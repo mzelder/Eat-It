@@ -1,0 +1,77 @@
+STRONA KLIENTA:
+    Rejestracja oraz logowanie:
+        Resjestracja:
+            - username 
+            - mail
+            - haslo
+            - potwierdzenie hasla
+
+        Logowanie:
+            - email lub username
+            - haslo
+            func:
+                - odzyskiwanie konta (zapomniane haslo)
+                - zmiana usernama, hasla
+        
+        DODATKOWE:
+            Mozliwosci po zalogowaniu:
+                - przegladanie historii zakupow przez uzytkownika
+                - dodawanie restauracji do ulubionych
+                - dodawanie listy adresow, tak aby mozna bylo szybko wybrac pomiedzy wszystkimi adresami
+                - otrzymywanie punktow ktore bedzie mozna wykorzystac (pyszne.pl - bony podarunkowe)
+
+    Wyszukiwanie restauracji:
+        - podanie adresu lub geolokalizacja (po zezwoleniu)
+
+        Filtorwanie restauracji:
+            - podzial na kategorie kebab, pizza itd.
+
+            - otwarte teraz
+            - bezplatna dostawa
+            - minimalna kwota zamowienia
+            - oceny
+
+            
+            - wyszukiwanie (miejsc oraz produktow)
+            - sortowanie wedlug (wedlug konkretnych danych)
+
+    
+    Koszyk - zakup jedzenia:
+        - dodawanie produktu:
+        - adres dostawy
+        - platnosc 
+
+    Mozliwosc dodania opini po odbiorze produktu
+
+        
+STRONA SPRZEDAWCY:
+    Rejestracja oraz logowanie:
+        Rejestracja:
+            - mail
+            - haslo
+            - potwierdzenie hasla
+            - username (nazwa firmy)
+
+            - potwierdzenie poprzez sprawdenie rejestru firm czy faktycznie firma istnieje
+            lub podeslanie na maila dokumentu rejestracyjnego
+        
+        Logowanie:
+            - mail lub username (nazwa firmy)
+            - haslo
+            
+            func:
+                - odzyskiwanie konta
+                - zmiana hasla
+
+            Po zalogowaniu uzupelnienie danych o:
+                - Nazwe firmy
+                - lokalizacje
+                - rodzaj restauracji
+    
+
+    Panel do dodawania prodkuktow w restauracji:
+        - kategoria (pizza, burgery itd.)
+        - zdjecie
+        - nazwa produktu
+        - opis
+        - cena (mozliwos zmiany skladnikow)

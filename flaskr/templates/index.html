@@ -3,5 +3,79 @@
 {% block title %} Home {% endblock %}
 
 {% block body %}
-    <!-- <h1>Hello everyone!</h1> -->
+
+<!-- Searching bar, burger photo -->
+<div class="container-fluid">
+    <div class="container-fluix">
+        <div class="row mt-5 text-center">
+            <div class="col ml-5 mt-5">
+                <img src="static/images/logo_black.png">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="adress" placeholder="Adress e.g Aleja Rozdzienskiego 1" style="border-radius: 12px;">                    
+                    <button class="btn btn-outline-secondary" type="submit" style="border-radius: 12px; border-color: #83B271; background-color: #83B271; color: white;">Search</button>
+                </div>
+            </div>
+            <div class="col ml-5">
+                <img src="static/images/big_burger.png">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- How to order -->
+<div class="container-fluid text-center" style="background-color: #BBEBA9;">
+    <div class="container">
+        <div class="row p-4">
+            <div class="col"></div>
+            <div class="col">
+                <p>How to order?</p>
+                <h4> It's as easy as this. </h4>
+            </div>
+            <div class="col"></div>
+        </div>
+        
+        <div class="row p-4">
+            <div class="col">
+                <image class="mb-4" src="static/images/maps-and-flags.png" style="width: 80px;">
+                <h5> Tell us where you are </h5>
+                <hr>
+                <p> We'll show you stores and restaurants nearby you can order from. </p>
+            </div>
+            
+            <div class="col">
+                <image class="mb-4" src="static/images/fast-food.png" style="width: 80px;">
+                <h5> Find what you want </h5>
+                <hr>
+                <p> Explore for products or meals, establishments or culinary styles. </p>
+            
+            </div><div class="col">
+                <image class="mb-4" src="static/images/accept.png" style="width: 80px;">
+                <h5> Order for delivery </h5>
+                <hr>
+                <p> We'll update you on your order's progress. </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Download the app -->
+<div class="container-fluid">
+    <div class="container p-4">
+        <div class="row text-left">
+            <div class="col p-2">
+                <h3> Download the app <h3>
+                <h4> <span style="color: #83B271">EatIt</span> anywhere you want</h4>
+                <div class="d-flex mt-5">
+                    <img src="static/images/appstore.png" style="width: 120px; margin-right: 20px;">
+                    <img src="static/images/googleplay.png" style="width: 120px; margin-right: 20px;">
+                    <img src="static/images/appgallery.png" style="width: 120px;">
+                </div>
+            </div>
+            <div class="col text-right">
+                <img src="static/images/phone_photo.png" style="width: 300px;">
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

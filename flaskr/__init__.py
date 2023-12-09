@@ -32,4 +32,10 @@ def create_app(test_config=None):
     def index():
         return render_template("index.html")
 
+    
+    @app.route("/delivery")
+    def order():
+        return render_template("delivery.html")
+
+
     return app

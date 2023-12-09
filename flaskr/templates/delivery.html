@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+<!-- {% block title %} Delivery {% endblock %} -->
+
+{% block body %}
+
+<div class="container p-3">
+    <div class="row">
+        
+        
+        <div class="col">
+
+            <h5 class="pb-3"> 69 places <h5>
+        
+            <!-- Open now section -->
+            <div class="row">
+                <div class="col">
+                    <h5> Open now </h5>    
+                </div>
+                <div class="col">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Free delivery section -->
+            <div class="row pb-3">
+                <div class="col">
+                    <h5> Free delivery </h5>    
+                </div>
+                <div class="col">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch">
+                    </div>
+                </div>
+            </div>
+        
+            <!-- Min order amount section -->
+            <div class="row">
+                <h5 class="pb-2"> Minimum order amount </h5>
+                
+                <div class="form-check pb-2">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                    <label class="form-check-label" for="flexRadioDefault1">
+                        Show all (69)
+                    </label>
+                  </div>
+                  
+                  <div class="form-check pb-2">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        35,00 zł or less (18)
+                    </label>
+                  </div>
+                  
+                  <div class="form-check pb-2">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        50,00 zł or less (51)
+                    </label>
+                  </div>
+            </div>
+
+        </div>
+       
+        <div class="col-8">
+            <div class="row">
+
+            <!-- Second column -->
+            <div class="col-sm">
+                <input type="text" class="form-control" id="adress" placeholder="Places and items" style="border-radius: 12px;">                    
+            </div>
+
+                <!-- Third column -->
+                <div class="col-sm">
+                    <div class="row">
+                        <div class="col-sm">
+                            <label class="form-label">Sort By</label>
+                        </div>
+                        <div class="col-sm">
+                            <select class="form-control-sm">
+                                <option>Best match</option>
+                                <option>Reviews</option>
+                                <option>Distance</option>
+                                <option>Estimated delivery time</option>
+                                <option>Most popular</option>
+                                <option>Min. order amount</option>
+                                <option>Delivery costs</option>
+                                <option>Product price</option>
+                                <option>Alphabetical</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% for number in range(69) %}
+            <div class="row">
+                <div class="col p-3">
+                    <div class="container-fluid" style="background-color: lightgray; border-radius: 5px;">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="row p-3">
+                                    <h5> Maxi Pizza {{ number }} </h5>
+                                    <div class="col-4">
+    
+                                        <image class="d-inline" src="static/images/star.png" style="width: 20px;">
+                                        <p class="d-inline"> 4,4 (404) </p>
+                                    </div>
+                                    <div class="col">
+                                        <image class="d-inline" src="static/images/bag.png" style="width: 20px;">
+                                        <p class="d-inline"> Min 30,00 zł </p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Restaurant Photo -->
+                            <div class="col">
+                                <image class="ms-5" src="static/images/pizza.jpeg" style="width: 200px; border-radius: 5px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

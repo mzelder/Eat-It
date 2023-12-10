@@ -39,3 +39,16 @@ def init_db_command():
 def init_app(app):
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)
+
+
+def get_restaurants(query=""):
+    db = get_db()
+
+    if query:
+        cur = db.execute("SELECT r.name, r.rating, r.min_order_amount, p.photo_path FROM restaurants r LEFT JOIN restaurant_photos p ON r.id=p.restaurant_id WHERE name LIKE ?;", (f'%{query}%',))
+    else:    
+        cur = db.execute("SELECT r.name, r.rating, r.min_order_amount, p.photo_path FROM restaurants r LEFT JOIN restaurant_photos p ON r.id=p.restaurant_id;")
+    
+    restaurants = cur.fetchall()
+    return restaurants
+

@@ -69,7 +69,9 @@
 
             <!-- Second column -->
             <div class="col-sm">
-                <input type="text" class="form-control" id="adress" placeholder="Places and items" style="border-radius: 12px;">                    
+                <form id="searchForm" action="/delivery" method="GET">
+                    <input type="search" class="form-control" id="search" name="search" placeholder="Places and items" autocomplete="off" style="border-radius: 12px;">                    
+                </form>
             </div>
 
                 <!-- Third column -->
@@ -95,29 +97,29 @@
                 </div>
             </div>
 
-            {% for number in range(69) %}
+            {% for restaurant in restaurants %}
             <div class="row">
                 <div class="col p-3">
                     <div class="container-fluid" style="background-color: lightgray; border-radius: 5px;">
                         <div class="row">
                             <div class="col-8">
                                 <div class="row p-3">
-                                    <h5> Maxi Pizza {{ number }} </h5>
+                                    <h5> {{ restaurant.name }} </h5>
                                     <div class="col-4">
     
                                         <image class="d-inline" src="static/images/star.png" style="width: 20px;">
-                                        <p class="d-inline"> 4,4 (404) </p>
+                                        <p class="d-inline"> {{ restaurant.rating }} </p>
                                     </div>
                                     <div class="col">
                                         <image class="d-inline" src="static/images/bag.png" style="width: 20px;">
-                                        <p class="d-inline"> Min 30,00 zł </p>
+                                        <p class="d-inline"> Min {{ restaurant.min_order_amount }} zł </p>
                                     </div>
                                 </div>
                             </div>
                             
                             <!-- Restaurant Photo -->
                             <div class="col">
-                                <image class="ms-5" src="static/images/pizza.jpeg" style="width: 200px; border-radius: 5px;">
+                                <image class="ms-5" src="static/{{ restaurant.photo_path }}" style="width: 200px; border-radius: 5px;">
                             </div>
                         </div>
                     </div>

@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 
 def create_app(test_config=None):
@@ -34,8 +34,11 @@ def create_app(test_config=None):
 
     
     @app.route("/delivery")
-    def order():
-        return render_template("delivery.html")
+    def delivery():
+        query = request.args.get("search")
+
+        restaurants = db.get_restaurants(query)
+        return render_template("delivery.html", restaurants=restaurants)
 
 
     return app

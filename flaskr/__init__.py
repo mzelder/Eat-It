@@ -35,8 +35,7 @@ def create_app(test_config=None):
     
     @app.route("/delivery")
     def delivery():
-        query = request.args.get("search")
-
+        query = request.args.get("search", "")
         restaurants = db.get_restaurants(query)
         return render_template("delivery.html", restaurants=restaurants)
 

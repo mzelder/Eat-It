@@ -41,6 +41,12 @@ def init_app(app):
     app.cli.add_command(init_db_command)
 
 
+
+# class Database:
+#     def __init__(self):
+#         self.db = 
+
+
 def get_restaurants(query=""):
     db = get_db()
 

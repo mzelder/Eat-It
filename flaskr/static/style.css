@@ -1,5 +1,15 @@
+.equal-size {
+   width: 200px;
+}
+
 .bg-green {
     background-color: #83B271;
+    color: white;
+}
+
+.bg-green:hover {
+   background-color: #99c984;
+   color: white;
 }
 
  .nav-btn {

@@ -1,10 +1,5 @@
 .equal-size {
-   width: 200px;
-}
-
-.bg-green {
-    background-color: #83B271;
-    color: white;
+   width: 220px;
 }
 
 .bg-green:hover {
@@ -27,4 +22,29 @@
     margin-bottom: 10px;
  }
 
+ .bg-green {
+   border-color: #83B271;
+   background-color: #83B271;
+   color: white;
+}
  
+ .bg-grey-hover:hover {
+   background-color: rgb(230,230,230);
+   border-color: rgb(230,230,230);
+ }
+
+ .underline-exist {
+   text-decoration: underline;
+ }
+ 
+ .underline-exist:hover {
+   text-decoration: none;
+ }
+
+ .underline-no-exist {
+   text-decoration: none;
+ }
+ 
+ .underline-no-exist:hover {
+   text-decoration: underline;
+ }

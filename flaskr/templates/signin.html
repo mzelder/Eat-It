@@ -3,7 +3,7 @@
    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4> My account </h4>
+                <h4 class="modal-title"> My account </h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -20,21 +20,108 @@
                     </div>
                 </div>
                 <div class="row pt-3">
-                    <div class="col text-left">
-                        <image class="d-inline" src="static/images/bag.png" style="width: 20px;"></image>
-                        <p class="d-inline"> Orders </p>
+                    <div class="col">
+                        <button class="btn w-100 text-left bg-grey-hover">
+                            <div class="d-flex align-items-center">
+                                <img src="static/images/bag.png" style="width: 20px;" class="me-2" alt="Bag Icon">
+                                <p class="mb-0">Orders</p>
+                            </div>
+                        </button>
                     </div>
-                    <div class="col"></div>
                 </div>
                 <div class="row">
-                    <div class="col text-right">
-                        <image class="d-inline" src="static/images/heart.png" style="width: 20px;"></image>
-                        <p class="d-inline"> Favourites </p>
-                     </div>
+                    <div class="col">
+                        <button class="btn w-100 text-left bg-grey-hover">
+                            <div class="d-flex align-items-center">
+                                <img src="static/images/heart.png" style="width: 20px;" class="me-2" alt="Heart Icon">
+                                <p class="mb-0">Favourites</p>
+                            </div>
+                        </button>
+                    </div>
+                </div>                    
+                <hr>
+                <div class="row">
+                    <div class="col">
+                        <button class="btn w-100 text-left bg-grey-hover">
+                            <div class="d-flex align-items-center">
+                                <img src="static/images/office.png" style="width: 20px;" class="me-2" alt="Office Icon">
+                                <p class="mb-0"> For business </p>
+                            </div>
+                        </button>
+                    </div>
                 </div>
-                <span></span>
-                    
             </div>
         </div>
    </div>
 </div>
+
+
+<!-- Sign in content -->
+<div class="modal fade" id="signIn" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn btn-back" data-bs-toggle="modal" data-bs-target="#myAccount">
+                    <i class="bi bi-arrow-left"></i>
+                </button>
+                <h4 class="modal-title"> Sign in </h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+             </div>
+             <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="email" class="form-label" style="font-weight: 500;">Email address</label>
+                        <input type="email" class="form-control" id="email" placeholder="Email address">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label" style="font-weight: 500;">Password</label>
+                        <input type="password" class="form-control" id="password" placeholder="Password">
+                    </div>
+                    <div class="d-flex justify-content-end mb-3">
+                        <button type="button" class="btn btn-sm underline-no-exist">Forgot password?</button>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 bg-green" style="border-radius: 12px;">Sign in</button>
+                </form>
+                <div class="d-flex justify-content-center">
+                    <button type="button" class="btn btn-sm underline-exist" style="font-weight: 600;" data-bs-toggle="modal" data-bs-target="#createAccount">Create account</button>
+                </div>
+            </div>
+         </div>
+    </div>
+ </div>
+ 
+
+ <!-- Create account -->
+<div class="modal fade" id="createAccount" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn btn-back" data-bs-toggle="modal" data-bs-target="#myAccount">
+                    <i class="bi bi-arrow-left"></i>
+                </button>
+                <h4 class="modal-title"> Create account </h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+             </div>
+             <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="email" class="form-label" style="font-weight: 500;">Email address</label>
+                        <input type="email" class="form-control" id="email" placeholder="Email address">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label" style="font-weight: 500;">Password</label>
+                        <input type="password" class="form-control" id="password" placeholder="Password">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label" style="font-weight: 500;">Confirm password</label>
+                        <input type="password" class="form-control" id="confirm_password" placeholder="Confirm password">
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 bg-green mt-3" style="border-radius: 12px;">Create account</button>
+                </form>
+                <div class="d-flex justify-content-center">
+                    <button type="button" class="btn btn-sm underline-exist" style="font-weight: 600;" data-bs-toggle="modal" data-bs-target="#signIn">I already have an account</button>
+                </div>
+            </div>
+         </div>
+    </div>
+ </div>

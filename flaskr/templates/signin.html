@@ -103,18 +103,21 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
              </div>
              <div class="modal-body">
-                <form>
+                <form action="/" method="POST">
+                    <!-- EMAIL -->
                     <div class="mb-3">
                         <label for="email" class="form-label" style="font-weight: 500;">Email address</label>
-                        <input type="email" class="form-control" id="email" placeholder="Email address">
+                        <input name="email" type="email" class="form-control" id="email" placeholder="Email address" required>
                     </div>
+                    <!-- PASSWORD -->
                     <div class="mb-3">
                         <label for="password" class="form-label" style="font-weight: 500;">Password</label>
-                        <input type="password" class="form-control" id="password" placeholder="Password">
+                        <input name="password" type="password" class="form-control" id="password" placeholder="Password" required>
                     </div>
+                    <!-- CONFIRM PASSWORD -->
                     <div class="mb-3">
                         <label for="password" class="form-label" style="font-weight: 500;">Confirm password</label>
-                        <input type="password" class="form-control" id="confirm_password" placeholder="Confirm password">
+                        <input name="confirm_password" type="password" class="form-control" id="confirm_password" placeholder="Confirm password" required>
                     </div>
                     <button type="submit" class="btn btn-primary w-100 bg-green mt-3" style="border-radius: 12px;">Create account</button>
                 </form>

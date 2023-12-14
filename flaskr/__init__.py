@@ -1,5 +1,4 @@
 import os
-
 from flask import Flask, render_template, request
 
 
@@ -27,9 +26,22 @@ def create_app(test_config=None):
     from . import db
     db.init_app(app)
 
-    
-    @app.route("/")
+
+    @app.route("/", methods=["GET", "POST"])
     def index():
+        if request.method == "POST":
+            email = request.form.get("email")
+            password = request.form.get("password")
+            confirm_password = request.form.get("confirm_password")
+
+            # Ensure email is correct (should contain @)
+
+            
+            # Ensure password have at least 8 characters, one upppercase, number and symbol
+            
+            
+            # Ensure passwords are exacly the same
+
         return render_template("index.html")
 
     

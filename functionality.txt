@@ -79,4 +79,4 @@ STRONA SPRZEDAWCY:
 
 TO DO LIST:
 Sign in button border blue - should be black
-Password - show up butto
+Password - show up buttons

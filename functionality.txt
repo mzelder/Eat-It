@@ -35,6 +35,7 @@ STRONA KLIENTA:
             - wyszukiwanie (miejsc oraz produktow)
             - sortowanie wedlug (wedlug konkretnych danych)
 yyy
+bbb
     
     Koszyk - zakup jedzenia:
         - dodawanie produktu:

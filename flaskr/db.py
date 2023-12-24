@@ -41,12 +41,12 @@ def init_app(app):
     app.cli.add_command(init_db_command)
 
 
-def get_restaurants(query=""):
-    db = get_db()
+# def get_restaurants(query=""):
+#     db = get_db()
 
-    if query:
-        restaurants = db.execute("SELECT r.name, r.rating, r.min_order_amount, p.photo_path FROM restaurants r LEFT JOIN restaurant_photos p ON r.id=p.restaurant_id WHERE name LIKE ?;", (f'%{query}%',))
-    else:    
-        restaurants = db.execute("SELECT r.name, r.rating, r.min_order_amount, p.photo_path FROM restaurants r LEFT JOIN restaurant_photos p ON r.id=p.restaurant_id;")
+#     if query:
+#         restaurants = db.execute("SELECT r.name, r.rating, r.min_order_amount, p.photo_path FROM restaurants r LEFT JOIN restaurant_photos p ON r.id=p.restaurant_id WHERE name LIKE ?;", (f'%{query}%',))
+#     else:    
+#         restaurants = db.execute("SELECT r.name, r.rating, r.min_order_amount, p.photo_path FROM restaurants r LEFT JOIN restaurant_photos p ON r.id=p.restaurant_id;")
     
-    return restaurants.fetchall()
+#     return restaurants.fetchall()

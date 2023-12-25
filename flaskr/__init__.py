@@ -28,43 +28,12 @@ def create_app(test_config=None):
     db.init_app(app)
 
 
-    
-    def validate_password(password):
-        # Ensure password length is at least 8 characters
-        if len(password) < 8:
-            return False
-        
-        # Ensure password contains at least one uppercase letter
-        if not re.search(r"[A-Z]", password):
-            return False
-
-        # Ensure password contains at least one digit
-        if not re.search(r"\d", password):
-            return False
-
-        # Ensure password contains at least one special symbol
-        if not re.search(r"[!@#$%^&*()_+{}|:<>?~]", password):
-            return False
-
-        return True
-
-
     @app.route("/", methods=["GET", "POST"])
     def index():
         if request.method == "POST":
             email = request.form.get("email")
             password = request.form.get("password")
             confirm_password = request.form.get("confirm_password")
-
-            # Ensure email is correct (should contain @)
-            
-            
-            # Ensure password have at least 8 characters, one upppercase, number and symbol
-            validate_password(password)
-            
-            # Ensure passwords are exacly the same
-            # if password != confirm_password:
-            #     return False
 
         return render_template("index.html")
 

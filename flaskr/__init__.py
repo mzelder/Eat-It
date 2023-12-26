@@ -1,6 +1,6 @@
 import os
 import re
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, abort
 
 
 def create_app(test_config=None):
@@ -34,6 +34,25 @@ def create_app(test_config=None):
             email = request.form.get("email")
             password = request.form.get("password")
             confirm_password = request.form.get("confirm_password")
+
+            # Ensure email match regex
+            if not re.match(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$", email):
+                return abort(400, description="Invalid input")
+            
+            # Ensure password is not blank
+            if not password:
+                return abort(400, description="Invalid input")
+            
+            # Ensure password have at least 8 characters where at least 1 uppercase letter, one number, one symbol
+            if not re.match(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$", password):
+                return abort(400, description="Invalid input")
+
+            # Ensure password and confirm_password are equal
+            if password != confirm_password:
+                return abort(400, description="Invalid input")
+
+            # Adding user to the database
+            
 
         return render_template("index.html")
 

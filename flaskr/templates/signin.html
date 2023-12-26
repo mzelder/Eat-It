@@ -68,11 +68,13 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
              </div>
              <div class="modal-body">
-                <form>
+                <form novalidate="novalidate">
+                    <!-- EMAIL -->
                     <div class="mb-3">
                         <label for="email" class="form-label" style="font-weight: 500;">Email address</label>
-                        <input type="email" class="form-control" id="email" placeholder="Email address">
+                        <input type="email" class="form-control" id="email" placeholder="Email address" autocomplete="off">
                     </div>
+                    <!-- PASSWORD -->
                     <div class="mb-3">
                         <label for="password" class="form-label" style="font-weight: 500;">Password</label>
                         <input type="password" class="form-control" id="password" placeholder="Password">
@@ -103,21 +105,24 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
              </div>
              <div class="modal-body">
-                <form class="form-floating" action="/" method="POST">
+                <form class="form-floating needs-validation" action="/" method="POST" novalidate oninput='confirm_password.setCustomValidity(password.value != confirm_password.value ? "Passwords do not match." : "")'>
                     <!-- EMAIL -->
                     <div class="mb-3">
                         <label for="email" class="form-label" style="font-weight: 500;">Email address</label>
                         <input name="email" type="email" class="form-control" id="email" placeholder="Email address" required autocomplete="off">
+                        <div class="invalid-feedback">Please enter a valid email address.</div>
                     </div>
                     <!-- PASSWORD -->
                     <div class="mb-3">
                         <label for="password" class="form-label" style="font-weight: 500;">Password</label>
-                        <input name="password" type="password" class="form-control" id="password" placeholder="Password" required>
+                        <input name="password" type="password" class="form-control" id="password" placeholder="Password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" required>
+                        <div class="invalid-feedback">Your password should be at least 8 characters long, contain both lower and upper-case letters, and include either a number or a symbol.</div>
                     </div>
                     <!-- CONFIRM PASSWORD -->
                     <div class="mb-3">
                         <label for="password" class="form-label" style="font-weight: 500;">Confirm password</label>
-                        <input name="confirm_password" type="password" class="form-control" id="confirm_password" placeholder="Confirm password" required>
+                        <input name="confirm_password" type="password" class="form-control" id="confirm_password" placeholder="Confirm password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" required>
+                        <div class="invalid-feedback">The new passwords you entered don't match. Please try again.</div>
                     </div>
                     <button type="submit" class="btn btn-primary w-100 bg-green mt-3" style="border-radius: 12px;">Create account</button>
                 </form>

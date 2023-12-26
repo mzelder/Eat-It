@@ -1,6 +1,8 @@
 import os
 import re
+from flask_bcrypt import Bcrypt
 from flask import Flask, render_template, request, abort
+
 
 
 def create_app(test_config=None):
@@ -30,6 +32,9 @@ def create_app(test_config=None):
 
     @app.route("/", methods=["GET", "POST"])
     def index():
+        message = None
+        database = db.get_db()
+        
         if request.method == "POST":
             email = request.form.get("email")
             password = request.form.get("password")
@@ -51,10 +56,24 @@ def create_app(test_config=None):
             if password != confirm_password:
                 return abort(400, description="Invalid input")
 
-            # Adding user to the database
-            
+            # Ensure user dont exist
+            cursor = database.cursor()
+            cursor.execute("SELECT * FROM customer WHERE email = ?", (email,)) 
+            user = cursor.fetchone()
+            print(user)
+            if user is not None:
+                message = False
+            else:
+                # Hash the password
+                bcrypt = Bcrypt(app)
+                pw_hash = bcrypt.generate_password_hash(password).decode("utf-8")
 
-        return render_template("index.html")
+                # Adding user to the database
+                database.execute("INSERT INTO customer (email, password) VALUES (?, ?)", (email, pw_hash))
+                database.commit()
+                message = True
+
+        return render_template("index.html", message=message)
 
     
     @app.route("/delivery")

@@ -1,5 +1,7 @@
+DROP TABLE IF EXISTS customer; 
+
 CREATE TABLE customer (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  email VARCHAR(255),
-  password_hash VARCHAR(255)
+  email VARCHAR(255) NOT NULL,
+  password VARCHAR(255) NOT NULL
 );

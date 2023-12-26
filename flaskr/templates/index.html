@@ -4,6 +4,19 @@
 
 {% block body %}
 
+{% if message is sameas true %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        Registration successful.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% elif message is sameas false %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        There's already an account with this email.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endif %}
+   
+
 <!-- Searching bar, burger photo -->
 <div class="container-fluid">
     <div class="container-fluix">

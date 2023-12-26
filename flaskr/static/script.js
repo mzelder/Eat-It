@@ -28,5 +28,5 @@ document.addEventListener('DOMContentLoaded', (event) => {
           var bsAlert = new bootstrap.Alert(alert);
           bsAlert.close();
       });
-  }, 5000);
+  }, 3000);
 });

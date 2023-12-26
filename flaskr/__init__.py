@@ -36,42 +36,53 @@ def create_app(test_config=None):
         database = db.get_db()
         
         if request.method == "POST":
-            email = request.form.get("email")
-            password = request.form.get("password")
-            confirm_password = request.form.get("confirm_password")
-
-            # Ensure email match regex
-            if not re.match(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$", email):
-                return abort(400, description="Invalid input")
+            form_type = request.form.get("form_type")
             
-            # Ensure password is not blank
-            if not password:
-                return abort(400, description="Invalid input")
-            
-            # Ensure password have at least 8 characters where at least 1 uppercase letter, one number, one symbol
-            if not re.match(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$", password):
-                return abort(400, description="Invalid input")
+            # Handle account creating
+            if form_type == "create_account":            
+                email = request.form.get("email")
+                password = request.form.get("password")
+                confirm_password = request.form.get("confirm_password")
 
-            # Ensure password and confirm_password are equal
-            if password != confirm_password:
-                return abort(400, description="Invalid input")
+                # Ensure email match regex
+                if not re.match(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$", email):
+                    return abort(400, description="Invalid input")
+                
+                # Ensure password is not blank
+                if not password:
+                    return abort(400, description="Invalid input")
+                
+                # Ensure password have at least 8 characters where at least 1 uppercase letter, one number, one symbol
+                if not re.match(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$", password):
+                    return abort(400, description="Invalid input")
 
-            # Ensure user dont exist
-            cursor = database.cursor()
-            cursor.execute("SELECT * FROM customer WHERE email = ?", (email,)) 
-            user = cursor.fetchone()
-            print(user)
-            if user is not None:
-                message = False
-            else:
-                # Hash the password
-                bcrypt = Bcrypt(app)
-                pw_hash = bcrypt.generate_password_hash(password).decode("utf-8")
+                # Ensure password and confirm_password are equal
+                if password != confirm_password:
+                    return abort(400, description="Invalid input")
 
-                # Adding user to the database
-                database.execute("INSERT INTO customer (email, password) VALUES (?, ?)", (email, pw_hash))
-                database.commit()
-                message = True
+                # Ensure user dont exist
+                cursor = database.cursor()
+                cursor.execute("SELECT * FROM customer WHERE email = ?", (email,)) 
+                user = cursor.fetchone()
+
+                if user is not None:
+                    message = False
+                else:
+                    # Hash the password
+                    bcrypt = Bcrypt(app)
+                    pw_hash = bcrypt.generate_password_hash(password).decode("utf-8")
+
+                    # Adding user to the database
+                    database.execute("INSERT INTO customer (email, password) VALUES (?, ?)", (email, pw_hash))
+                    database.commit()
+                    message = True
+
+            # Handle Sign In 
+            elif form_type == "signin":
+                # After registraion log in user (session[user] -> flask thing)
+                # Checking if email exists
+                # Checking hash password
+                ...
 
         return render_template("index.html", message=message)
 

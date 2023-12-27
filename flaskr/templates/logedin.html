@@ -1,0 +1,66 @@
+<!-- Loged account -->
+<div class="modal fade" id="loged" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+         <div class="modal-content">
+             <div class="modal-header">
+                 <h4 class="modal-title"> Welcome, {{ session["user_email"] }} </h4>
+                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+             </div>
+             <div class="modal-body">
+                 <div class="row">
+                     <div class="col">
+                         <button class="btn w-100 text-left bg-grey-hover">
+                             <div class="d-flex align-items-center">
+                                 <img src="static/images/bag.png" style="width: 22px;" class="me-2" alt="Bag Icon">
+                                 <p class="mb-0">Orders</p>
+                             </div>
+                         </button>
+                     </div>
+                 </div>
+                 <div class="row">
+                     <div class="col">
+                         <button class="btn w-100 text-left bg-grey-hover">
+                             <div class="d-flex align-items-center">
+                                 <img src="static/images/heart.png" style="width: 20px;" class="me-2" alt="Heart Icon">
+                                 <p class="mb-0">Favourites</p>
+                             </div>
+                         </button>
+                     </div>
+                 </div>
+                 <div class="row">
+                    <div class="col">
+                        <button class="btn w-100 text-left bg-grey-hover">
+                            <div class="d-flex align-items-center">
+                                <img src="static/images/home.png" style="width: 20px;" class="me-2" alt="Home Icon">
+                                <p class="mb-0">Addresses</p>
+                            </div>
+                        </button>
+                    </div>
+                </div>                                        
+                 <hr>
+                 <div class="row">
+                     <div class="col">
+                         <button class="btn w-100 text-left bg-grey-hover">
+                             <div class="d-flex align-items-center">
+                                 <img src="static/images/briefcase.png" style="width: 20px;" class="me-2" alt="Office Icon">
+                                 <p class="mb-0"> For business </p>
+                             </div>
+                         </button>
+                     </div>
+                 </div>
+                 <hr>
+                 <div class="row">
+                    <div class="col">
+                        <button class="btn w-100 text-left bg-grey-hover">
+                            <div class="d-flex align-items-center">
+                                <img src="static/images/logout.png" style="width: 20px;" class="me-2" alt="Office Icon">
+                                <p class="mb-0"> Sign out </p>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+             </div>
+         </div>
+    </div>
+ </div>
+ 

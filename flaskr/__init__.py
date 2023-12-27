@@ -1,7 +1,7 @@
 import os
 import re
 from flask_bcrypt import Bcrypt
-from flask import Flask, render_template, request, abort
+from flask import Flask, render_template, request, abort, session, redirect, url_for
 
 
 
@@ -33,6 +33,7 @@ def create_app(test_config=None):
     @app.route("/", methods=["GET", "POST"])
     def index():
         message = None
+        error_message = None
         database = db.get_db()
         
         if request.method == "POST":
@@ -75,16 +76,34 @@ def create_app(test_config=None):
                     # Adding user to the database
                     database.execute("INSERT INTO customer (email, password) VALUES (?, ?)", (email, pw_hash))
                     database.commit()
+                    
                     message = True
+
+                    # Login user after registration
+                    session["user_email"] = email.split("@")[0]
+
+                    
 
             # Handle Sign In 
             elif form_type == "signin":
-                # After registraion log in user (session[user] -> flask thing)
+                email = request.form.get("email")
+                password = request.form.get("password")
+                
                 # Checking if email exists
+                cursor = database.cursor()
+                cursor.execute("SELECT * FROM customer WHERE email = ?", (email,))
+                email_check = cursor.fetchone()
+                if email_check is None: 
+                    error_message = True
+                
                 # Checking hash password
-                ...
-
-        return render_template("index.html", message=message)
+                cursor = database.cursor()
+                cursor.execute("SELECT password FROM customer WHERE email = ?", (email,))
+                hashed_password = cursor.fetchone()
+                if bcrypt.check_password_hash(hashed_password, password) is False:
+                    error_message = True
+                
+        return render_template("index.html", message=message, error_message=error_message, user=check_status())
 
     
     @app.route("/delivery")
@@ -94,4 +113,16 @@ def create_app(test_config=None):
         return render_template("delivery.html") #restaurants=restaurants)
 
 
+    @app.route("/delete")
+    def delete():
+        session.pop("user_email", None)
+        return redirect(url_for("index"))
+
     return app
+
+
+def check_status():
+    if "user_email" in session:
+        return session["user_email"]
+    else:
+        return None

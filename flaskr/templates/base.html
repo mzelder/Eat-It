@@ -18,9 +18,15 @@
                 <div class="col-auto ml-auto">
                     <div class="d-grid gap-2 d-md-block">
                         <button class="btn btn-light" style="border-radius:12px;" type="button">Add your Restaurant</button>
-                        <button class="btn btn-light" style="border-radius:12px;" type="button" data-bs-toggle="modal" data-bs-target="#myAccount">
-                            Get started
-                        </button>
+                        {% if user %}
+                            <button class="btn btn-light" style="border-radius:12px;" type="button" data-bs-toggle="modal" data-bs-target="#loged">
+                                III
+                            </button>
+                        {% else %}
+                            <button class="btn btn-light" style="border-radius:12px;" type="button" data-bs-toggle="modal" data-bs-target="#myAccount">
+                                Get started
+                            </button>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -31,6 +37,7 @@
 
         <!-- My account - Sign in, creating acocunt -->
         {% include "signin.html" %}
+        {% include "logedin.html" %}
         
         <!-- Footer -->
         <footer class="text-center bg-green text-white mt-auto">

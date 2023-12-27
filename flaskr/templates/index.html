@@ -15,6 +15,13 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 {% endif %}
+
+{% if error_message is sameas true %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    There was a problem signing you in. Please check your email and password.
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
    
 
 <!-- Searching bar, burger photo -->

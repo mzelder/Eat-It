@@ -21,7 +21,8 @@ STRONA KLIENTA:
                 - otrzymywanie punktow ktore bedzie mozna wykorzystac (pyszne.pl - bony podarunkowe)
 
     Wyszukiwanie restauracji:
-        - podanie adresu lub geolokalizacja (po zezwoleniu)
+        - geolokalizacja po zezwoleniu -> po akceptacji przez uzytkownika dostajemy dane geograficzne ktore nalezy zamienic na adres
+        - po wpisaniu adresu przez uzytownika -> dostajemy adres geograficzny (x, y)
 
         Filtorwanie restauracji:
             - podzial na kategorie kebab, pizza itd.
@@ -34,9 +35,6 @@ STRONA KLIENTA:
             
             - wyszukiwanie (miejsc oraz produktow)
             - sortowanie wedlug (wedlug konkretnych danych)
-yyy
-xxx
-bbb
     
     Koszyk - zakup jedzenia:
         - dodawanie produktu:

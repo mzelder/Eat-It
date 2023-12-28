@@ -26,6 +26,8 @@ def create_app(test_config=None):
     except OSError:
         pass
 
+    bcrypt = Bcrypt(app)
+
     from . import db
     db.init_app(app)
 
@@ -70,7 +72,6 @@ def create_app(test_config=None):
                     message = False
                 else:
                     # Hash the password
-                    bcrypt = Bcrypt(app)
                     pw_hash = bcrypt.generate_password_hash(password).decode("utf-8")
 
                     # Adding user to the database
@@ -86,8 +87,8 @@ def create_app(test_config=None):
 
             # Handle Sign In 
             elif form_type == "signin":
-                email = request.form.get("email")
-                password = request.form.get("password")
+                email = request.form.get("email_login")
+                password = request.form.get("password_login")
                 
                 # Checking if email exists
                 cursor = database.cursor()
@@ -99,13 +100,26 @@ def create_app(test_config=None):
                 # Checking hash password
                 cursor = database.cursor()
                 cursor.execute("SELECT password FROM customer WHERE email = ?", (email,))
-                hashed_password = cursor.fetchone()
-                if bcrypt.check_password_hash(hashed_password, password) is False:
-                    error_message = True
+                hashed_password_row = cursor.fetchone()
+                if hashed_password_row:
+                    hashed_password = hashed_password_row[0]
+                    if password is None:
+                        error_message = True
+                    elif bcrypt.check_password_hash(hashed_password, password) is False:
+                        error_message = True
+
+                if error_message is not False:
+                    session["user_email"] = email.split("@")[0]
                 
         return render_template("index.html", message=message, error_message=error_message, user=check_status())
 
-    
+   
+    @app.route("/signout", methods=["POST"])
+    def signout():
+        session.clear()
+        return redirect(url_for("index"))
+
+
     @app.route("/delivery")
     def delivery():
         # query = request.args.get("search", "")
@@ -113,10 +127,6 @@ def create_app(test_config=None):
         return render_template("delivery.html") #restaurants=restaurants)
 
 
-    @app.route("/delete")
-    def delete():
-        session.pop("user_email", None)
-        return redirect(url_for("index"))
 
     return app
 

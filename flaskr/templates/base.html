@@ -20,11 +20,11 @@
                         <button class="btn btn-light" style="border-radius:12px;" type="button">Add your Restaurant</button>
                         {% if user %}
                             <button class="btn btn-light" style="border-radius:12px;" type="button" data-bs-toggle="modal" data-bs-target="#loged">
-                                III
+                                <img src="static/images/menu.png" width="40px">
                             </button>
                         {% else %}
-                            <button class="btn btn-light" style="border-radius:12px;" type="button" data-bs-toggle="modal" data-bs-target="#myAccount">
-                                Get started
+                            <button class="btn" style="border-radius:12px;" type="button" data-bs-toggle="modal" data-bs-target="#myAccount" style="background-color: transparent;">
+                                <img src="static/images/menu.png" width="40px">
                             </button>
                         {% endif %}
                     </div>
@@ -82,6 +82,8 @@
             
         </footer>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAp2OGmbbirXc1RzEdrOvoxqDobU4Ktf2g" defer></script>
         <script src="static/script.js"></script>
+        <script src="static/geolocation.js" defer></script>
     </body>
 </html>

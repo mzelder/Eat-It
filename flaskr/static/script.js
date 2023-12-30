@@ -1,4 +1,4 @@
-// Example starter JavaScript for disabling form submissions if there are invalid fields
+// Registration Validation
 (() => {
   'use strict'
 
@@ -33,19 +33,21 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 
 // Geolocation
-if ("geolocation" in navigator) {
-  navigator.geolocation.getCurrentPosition(function(position) {
-    const latitude = position.coords.latitude;
-    const longitude = position.coords.longitude;
+function getUserGeolocation(callback) {
+  if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
 
-    // Send this data to the Flask backend
-    sendDataToFlask(latitude, longitude);
-  });
-} else {
-  console.log("Geolocation is not available");
+      // Send this data to the Flask backend
+      var data = sendDataToFlask(latitude, longitude, callback);
+    });
+  } else {
+    console.log("Geolocation is not available");
+  }
 }
 
-function sendDataToFlask(latitude, longitude) {
+function sendDataToFlask(latitude, longitude, callback) {
   fetch('/process_location', {
     method: 'POST',
     headers: {
@@ -56,20 +58,68 @@ function sendDataToFlask(latitude, longitude) {
   .then(response => response.json())
   .then(data => {
     console.log('Success:', data);
+    callback(data);
   })
   .catch((error) => {
     console.error('Error:', error);
   });
 }
 
-// Search bar index page
-let autocomplete;
-function initMap() {
-  autocomplete = new google.maps.places.AutocompleteService(
-    document.getElementById("autocomplete"),
-    {
-      types: ["establishment"],
-      componentRestrictions: {"country": ["PL"]},
-      fields: ["place_id", "geometry", "name"]
-    });
+// Search bar AutocompleteService class
+function showDropdown() {
+  var input = document.getElementById('autocomplete');
+  var dropdown = document.getElementById('dropdown-menu');
+
+  // Clear previous items
+  dropdown.innerHTML = '';
+
+  if (input.value.length > 0) {
+      var service = new google.maps.places.AutocompleteService();
+      service.getPlacePredictions({ input: input.value }, function(predictions, status) {
+          if (status !== google.maps.places.PlacesServiceStatus.OK) {
+              var error_item = document.createElement('p');
+              dropdown.innerHTML = "Please enter your street and house number.";
+          }
+          else { 
+            // Add 'My Location' option
+            getUserGeolocation(function(data) {
+              if (data && data.address) {
+                var headerLocalization = document.createElement("h4");
+                headerLocalization.textContent = "My localization";
+                dropdown.appendChild(headerLocalization);
+                
+                var myLocationItem = document.createElement("a");
+                myLocationItem.classList.add("dropdown-item");
+                myLocationItem.href = "#";
+                myLocationItem.textContent = data.address; // Use the received address
+                dropdown.appendChild(myLocationItem);
+              }
+            });
+
+            // autocomplete options
+            var header_autocomplete = document.createElement("h4");
+            header_autocomplete.textContent = "Suggestions";
+            dropdown.appendChild(header_autocomplete);
+
+            predictions.forEach(function(prediction) {
+              var item = document.createElement('a');
+              item.classList.add('dropdown-item');
+              item.href = '#';
+              item.textContent = prediction.description;
+              item.onclick = function() {
+                  input.value = prediction.description;
+                  dropdown.style.display = 'none';
+              };
+              dropdown.appendChild(item);
+          });
+        }
+          // Show dropdown
+          dropdown.style.display = 'block';
+      });
+  } else {
+      // Hide dropdown
+      dropdown.style.display = 'none';
+  }
 }
+
+

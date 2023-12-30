@@ -48,3 +48,12 @@
  .underline-no-exist:hover {
    text-decoration: underline;
  }
+
+ .input-group .form-control {
+  border-radius: 20px 0 0 20px; /* Adjust as needed */
+}
+
+.input-group .btn {
+  border-radius: 0 20px 20px 0; /* Adjust as needed */
+}
+

@@ -137,6 +137,7 @@ def create_app(test_config=None):
         
         API_KEY = "AIzaSyDX15gm2sYzVlUQQcQyacEictCCmwiZhss"
         
+        
         params = {
             "latlng": f"{latitude},{longitude}",
             "key": API_KEY

@@ -46,6 +46,7 @@ function getUserGeolocation(callback) {
     console.log("Geolocation is not available");
   }
 }
+//TODO 
 
 function sendDataToFlask(latitude, longitude, callback) {
   fetch('/process_location', {

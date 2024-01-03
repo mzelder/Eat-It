@@ -21,6 +21,7 @@
   })
 })()
 
+// Alert after registration 
 document.addEventListener('DOMContentLoaded', (event) => {
   setTimeout(() => {
       var alerts = document.querySelectorAll('.alert');
@@ -32,13 +33,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
 });
 
 
+
 // Geolocation
 function getUserGeolocation(callback) {
   if ("geolocation" in navigator) {
     navigator.geolocation.getCurrentPosition(function(position) {
       const latitude = position.coords.latitude;
       const longitude = position.coords.longitude;
-
       // Send this data to the Flask backend
       var data = sendDataToFlask(latitude, longitude, callback);
     });
@@ -46,7 +47,6 @@ function getUserGeolocation(callback) {
     console.log("Geolocation is not available");
   }
 }
-//TODO 
 
 function sendDataToFlask(latitude, longitude, callback) {
   fetch('/process_location', {
@@ -66,42 +66,51 @@ function sendDataToFlask(latitude, longitude, callback) {
   });
 }
 
-// Search bar AutocompleteService class
+
+let debounceTimer;
+
 function showDropdown() {
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(() => {
+    actualShowDropdown();
+  }, 300);
+}
+
+function actualShowDropdown() {
   var input = document.getElementById('autocomplete');
   var dropdown = document.getElementById('dropdown-menu');
-
+  
   // Clear previous items
   dropdown.innerHTML = '';
 
   if (input.value.length > 0) {
+      // Setting my localization option
+      getUserGeolocation(function(data) {
+        if (data && data.address) {
+          var headerLocalization = document.createElement("h4");
+          headerLocalization.textContent = "My localization";
+          dropdown.appendChild(headerLocalization);
+          
+          var myLocationItem = document.createElement("a");
+          myLocationItem.classList.add("dropdown-item");
+          myLocationItem.href = "#";
+          myLocationItem.textContent = data.address; // Use the received address
+          dropdown.appendChild(myLocationItem);
+        }
+      });
+    
       var service = new google.maps.places.AutocompleteService();
       service.getPlacePredictions({ input: input.value }, function(predictions, status) {
           if (status !== google.maps.places.PlacesServiceStatus.OK) {
               var error_item = document.createElement('p');
               dropdown.innerHTML = "Please enter your street and house number.";
           }
-          else { 
             // Add 'My Location' option
-            getUserGeolocation(function(data) {
-              if (data && data.address) {
-                var headerLocalization = document.createElement("h4");
-                headerLocalization.textContent = "My localization";
-                dropdown.appendChild(headerLocalization);
-                
-                var myLocationItem = document.createElement("a");
-                myLocationItem.classList.add("dropdown-item");
-                myLocationItem.href = "#";
-                myLocationItem.textContent = data.address; // Use the received address
-                dropdown.appendChild(myLocationItem);
-              }
-            });
-
+            
             // autocomplete options
             var header_autocomplete = document.createElement("h4");
             header_autocomplete.textContent = "Suggestions";
             dropdown.appendChild(header_autocomplete);
-
             predictions.forEach(function(prediction) {
               var item = document.createElement('a');
               item.classList.add('dropdown-item');
@@ -113,7 +122,7 @@ function showDropdown() {
               };
               dropdown.appendChild(item);
           });
-        }
+        
           // Show dropdown
           dropdown.style.display = 'block';
       });
@@ -122,5 +131,3 @@ function showDropdown() {
       dropdown.style.display = 'none';
   }
 }
-
-

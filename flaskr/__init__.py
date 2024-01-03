@@ -159,7 +159,6 @@ def create_app(test_config=None):
 
     return app
 
-
 def check_status():
     if "user_email" in session:
         return session["user_email"]

@@ -35,6 +35,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 
 // Geolocation
+let userAddress = null;
+
 function getUserGeolocation(callback) {
   if ("geolocation" in navigator) {
     navigator.geolocation.getCurrentPosition(function(position) {
@@ -69,18 +71,22 @@ function sendDataToFlask(latitude, longitude, callback) {
 
 
 let debounceTimer;
-
-function showDropdown() {
+function debounce(func, delay) {
   clearTimeout(debounceTimer);
-  debounceTimer = setTimeout(() => {
-    actualShowDropdown();
-  }, 300);
+  debounceTimer = setTimeout(func, delay);
 }
 
-function actualShowDropdown() {
+function handleInput() {
+  debounce(function() {
+      showDropdown();
+  }, 1000); // Adjust the delay as needed
+}
+
+function showDropdown() {
   var input = document.getElementById('autocomplete');
   var dropdown = document.getElementById('dropdown-menu');
-  
+  var flag = false; 
+
   // Clear previous items
   dropdown.innerHTML = '';
 

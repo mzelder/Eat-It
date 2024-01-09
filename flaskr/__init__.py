@@ -126,37 +126,7 @@ def create_app(test_config=None):
         # query = request.args.get("search", "")
         # restaurants = db.get_restaurants(query)
         return render_template("delivery.html") #restaurants=restaurants)
-    
-    
-    # Geolocation data send
-    @app.route('/process_location', methods=['POST'])
-    def process_location():
-        data = request.json
-        latitude = data['latitude']
-        longitude = data['longitude']
-        
-        API_KEY = "AIzaSyDX15gm2sYzVlUQQcQyacEictCCmwiZhss"
-        
-        
-        params = {
-            "latlng": f"{latitude},{longitude}",
-            "key": API_KEY
-        }
-
-        base_url = "https://maps.googleapis.com/maps/api/geocode/json?"
-        try:
-            response = requests.get(base_url, params=params).json()
-            if response['status'] == 'OK':
-                formatted_address = response["results"][0]["formatted_address"]
-                session["geolocation_address"] = formatted_address
-                return jsonify({'address': formatted_address})
-            else:
-                return jsonify({'error': 'Geocoding failed'}), 400
-        except requests.RequestException as e:
-            print(e)
-            return jsonify({'error': 'API request failed'}), 500
-
-
+   
     return app
 
 def check_status():

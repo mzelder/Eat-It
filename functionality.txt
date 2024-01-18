@@ -75,8 +75,3 @@ STRONA SPRZEDAWCY:
         - nazwa produktu
         - opis
         - cena (mozliwos zmiany skladnikow)
-
-
-TO DO LIST:
-Sign in button border blue - should be black
-Password - show up buttons, fixing buttons

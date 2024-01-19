@@ -75,3 +75,5 @@ STRONA SPRZEDAWCY:
         - nazwa produktu
         - opis
         - cena (mozliwos zmiany skladnikow)
+
+

@@ -255,3 +255,50 @@ input[type="color"]:focus,
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px #83B271;
   outline: 0 none;
 }
+
+
+/* Custom switch style */
+.custom-switch:checked {
+    background-color: #83B271 !important; /* Green background for checked state */
+    outline: none;
+    outline: none;
+    border: none;
+  }
+  
+  .custom-switch:checked + .form-check-label::before {
+    background-color: #83B271 !important; /* Green background for the slider knob in checked state */
+    outline: none;
+    border: none;
+  }
+  
+  .custom-switch:not(:checked) {
+    background-color: #ddd; /* Gray background for unchecked state */
+    outline: none;
+    border: none;
+  }
+  
+  .custom-switch:not(:checked) + .form-check-label::before {
+    background-color: #fff; /* White background for the slider knob in unchecked state */
+    outline: none;
+    border: none;
+  }
+  
+  .custom-switch:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(40, 167, 69, 0.25); /* Green glow for focus */
+    outline: none;
+    border: none;
+  }
+
+.form-check-input.custom-switch:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(40, 167, 69, 0.25); /* Green glow for focus */
+    outline: none;
+    border: none;
+}
+
+.form-check-input.custom-switch:checked:focus {
+    box-shadow: 0 0 0 2px rgba(131, 178, 113, 0.5); /* Green glow for focus when checked */
+    outline: none;
+    border: none;
+}

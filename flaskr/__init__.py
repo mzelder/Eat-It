@@ -123,10 +123,12 @@ def create_app(test_config=None):
 
     @app.route("/delivery")
     def delivery():
-        # query = request.args.get("search", "")
-        # restaurants = db.get_restaurants(query)
-        return render_template("delivery.html") #restaurants=restaurants)
+        return render_template("delivery.html")
    
+    @app.route("/business")
+    def business_index():
+        return render_template("business_index.html")
+
     return app
 
 def check_status():

@@ -302,3 +302,7 @@ input[type="color"]:focus,
     outline: none;
     border: none;
 }
+
+.pointer img {
+    cursor: pointer;
+}

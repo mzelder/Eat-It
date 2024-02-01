@@ -26,9 +26,9 @@
 
 <!-- Searching bar, burger photo -->
 <div class="container-fluid">
-    <div class="container-fluix">
+    <div class="container">
         <div class="row mt-5 text-center">
-            <div class="col ml-5 mt-5">
+            <div class="col-7 ml-5 mt-5">
                 <img src="static/images/logo_black.png">
                 <div class="input-group pb-5">
                     <input type="text" class="form-control" id="autocomplete" placeholder="Address, i.e Aleja 29 Listopada 1">               
@@ -37,20 +37,21 @@
                 <div id="dropdown-menu" class="dropdown-menu" style="display: none;"></div>
             </div>
             <div class="col ml-5">
-                <img src="static/images/big_burger.png">
+                <img src="static/images/big_burger-transformed.png" style="width: 500px;">
             </div>
         </div>
     </div>
 </div>
 
+
 <!-- How to order -->
 <div class="container-fluid text-center" style="background-color: #BBEBA9;">
-    <div class="container">
+    <div class="container p-3">
         <div class="row p-4">
             <div class="col"></div>
             <div class="col">
-                <p>How to order?</p>
-                <h4> It's as easy as this. </h4>
+                <h5>How to order?</h5>
+                <h3> It's as easy as this. </h3>
             </div>
             <div class="col"></div>
         </div>
@@ -81,28 +82,28 @@
 
 <!-- Download the app -->
 <div class="container-fluid">
-    <div class="container p-4">
-        <div class="row text-left">
-            <div class="col p-2">
-                <h3> Download the app <h3>
-                <h4> <span style="color: #83B271">EatIt</span> anywhere you want</h4>
-                <div class="d-flex mt-5 pointer">
-                    <img src="static/images/appstore.png" style="width: 180px; margin-right: 20px;">
-                    <img src="static/images/googleplay.png" style="width: 180px; margin-right: 20px;">
+    <div class="container p-4 overflow-hidden"> 
+        <div class="row text-left p-5">
+            <div class="col-6 p-5">
+                <h3>Download the app</h3>
+                <h4><span style="color: #83B271">EatIt</span> anywhere you want</h4>
+                <div class="d-flex mt-5">
+                    <img src="static/images/appstore.png" class="me-3" style="width: 180px;"> 
+                    <img src="static/images/googleplay.png" class="me-3" style="width: 180px;">
                     <img src="static/images/appgallery.png" style="width: 180px;">
                 </div>
             </div>
-            <div class="col text-right">
-                <img src="static/images/phone_photo.png" style="width: 600px;">
+            <div class="col position-relative mt-5">
+                <img src="static/images/app-transformed.png" class="position-absolute" style="width: 700px; top: -65%;">
             </div>
         </div>
     </div>
 </div>
 
 <!-- Reviews -->
-<div class="container-fluid text-center" style="background-color: #ECECEC;">
-    <div class="container p-4">
-        <div class="row p-3">
+<div class="container-fluid text-center pb-5 pt-4" style="background-color: #ECECEC;">
+    <div class="container">
+        <div class="row">
             <div class="col">
                 <h3 class="p-4">
                     Share
@@ -116,15 +117,17 @@
             </div>
         </div>
         <div class="row p-3">
-            <div id="carouselExample" class="carousel slide">
+            
+            <!-- Carousel -->
+            <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         <!-- First div -->
                         <div class="row">
-                            <div class="col d-flex">
+                            <div class="col">
                                 <div class="container p-5 rounded-5" style="background-color: white;">
                                     <h5 class="fw-bold pb-3">“Exceptional Service!”</h5>
-                                    <p class="m-4">"Eat It has been a game-changer for me! The variety of restaurants and quick delivery is incredible. I've ordered multiple times and each experience has been seamless. The food arrives hot and my orders have always been accurate. I'm a fan!"</p>
+                                    <p class="m-4 text-left">"Eat It has been a game-changer for me! The variety of restaurants and quick delivery is incredible. I've ordered multiple times and each experience has been seamless. The food arrives hot and my orders have always been accurate. I'm a fan!"</p>
                                     <div class="row">
                                         <div class="col-8 ml-5">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="23" viewBox="0 0 29 28" fill="none">
@@ -144,13 +147,13 @@
                                             </svg>
                                         </div>
                                         <div class="col text-right">
-                                            <p class="fw-bold">Samantha B.</p>
+                                            <p class="fw-bold">Jerermy B.</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <!-- Second div -->
-                            <div class="col d-flex">
+                            <div class="col">
                                 <div class="container p-5 rounded-5" style="background-color: white;">
                                     <h5 class="fw-bold pb-3">“Simply the Best!”</h5>
                                     <p class="m-4">“I've tried nearly every food delivery service out there, and Eat It is by far the best! The website is a breeze to use, the delivery times are unbeatable, and the food is always hot and delicious. They've never let me down on a busy night!"</p>
@@ -179,7 +182,7 @@
                                 </div>
                             </div>
                             <!-- Third div -->
-                            <div class="col d-flex">
+                            <div class="col">
                                 <div class="container p-5 rounded-5" style="background-color: white;">
                                     <h5 class="fw-bold pb-3">"Top-Notch Customer Care"</h5>
                                     <p class="m-4">"I had a small issue with my order and the customer service team at Eat It resolved it so quickly! They truly care about their customers. Not to mention, their delivery is always on point. I can't recommend them enough!"</p>
@@ -210,10 +213,95 @@
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <img src="..." class="d-block w-100" alt="...">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="..." class="d-block w-100" alt="...">
+                        <!-- First div -->
+                        <div class="row">
+                            <div class="col">
+                                <div class="container p-5 rounded-5" style="background-color: white;">
+                                    <h5 class="fw-bold pb-3">"Eat It Never Disappoints!"</h5>
+                                    <p class="m-4 text-left">"I've been using Eat It for months now and they never disappoint. The delivery personnel are always friendly and professional, and the selection of restaurants is the best I've seen. Highly recommend for anyone with a busy lifestyle!"</p>
+                                    <div class="row">
+                                        <div class="col-8 ml-5">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="23" viewBox="0 0 29 28" fill="none">
+                                                <path d="M14.3664 0L17.7342 10.3647H28.6323L19.8155 16.7705L23.1832 27.1353L14.3664 20.7295L5.54966 27.1353L8.91737 16.7705L0.100594 10.3647H10.9987L14.3664 0Z" fill="#F2F200"/>
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="23" viewBox="0 0 29 28" fill="none">
+                                                <path d="M14.3664 0L17.7342 10.3647H28.6323L19.8155 16.7705L23.1832 27.1353L14.3664 20.7295L5.54966 27.1353L8.91737 16.7705L0.100594 10.3647H10.9987L14.3664 0Z" fill="#F2F200"/>
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="23" viewBox="0 0 29 28" fill="none">
+                                                <path d="M14.3664 0L17.7342 10.3647H28.6323L19.8155 16.7705L23.1832 27.1353L14.3664 20.7295L5.54966 27.1353L8.91737 16.7705L0.100594 10.3647H10.9987L14.3664 0Z" fill="#F2F200"/>
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="23" viewBox="0 0 29 28" fill="none">
+                                                <path d="M14.3664 0L17.7342 10.3647H28.6323L19.8155 16.7705L23.1832 27.1353L14.3664 20.7295L5.54966 27.1353L8.91737 16.7705L0.100594 10.3647H10.9987L14.3664 0Z" fill="#F2F200"/>
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="23" viewBox="0 0 29 28" fill="none">
+                                                <path d="M14.3664 0L17.7342 10.3647H28.6323L19.8155 16.7705L23.1832 27.1353L14.3664 20.7295L5.54966 27.1353L8.91737 16.7705L0.100594 10.3647H10.9987L14.3664 0Z" fill="#F2F200"/>
+                                            </svg>
+                                        </div>
+                                        <div class="col text-right">
+                                            <p class="fw-bold">Mathew Z.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Second div -->
+                            <div class="col">
+                                <div class="container p-5 rounded-5" style="background-color: white;">
+                                    <h5 class="fw-bold pb-3">"A Culinary Journey at Home”</h5>
+                                    <p class="m-4">"With Eat It, every dinner is a culinary adventure! The array of international cuisines available is astounding, and every dish I've tried has been a hit. It's like having the world's best chefs in my kitchen!" </p>
+                                    <div class="row">
+                                        <div class="col-8 ml-5">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="23" viewBox="0 0 29 28" fill="none">
+                                                <path d="M14.3664 0L17.7342 10.3647H28.6323L19.8155 16.7705L23.1832 27.1353L14.3664 20.7295L5.54966 27.1353L8.91737 16.7705L0.100594 10.3647H10.9987L14.3664 0Z" fill="#F2F200"/>
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="23" viewBox="0 0 29 28" fill="none">
+                                                <path d="M14.3664 0L17.7342 10.3647H28.6323L19.8155 16.7705L23.1832 27.1353L14.3664 20.7295L5.54966 27.1353L8.91737 16.7705L0.100594 10.3647H10.9987L14.3664 0Z" fill="#F2F200"/>
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="23" viewBox="0 0 29 28" fill="none">
+                                                <path d="M14.3664 0L17.7342 10.3647H28.6323L19.8155 16.7705L23.1832 27.1353L14.3664 20.7295L5.54966 27.1353L8.91737 16.7705L0.100594 10.3647H10.9987L14.3664 0Z" fill="#F2F200"/>
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="23" viewBox="0 0 29 28" fill="none">
+                                                <path d="M14.3664 0L17.7342 10.3647H28.6323L19.8155 16.7705L23.1832 27.1353L14.3664 20.7295L5.54966 27.1353L8.91737 16.7705L0.100594 10.3647H10.9987L14.3664 0Z" fill="#F2F200"/>
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="23" viewBox="0 0 29 28" fill="none">
+                                                <path d="M14.3664 0L17.7342 10.3647H28.6323L19.8155 16.7705L23.1832 27.1353L14.3664 20.7295L5.54966 27.1353L8.91737 16.7705L0.100594 10.3647H10.9987L14.3664 0Z" fill="#F2F200"/>
+                                            </svg>
+                                        </div>
+                                        <div class="col text-right">
+                                            <p class="fw-bold">Fiona G.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Third div -->
+                            <div class="col">
+                                <div class="container p-5 rounded-5" style="background-color: white;">
+                                    <h5 class="fw-bold pb-3">"Always There When You Need Them!"</h5>
+                                    <p class="m-4">"Eat It has saved me on numerous late work nights. Their late-night delivery options are a lifesaver, and the food quality is consistently excellent. It's wonderful to have a service you can always count on!" </p>
+                                    <div class="row">
+                                        <div class="col-8 ml-5">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="23" viewBox="0 0 29 28" fill="none">
+                                                <path d="M14.3664 0L17.7342 10.3647H28.6323L19.8155 16.7705L23.1832 27.1353L14.3664 20.7295L5.54966 27.1353L8.91737 16.7705L0.100594 10.3647H10.9987L14.3664 0Z" fill="#F2F200"/>
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="23" viewBox="0 0 29 28" fill="none">
+                                                <path d="M14.3664 0L17.7342 10.3647H28.6323L19.8155 16.7705L23.1832 27.1353L14.3664 20.7295L5.54966 27.1353L8.91737 16.7705L0.100594 10.3647H10.9987L14.3664 0Z" fill="#F2F200"/>
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="23" viewBox="0 0 29 28" fill="none">
+                                                <path d="M14.3664 0L17.7342 10.3647H28.6323L19.8155 16.7705L23.1832 27.1353L14.3664 20.7295L5.54966 27.1353L8.91737 16.7705L0.100594 10.3647H10.9987L14.3664 0Z" fill="#F2F200"/>
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="23" viewBox="0 0 29 28" fill="none">
+                                                <path d="M14.3664 0L17.7342 10.3647H28.6323L19.8155 16.7705L23.1832 27.1353L14.3664 20.7295L5.54966 27.1353L8.91737 16.7705L0.100594 10.3647H10.9987L14.3664 0Z" fill="#F2F200"/>
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="23" viewBox="0 0 29 28" fill="none">
+                                                <path d="M14.3664 0L17.7342 10.3647H28.6323L19.8155 16.7705L23.1832 27.1353L14.3664 20.7295L5.54966 27.1353L8.91737 16.7705L0.100594 10.3647H10.9987L14.3664 0Z" fill="#F2F200"/>
+                                            </svg>
+                                        </div>
+                                        <div class="col text-right">
+                                            <p class="fw-bold">Arjun P.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">

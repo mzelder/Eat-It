@@ -95,8 +95,6 @@
 .pac-item-selected .pac-icon {
     color: green; /* Zmiana koloru ikony na zielony dla wybranego elementu */
 }
-    margin-bottom: 10px;
- }
 
  .bg-green {
    border-color: #83B271;

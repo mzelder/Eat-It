@@ -304,3 +304,8 @@ input[type="color"]:focus,
 .pointer img {
     cursor: pointer;
 }
+
+.bg-image {
+    background-image: url(images/restaurant_delivery2.png);
+    background-size: cover;
+}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="container-fluid p-5 mt-5">
+    <div class="container border p-4 mt-5" style="width: 30%;">
+        <form>
+            <div>
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" placeholder="">    
+            </div>
+            <div class="mt-3">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-control" placeholder="">    
+            </div>
+            <div class="row">
+                <div class="col">
+                    <button type="button" class="btn btn-sm underline-no-exist">Forgot password?</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

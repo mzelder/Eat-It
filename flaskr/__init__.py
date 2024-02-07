@@ -128,6 +128,10 @@ def create_app(test_config=None):
     @app.route("/business")
     def business_index():
         return render_template("business_index.html")
+    
+    @app.route("/business_login")
+    def business_login():
+        return render_template("business_login.html")
 
     return app
 

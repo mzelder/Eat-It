@@ -33,6 +33,11 @@
    border-color: rgb(230,230,230);
  }
 
+ .menu-button:hover {
+    background-color: #99c984;
+    border-color: #99c984;
+ }
+
  .underline-exist {
    text-decoration: underline;
  }
@@ -308,4 +313,8 @@ input[type="color"]:focus,
 .bg-image {
     background-image: url(images/restaurant_delivery2.png);
     background-size: cover;
+}
+
+.cursor-pointer {
+    cursor: pointer;
 }

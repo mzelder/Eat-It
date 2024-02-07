@@ -2,6 +2,18 @@
 
 {% block title %} Home {% endblock %}
 
+{% block menu %}
+    {% if user %}
+        <button class="btn menu-button" style="border-radius:12px;" type="button" data-bs-toggle="modal" data-bs-target="#loged">
+            <img src="static/images/menu.png" width="40px">
+        </button>
+    {% else %}
+        <button class="btn menu-button" style="border-radius:12px;" type="button" data-bs-toggle="modal" data-bs-target="#myAccount" style="background-color: transparent;">
+            <img src="static/images/menu.png" width="40px">
+        </button>
+    {% endif %}
+{% endblock %}
+
 {% block body %}
 
 <!-- Alerts -->
@@ -88,9 +100,9 @@
                 <h3>Download the app</h3>
                 <h4><span style="color: #83B271">EatIt</span> anywhere you want</h4>
                 <div class="d-flex mt-5">
-                    <img src="static/images/appstore.png" class="me-3" style="width: 180px;"> 
-                    <img src="static/images/googleplay.png" class="me-3" style="width: 180px;">
-                    <img src="static/images/appgallery.png" style="width: 180px;">
+                    <img src="static/images/appstore.png" class="me-3 cursor-pointer" style="width: 180px;"> 
+                    <img src="static/images/googleplay.png" class="me-3 cursor-pointer" style="width: 180px;">
+                    <img src="static/images/appgallery.png" class="cursor-pointer" style="width: 180px;">
                 </div>
             </div>
             <div class="col position-relative mt-5">
@@ -309,4 +321,6 @@
     </div>
 </div>
 
+{% include "signin.html" %}
+{% include "logedin.html" %}
 {% endblock %}

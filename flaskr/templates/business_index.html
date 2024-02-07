@@ -2,8 +2,18 @@
 
 {% block title %} Business {% endblock %}
 
-{% block body %}
+{% block menu %}
+    <form action="/business_login" method="GET">
+        <button class="btn w-100 text-left menu-button">
+            <div class="d-flex align-items-center">
+                <img src="static/images/login.png" style="width: 20px;" class="me-2" alt="Office Icon">
+                <p class="mb-0" style="color: white;"> Admin log in </p>
+            </div>
+        </button>
+    </form>
+{% endblock %}
 
+{% block body %}
 
 <!-- Photo and text -->
 <div class="container-fluid bg-image p-5">
@@ -191,5 +201,85 @@
     </div>
 </div>
 
+<!-- What you will get content -->
+<div class="container-fluid p-5 mt-5" style="background-color: #F4F4F4;">
+    <div class="container mt-3" style="max-width: 80%;">
+        <div class="row">
+            <div class="col">
+                <h3 class="pb-4"> What You'll Gain by Partnering with EatIt? </h3>
+        <div class="row mt-3">
+            <div class="col-1 text-end">
+                <img src="static/images/check-icon.png" style="width: 40px;">
+            </div>
+            <div class="col">
+                <h4 class="fw-light"> Branding materials to show you're on EatIt. </h4>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-1 text-end">
+                <img src="static/images/check-icon.png" style="width: 40px;">
+            </div>
+            <div class="col">
+                <h4 class="fw-light"> An EatIt device for managing orders. </h4>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-1 text-end">
+                <img src="static/images/check-icon.png" style="width: 40px;">
+            </div>
+            <div class="col">
+                <h4 class="fw-light"> Quick-start guide for leveraging our platform. </h4>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-1 text-end">
+                <img src="static/images/check-icon.png" style="width: 40px;">
+            </div>
+            <div class="col">
+                <h4 class="fw-light"> Access to our experts and support team. </h4>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-1 text-end">
+                <img src="static/images/check-icon.png" style="width: 40px;">
+            </div>
+            <div class="col">
+                <h4 class="fw-light"> Personal dashboard for insights and customer feedback. </h4>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-1 text-end">
+                <img src="static/images/check-icon.png" style="width: 40px;">
+            </div>
+            <div class="col">
+                <h4 class="fw-light"> Analytics and business tips. </h4>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-1 text-end">
+                <img src="static/images/check-icon.png" style="width: 40px;">
+            </div>
+            <div class="col">
+                <h4 class="fw-light"> Exclusive deals on business essentials. </h4>
+            </div>
+        </div>
+            </div>
+            <div class="col-4 mt-4">
+                <img src="static/images/terminal.png" style="width: 400px">
+            </div>    
+        </div>
+    </div>
+</div>
+
+<!-- Join us today section -->
+<div class="container-fluid p-5 mt-3">
+    <div class="container text-center" style="max-width: 50%;">
+        <h4 class="fw-bold"> Let's reach more customers, cut your costs and </h4>
+        <h4 class="fw-bold"> boost your business, together. </h4>
+        <button class="mt-4 btn bg-green rounded-5" style="width: 40%;" onclick="scrollToTop()">
+            Join us today
+        </button>
+    </div>
+</div>
 
 {% endblock %}

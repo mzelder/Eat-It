@@ -3,6 +3,7 @@
 {% block body %}
 <div class="container-fluid p-5 mt-5">
     <div class="container border p-4 mt-5" style="width: 30%;">
+        <h5 class="mb-4"> Log in </h5>
         <form>
             <div>
                 <label class="form-label">Email</label>
@@ -12,12 +13,12 @@
                 <label class="form-label">Password</label>
                 <input type="password" class="form-control" placeholder="">    
             </div>
-            <div class="row">
-                <div class="col">
-                    <button type="button" class="btn btn-sm underline-no-exist">Forgot password?</button>
-                </div>
+            <div class="d-flex justify-content-end mt-3">
+                <button type="button" class="btn btn-sm underline-no-exist">Forgot password?</button>
             </div>
+            <button type="submit" class="btn w-100 bg-green mt-3" style="border-radius: 12px;">Sign in</button>
         </form>
     </div>
 </div>
+<img class="p-5 ms-5" src="static/images/9874292 1.png" style="width: 400px;">
 {% endblock %}

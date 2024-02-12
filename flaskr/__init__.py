@@ -84,6 +84,10 @@ def business_login():
 def business_admin():
     return render_template("business_admin.html")
 
+@app.route("/business/admin/menu")
+def business_admin_menu():
+    return render_template("business_admin_menu.html")
+
 def check_status():
     if "user_email" in session:
         return session["user_email"]

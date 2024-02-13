@@ -18,6 +18,16 @@ class User(db.Model):
     email = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=True, nullable=False)
 
+class Owner(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(80), unique=True, nullable=False)
+    password = db.Column(db.String(80), unique=True, nullable=False) 
+
+class Food(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), unique=False, nullable=False)
+    price = db.Column(db.Integer, unique=False, nullable=False)
+
 with app.app_context():
     db.create_all()
 
@@ -28,9 +38,7 @@ def index():
     
     if request.method == "POST":
         form_type = request.form.get("form_type")
-        
         if form_type == "create_account":
-            # The account creation logic using SQLAlchemy
             email = request.form.get("email")
             password = request.form.get("password")
             confirm_password = request.form.get("confirm_password")
@@ -61,7 +69,7 @@ def index():
             else:
                 error_message = True
             
-    return render_template("index.html", message=message, error_message=error_message, user=check_status())
+    return render_template("/user/index.html", message=message, error_message=error_message, user=check_status())
 
 @app.route("/signout", methods=["POST"])
 def signout():
@@ -70,23 +78,23 @@ def signout():
 
 @app.route("/delivery")
 def delivery():
-    return render_template("delivery.html")
+    return render_template("/user/delivery.html")
 
 @app.route("/business", methods=["GET"])
 def business_index():
-    return render_template("business_index.html")
+    return render_template("/business/index.html")
 
 @app.route("/business/login")
 def business_login():
-    return render_template("business_login.html")
+    return render_template("/business/login.html")
 
-@app.route("/business/admin")
+@app.route("/admin/dashboard")
 def business_admin():
-    return render_template("business_admin.html")
+    return render_template("admin/dashboard.html")
 
-@app.route("/business/admin/menu")
+@app.route("/admin/menu")
 def business_admin_menu():
-    return render_template("business_admin_menu.html")
+    return render_template("admin/menu.html")
 
 def check_status():
     if "user_email" in session:

@@ -9,10 +9,41 @@
     <title>EatIt | Admin panel</title>
 </head>
 <body>
-    
     <nav class="navbar" style="background-color: #FFFFFF;">
         <div class="container-fluid p-2 border-bottom border-1">
             <h4 class=""> NazwaFirmy </h4>
+            <form action="/admin/dashboard" method="GET">
+                <button class="btn w-100 mb-2 pt-2 text-left bg-grey-hover" type="submit">
+                    <div class="d-flex align-items-center">
+                        <img src="/static/images/dashboard.png" style="width: 20px;" class="me-2" alt="Office Icon">
+                        <p class="mb-0">Dashboard</p>
+                    </div>
+                </button>
+            </form>
+            <form action="/admin/menu" method="GET">
+                <button class="btn w-100 mb-2 pt-2 text-left bg-grey-hover" type="submit">
+                    <div class="d-flex align-items-center">
+                        <img src="/static/images/menu (1).png" style="width: 20px;" class="me-2" alt="Office Icon">
+                        <p class="mb-0">Menu management</p>
+                    </div>
+                </button>
+            </form>
+            <form action="/admin/orders" method="GET">
+                <button class="btn w-100 mb-2 pt-2 text-left bg-grey-hover" type="submit">
+                    <div class="d-flex align-items-center">
+                        <img src="/static/images/order.png" style="width: 20px;" class="me-2" alt="Office Icon">
+                        <p class="mb-0">Orders</p>
+                    </div>
+                </button>
+            </form>
+            <form action="admin/settin" method="GET">
+                <button class="btn w-100 mb-2 pt-2 text-left bg-grey-hover" type="submit">
+                    <div class="d-flex align-items-center">
+                        <img src="/static/images/settings.png" style="width: 20px;" class="me-2" alt="Office Icon">
+                        <p class="mb-0">Settings</p>
+                    </div>
+                </button>
+            </form>
             <form action="/signout" method="POST">
                 <button class="btn w-100 mb-2 pt-2 text-left bg-grey-hover" type="submit">
                     <div class="d-flex align-items-center">
@@ -23,53 +54,8 @@
             </form>
         </div>
     </nav>
-    
-    <div class="row">
-        <div class="col-2">
-            <div class="container-fluid d-flex align-items-center p-2">
-                <img src="/static/images/user.png" style="width: 30px;">
-                <p class="mb-0 ms-2">Nazwa uzytkownika</p>
-            </div>
-            <div class="container-fluid" style="background-color: #e4e4e4;">
-                <h5>MAIN NAVIGATION</h5>
-            </div>
-            
-            <form action="/business/admin" method="GET">
-                <button class="btn w-100 mb-2 pt-2 text-left bg-grey-hover" type="submit">
-                    <div class="d-flex align-items-center">
-                        <img src="/static/images/dashboard.png" style="width: 20px;" class="me-2" alt="Office Icon">
-                        <p class="mb-0">Dashboard</p>
-                    </div>
-                </button>
-            </form>
-            <form action="/business/admin/menu" method="GET">
-                <button class="btn w-100 mb-2 pt-2 text-left bg-grey-hover" type="submit">
-                    <div class="d-flex align-items-center">
-                        <img src="/static/images/menu (1).png" style="width: 20px;" class="me-2" alt="Office Icon">
-                        <p class="mb-0">Menu management</p>
-                    </div>
-                </button>
-            </form>
-            <form action="/business/admin/orders" method="GET">
-                <button class="btn w-100 mb-2 pt-2 text-left bg-grey-hover" type="submit">
-                    <div class="d-flex align-items-center">
-                        <img src="/static/images/order.png" style="width: 20px;" class="me-2" alt="Office Icon">
-                        <p class="mb-0">Orders</p>
-                    </div>
-                </button>
-            </form>
-            <form action="/business/admin/settin" method="GET">
-                <button class="btn w-100 mb-2 pt-2 text-left bg-grey-hover" type="submit">
-                    <div class="d-flex align-items-center">
-                        <img src="/static/images/settings.png" style="width: 20px;" class="me-2" alt="Office Icon">
-                        <p class="mb-0">Settings</p>
-                    </div>
-                </button>
-            </form>
-        </div>
-        <div class="col-9">
-
-        </div>
+    <div class="container-fluid">
+        {% block body %} {% endblock %}
     </div>
 </body>
 </html>

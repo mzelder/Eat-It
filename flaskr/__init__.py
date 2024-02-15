@@ -9,18 +9,23 @@
 # TODO -> regex for creating account on backend
 # abort when some of the data are not given and html is changed 
 
+# ADMIN
+# protect admin roots
+
 from flask import Flask, render_template, request, abort, session, redirect, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
-from dotenv import load_dotenv
+from flask_mail import Mail, Message
+from functools import wraps
 import os
 import re
+import string
+import random
 
-load_dotenv()
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db.sqlite3"
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URI")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 app.config['MAIL_SERVER']='sandbox.smtp.mailtrap.io'
@@ -30,22 +35,38 @@ app.config['MAIL_PASSWORD'] = os.environ.get("MAIL_PASSWORD")
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
 
+mail = Mail(app)
 db = SQLAlchemy(app)
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(80), unique=True, nullable=False)
-    password = db.Column(db.String(80), unique=True, nullable=False)
+    password = db.Column(db.String(80), unique=False, nullable=False)
 
 class Owner(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(80), unique=True, nullable=False)
-    password = db.Column(db.String(80), unique=True, nullable=False) 
+    email = db.Column(db.String(80), unique=False, nullable=False)
+    password = db.Column(db.String(80), unique=False, nullable=False) 
+    restaurant = db.relationship('Restaurant', backref='owner', uselist=False)
+
+class Restaurant(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), unique=False, nullable=False) 
+    owner_id = db.Column(db.Integer, db.ForeignKey('owner.id'), unique=True)
 
 class Food(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=False, nullable=False)
     price = db.Column(db.Integer, unique=False, nullable=False)
+
+class Address(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    city = db.Column(db.String(80), unique=False, nullable=False)
+    street = db.Column(db.String(80), unique=False, nullable=False)
+    street_number = db.Column(db.String(80), unique=False, nullable=False)
+    postal_code = db.Column(db.String(80), unique=False, nullable=False)
+    phone_number = db.Column(db.String(80), unique=False, nullable=False)
+    # adding country? 
 
 with app.app_context():
     db.create_all()
@@ -62,12 +83,18 @@ def create_account(email, password):
     session["user_email"] = email.split("@")[0]
     return True
 
-def sign_in(email, password):
+def sign_in(email, password, who):
     """Sign in existing user."""
-    user = User.query.filter_by(email=email).first()
-    if user and check_password_hash(user.password, password):
-        session["user_email"] = email.split("@")[0]
-        return True
+    if who == "user":
+        user = User.query.filter_by(email=email).first()
+        if user and check_password_hash(user.password, password):
+            session["user_email"] = email.split("@")[0]
+            return True
+    elif who == "owner":
+        owner = Owner.query.filter_by(email=email).first()
+        if owner and check_password_hash(owner.password, password):
+            session["owner_email"] = email
+            return True 
     return False
 
 def check_status():
@@ -87,9 +114,24 @@ def process_form_request():
     elif form_type == "signin":
         email = request.form.get("email_login")
         password = request.form.get("password_login")
-        success = sign_in(email, password)
+        success = sign_in(email, password, "user")
         return None, not success  
     return None, None 
+
+def generate_hashed_password(length):
+    """Generating hashed password."""
+    characters = string.ascii_letters + string.digits + string.punctuation
+    password = ''.join(random.choice(characters) for i in range(length))
+    pw_hashed = generate_password_hash(password)
+    return pw_hashed
+
+def owner_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if "owner_email" not in session:
+            return redirect(url_for("login", next=request.url))
+        return f(*args, **kwargs)
+    return decorated_function
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -110,18 +152,70 @@ def signout():
 def delivery():
     return render_template("/user/delivery.html")
 
-@app.route("/business", methods=["GET"])
+@app.route("/business", methods=["GET", "POST"])
 def business_index():
+    if request.method == "POST":
+        first_name = request.form.get("name")
+        surname = request.form.get("surname")
+        phone_number = request.form.get("phone_number")
+        street_number = request.form.get("street_number")
+        street = request.form.get("street_name")
+        city = request.form.get("city")
+        postal_code = request.form.get("postal_code")
+        email = request.form.get("email")
+        restaurant_name = request.form.get("restaurant_name")
+        
+        # Ensure all informations are given
+        if not all([first_name, surname, city, street, street_number, postal_code, phone_number]):
+            return abort(405)
+
+        # Send password to the owner of the restaurant
+        password = generate_hashed_password(length=12)
+        msg = Message(subject="EatIt | Your password", sender=os.environ.get("EMAIL_EATIT"), recipients=[f"{email}"])
+        msg.body = f"<h1Your password (including scrypt:) {password} \n Log in to admin panel via: http://127.0.0.1:5000/business/login"
+        mail.send(msg)
+        
+        # Add owner of the restaurant to the database
+        owner = Owner(email=email, password=password)
+        db.session.add(owner)
+
+        # Add restaurant to database
+        restaurant = Restaurant(name=restaurant_name)
+        db.session.add(restaurant)
+
+        # Add address of the restaurant to database
+        address = Address(
+            city = city,
+            street = street,
+            street_number = street_number, 
+            postal_code = postal_code, 
+            phone_number = phone_number
+        )
+        db.session.add(address)
+
+        db.session.commit()
+        return f"You will find your password on this email: {email}"
+        
     return render_template("/business/index.html")
 
-@app.route("/business/login")
-def business_login():
+@app.route("/business/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        email = request.form.get("email")
+        password = request.form.get("password")
+        #return f"{email}, {password}"
+        if sign_in(email, password, "owner"):
+            return f"{email}, {password}"
+            return redirect(url_for("admin"))
+        else:
+            return "Wrong password or email"
     return render_template("/business/login.html")
 
 @app.route("/admin/dashboard")
-def business_admin():
+@owner_required
+def admin():
     return render_template("admin/dashboard.html")
 
 @app.route("/admin/menu")
-def business_admin_menu():
+def admin_menu():
     return render_template("admin/menu.html")

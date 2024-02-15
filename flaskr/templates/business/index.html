@@ -71,50 +71,50 @@
         <div class="col p-5" style="background-color: #F4F4F4;">
             <div class="container" style="max-width: 70%;">
                 <h3 class="pb-4 mt-4 fw-bold">Join us today</h3>
-                <form class="needs-validation" novalidate> 
+                <form action="/business" method="POST" class="needs-validation" novalidate> 
                     <div class="mt-3">
                         <label class="form-label fw-bold">First name</label>
-                        <input type="text" class="form-control" placeholder="Enter your first name" required> 
+                        <input name="name" type="text" class="form-control" placeholder="Enter your first name" > 
                         <div class="invalid-feedback">Please complete mandatory field.</div>   
                     </div>
                     <div class="mt-3">
                         <label class="form-label fw-bold">Last name</label>
-                        <input type="text" class="form-control" placeholder="Enter your last name" required>    
+                        <input name="surname" type="text" class="form-control" placeholder="Enter your last name" >    
                         <div class="invalid-feedback">Please complete mandatory field.</div>   
                     </div>
                     <div class="mt-3">
                         <label class="form-label fw-bold">Business Phone/Mobile</label>
-                        <input type="tel" class="form-control" placeholder="e.g. +48335123784" required pattern="^\+\d{2} \d{3} \d{3} \d{3}$">    
+                        <input name="phone_number" type="tel" class="form-control" placeholder="e.g. +48335123784"  pattern="^\+\d{2} \d{3} \d{3} \d{3}$">    
                         <div class="invalid-feedback">Please enter your phone number in the format: +48 697 860 109</div>
                     </div>
                     <div class="mt-3">
                         <label class="form-label fw-bold">Email address</label>
-                        <input type="email" class="form-control" placeholder="e.g. email" required>   
+                        <input name="email" type="email" class="form-control" placeholder="e.g. email" >   
                         <div class="invalid-feedback">Please enter your email address</div> 
                     </div>
                     <div class="mt-3">
                         <label class="form-label fw-bold">Name of your restaurant/store</label>
-                        <input type="text" class="form-control" placeholder="e.g. Best Pizzeria" required>  
+                        <input name="restaurant_name" type="text" class="form-control" placeholder="e.g. Best Pizzeria" >  
                         <div class="invalid-feedback">Please complete mandatory field.</div>  
                     </div>
                     <div class="mt-3">
                         <label class="form-label fw-bold">House number</label>
-                        <input type="text" class="form-control" placeholder="e.g. 59" required>    
+                        <input name="street_number" type="text" class="form-control" placeholder="e.g. 59">    
                         <div class="invalid-feedback">Please complete mandatory field.</div>
                     </div>
                     <div class="mt-3">
                         <label class="form-label fw-bold">Business Street name</label>
-                        <input type="text" class="form-control" placeholder="e.g. Żurawia" required>
+                        <input name="street_name" type="text" class="form-control" placeholder="e.g. Żurawia" >
                         <div class="invalid-feedback">Please complete mandatory field.</div>    
                     </div>
                     <div class="mt-3">
                         <label class="form-label fw-bold">City</label>
-                        <input type="text" class="form-control" placeholder="e.g. Warszawa" required> 
+                        <input name="city" type="text" class="form-control" placeholder="e.g. Warszawa" > 
                         <div class="invalid-feedback">Please complete mandatory field.</div>   
                     </div>
                     <div class="mt-3">
                         <label class="form-label fw-bold">Postal Code</label>
-                        <input type="text" class="form-control" placeholder="e.g. 00-525" required pattern="^\d{2}-\d{3}$">  
+                        <input name="postal_code" type="text" class="form-control" placeholder="e.g. 00-525"  pattern="^\d{2}-\d{3}$">  
                         <div class="invalid-feedback">Please enter a valid postal code in the format 12-123.</div>  
                     </div>
                     <div class="mt-5">

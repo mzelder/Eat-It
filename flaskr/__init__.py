@@ -41,12 +41,12 @@ db = SQLAlchemy(app)
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(80), unique=True, nullable=False)
-    password = db.Column(db.String(80), unique=False, nullable=False)
+    password = db.Column(db.String(200), unique=False, nullable=False)
 
 class Owner(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(80), unique=False, nullable=False)
-    password = db.Column(db.String(80), unique=False, nullable=False) 
+    email = db.Column(db.String(80), unique=True, nullable=False)
+    password = db.Column(db.String(200), unique=False, nullable=False) 
     restaurant = db.relationship('Restaurant', backref='owner', uselist=False)
 
 class Restaurant(db.Model):
@@ -118,12 +118,11 @@ def process_form_request():
         return None, not success  
     return None, None 
 
-def generate_hashed_password(length):
+def generate_password(length):
     """Generating hashed password."""
     characters = string.ascii_letters + string.digits + string.punctuation
     password = ''.join(random.choice(characters) for i in range(length))
-    pw_hashed = generate_password_hash(password)
-    return pw_hashed
+    return password
 
 def owner_required(f):
     @wraps(f)
@@ -170,13 +169,13 @@ def business_index():
             return abort(405)
 
         # Send password to the owner of the restaurant
-        password = generate_hashed_password(length=12)
+        password = generate_password(length=12)
         msg = Message(subject="EatIt | Your password", sender=os.environ.get("EMAIL_EATIT"), recipients=[f"{email}"])
-        msg.body = f"<h1Your password (including scrypt:) {password} \n Log in to admin panel via: http://127.0.0.1:5000/business/login"
+        msg.body = f"Your password: {password} \n Log in to admin panel via: http://127.0.0.1:5000/business/login"
         mail.send(msg)
         
         # Add owner of the restaurant to the database
-        owner = Owner(email=email, password=password)
+        owner = Owner(email=email, password=generate_password_hash(password))
         db.session.add(owner)
 
         # Add restaurant to database
@@ -203,12 +202,8 @@ def login():
     if request.method == "POST":
         email = request.form.get("email")
         password = request.form.get("password")
-        #return f"{email}, {password}"
         if sign_in(email, password, "owner"):
-            return f"{email}, {password}"
             return redirect(url_for("admin"))
-        else:
-            return "Wrong password or email"
     return render_template("/business/login.html")
 
 @app.route("/admin/dashboard")
@@ -217,5 +212,16 @@ def admin():
     return render_template("admin/dashboard.html")
 
 @app.route("/admin/menu")
+@owner_required
 def admin_menu():
     return render_template("admin/menu.html")
+
+@app.route("/admin/orders")
+@owner_required
+def admin_orders():
+    return render_template("admin/orders.html")
+
+@app.route("/admin/settings")
+@owner_required
+def admin_settings():
+    return render_template("admin/settings.html")

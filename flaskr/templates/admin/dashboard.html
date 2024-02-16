@@ -1,34 +1,89 @@
 {% extends "/admin/base.html" %}
 
 {% block body %} 
-    <div class="container mt-5">
+    <h1 class="m-5">Dashboard</h1>
+    <div class="container-fluid mt-5">
+        </div>
         <div class="row text-center">
-            <div class="col border p-2">
+            <div class="col border p-2 ms-5 me-5" style="background-color: white;">
                 <h2>$86,802.60</h2>
                 <p>Sales</p>
             </div>
-            <div class="col border p-2">
+            <div class="col border p-2 ms-5 me-5" style="background-color: white;">
                 <h2>383</h2>
                 <p>Delivered</p>
             </div>
-            <div class="col border p-2">
+            <div class="col border p-2 ms-5 me-5" style="background-color: white;">
                 <h2>1067</h2>
                 <p>Orders</p>
             </div>
-            <div class="col border p-2">
+            <div class="col border p-2 ms-5 me-5" style="background-color: white;">
                 <h2>502</h2>
                 <p>Customers</p>  
             </div>
         </div>
-        <!-- <div class="row">
-            <div class="col">
-                <h3 class="fw-bold pt-5">All Orders</h3>
-                <h3>1067</h3>
-                <p>New Orders</p>
+        <div class="row pt-5">
+            <div class="col border p-2 ms-5 me-5" style="background-color: white;">
+                <h2>All Orders</h2>
+                <hr>
+                <div class="p-3">
+                    <h3>1067</h3>
+                    <h5>New Orders</h5>
+                </div>
+                <div class="p-3">
+                    <h3>$86,802.60</h3>
+                    <h5>Orders Price</h5>
+                </div>
             </div>
-            <div class="col">
+            <div class="col border p-2 ms-5 me-5" style="background-color: white;">
+                <h2>All Orders</h2>
+                <hr>
+                <div class="p-3">
+                    <h3>1067</h3>
+                    <h5>New Orders</h5>
+                </div>
+                <div class="p-3">
+                    <h3>$86,802.60</h3>
+                    <h5>Orders Price</h5>
+                </div>
+            </div>
+        </div>
+        <!-- Current Orders -->
+        <div class="row pt-5">
+            <div class="col border p-2 ms-5 me-5" style="background-color: white;">
+                <div class="row">
+                    <div class="col">
+                        <h2>Current Orders</h2>
+                        <hr>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <h5>Order #789123981273</h5>
+                        <h5>Order #123312134314</h5>
+                        <h5>Order #719823790123</h5>
+                    </div>
+                    <div class="col">
+                        <h5>Ashi Jha</h5>
+                        <h5>Naina Khan</h5>
+                        <h5>Nikita Kapoor</h5>
+                    </div>
+                    <div class="col">
+                        <h5>Paid</h5>
+                        <h5>Paid</h5>
+                        <h5>Pending</h5>
+                    </div>
+                    <div class="col">
+                        <button class="btn btn-primary btn-sm">Mark as Picked-Up</button>
+                        <button class="btn btn-primary btn-sm">Mark as Picked-Up</button>
+                        <button class="btn btn-primary btn-sm">Mark as Picked-Up</button>
+                    </div>
+                </div>
+                
+                
+                
 
             </div>
-        </div> -->
+        </div>
     </div>
 {% endblock %}

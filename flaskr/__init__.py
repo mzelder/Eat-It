@@ -177,10 +177,12 @@ def business_index():
         # Add owner of the restaurant to the database
         owner = Owner(email=email, password=generate_password_hash(password))
         db.session.add(owner)
+        db.session.commit()
 
         # Add restaurant to database
-        restaurant = Restaurant(name=restaurant_name)
+        restaurant = Restaurant(name=restaurant_name, owner_id=owner.id)
         db.session.add(restaurant)
+        db.session.commit()
 
         # Add address of the restaurant to database
         address = Address(
@@ -191,7 +193,6 @@ def business_index():
             phone_number = phone_number
         )
         db.session.add(address)
-
         db.session.commit()
         return f"You will find your password on this email: {email}"
         
@@ -203,6 +204,13 @@ def login():
         email = request.form.get("email")
         password = request.form.get("password")
         if sign_in(email, password, "owner"):
+            # adding owner to session
+            owner = Owner.query.filter_by(email=email).first()
+            session["owner_id"] = owner.id
+            
+            # adding restaurant to session
+            restaurant = Restaurant.query.filter_by(owner_id = owner.id).first()
+            session["restaurant_name"] = restaurant.name
             return redirect(url_for("admin"))
     return render_template("/business/login.html")
 

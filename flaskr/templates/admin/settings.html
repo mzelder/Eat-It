@@ -1,1 +1,23 @@
 {% extends "/admin/base.html" %}
+
+{% block body %}
+<div class="container">
+  <form action="/business" method="POST" class="needs-validation" novalidate>
+    <div class="row">
+      <div class="col-12"> <!-- This ensures the column takes up the full width -->
+        <div class="input-group">
+          <div class="mt-3">
+            <label class="form-label fw-bold">New restaurant name</label>
+            <input name="new_restaurant_name" type="text" class="form-control" placeholder="{{ session['restaurant_name'] }}" autocomplete="off">
+            <div class="invalid-feedback">Please complete mandatory field.</div>
+          </div>
+          <div class="mt-5">
+            <button type="submit" class="btn bg-green">Change</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

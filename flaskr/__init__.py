@@ -229,7 +229,40 @@ def admin_menu():
 def admin_orders():
     return render_template("admin/orders.html")
 
-@app.route("/admin/settings")
+@app.route("/admin/settings", methods=["GET", "POST"])
 @owner_required
 def admin_settings():
+    if request.method == "POST":
+        restaurant = Restaurant.query.filter_by(owner_id=session["owner_id"]).first()
+        restaurant.name = request.form.get("restaurant_name")
+        session["restaurant_name"] = request.form.get("restaurant_name")
+        return redirect(url_for("admin_settings"))
     return render_template("admin/settings.html")
+
+@app.route("/admin/change-restaurant-name", methods=["POST"])
+@owner_required
+def change_restaurant_name():
+    # Ensure restaurant are not blank
+    restaurant_name = request.form.get("restaurant_name")
+    if restaurant_name == "":
+        return abort(405)
+    
+    # Changeing restaurant name in database and session
+    restaurant = Restaurant.query.filter_by(owner_id=session["owner_id"]).first()
+    restaurant.name = restaurant_name
+    session["restaurant_name"] = request.form.get("restaurant_name")
+    db.session.commit()
+    return redirect(url_for("admin_settings"))
+
+@app.route("/admin/change-password", methods=["POST"])
+@owner_required
+def change_password():
+    current_password = request.form.get("current_password")
+    new_password = request.form.get("new_password")
+    confirm_password = request.form.get("confirm_password")
+
+    if sign_in(session["owner_email"], current_password, "owner") and new_password == confirm_password:
+        owner = Owner.query.filter_by(email=session["owner_email"]).first()
+        owner.password = generate_password_hash(new_password)
+        db.session.commit()
+        return redirect(url_for("admin_settings")) 

@@ -1,1 +1,43 @@
 {% extends "/admin/base.html" %}
+
+{% block body %}
+    <div class="container">
+		<div class="row">
+			<div class="col">
+				<h1 class="m-5 fw-bold">Settings</h1>
+			</div>
+			<div class="col text-end">
+				<form action="/admin/add-item" method="GET">
+					<button class="btn btn-lg bg-green w-50 m-5 rounded-5" type="submit">
+						Add Item
+					</button>
+				</form>
+			</div>
+		</div>
+		
+		<table class="table mt-5">
+			<thead>
+				<tr>
+					<th scope="col">Name</th>
+					<th scope="col">Price</th>
+					<th scope="col">Categories</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for item in items %}
+				<tr>
+					<th scope="row" style="color: #83B271;">{{  item.name  }}</th>
+					<td>${{  item.price  }}</td>
+					<td>{{  item.category  }}</td>
+				</tr>
+				<tr>
+					<th scope="row" style="color: #83B271;">Pizza</th>
+					<td>$10.00</td>
+					<td>Dinner</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</div>
+            
+    </div>
+{% endblock %}

@@ -53,11 +53,14 @@ class Restaurant(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=False, nullable=False) 
     owner_id = db.Column(db.Integer, db.ForeignKey('owner.id'), unique=True)
+    foods = db.relationship('Items', backref='restaurant', lazy=True)
 
-class Food(db.Model):
+class Items(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=False, nullable=False)
     price = db.Column(db.Integer, unique=False, nullable=False)
+    category = db.Column(db.String(80), unique=False, nullable=False)
+    restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurant.id'), nullable=False)
 
 class Address(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -222,7 +225,8 @@ def admin():
 @app.route("/admin/menu")
 @owner_required
 def admin_menu():
-    return render_template("admin/menu.html")
+    items = Items.query.filter_by(restaurant_id=session["owner_id"]).all()
+    return render_template("admin/menu.html", items=items)
 
 @app.route("/admin/orders")
 @owner_required

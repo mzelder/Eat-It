@@ -318,3 +318,7 @@ input[type="color"]:focus,
 .cursor-pointer {
     cursor: pointer;
 }
+
+.text-green {
+    color: #83B271;
+}

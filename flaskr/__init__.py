@@ -278,7 +278,36 @@ def add_item():
     price = request.form.get("price")
     category = request.form.get("category")
     restaurant_id = session["owner_id"]
+
+    # Ensure all informations are given
+    if not all([name, price, category]):
+        return abort(405)
+    
     item = Items(name=name, price=price, category=category, restaurant_id=restaurant_id)
     db.session.add(item)
+    db.session.commit()
+    return redirect(url_for("admin_menu"))
+
+@app.route("/admin/edit-item", methods=["POST"])
+@owner_required
+def edit_item():
+    item_id = request.form.get("item_id")
+    name = request.form.get("item_name")
+    price = request.form.get("price")
+    category = request.form.get("category")
+
+    item = Items.query.filter_by(id=item_id).first()
+    item.name = name
+    item.price = price
+    item.category = category
+    db.session.commit()
+    return redirect(url_for("admin_menu"))
+
+@app.route("/admin/delete-item", methods=["POST"])
+@owner_required
+def delete_item():
+    item_id = request.form.get("item_id")
+    item = Items.query.filter_by(id=item_id).first()
+    db.session.delete(item)
     db.session.commit()
     return redirect(url_for("admin_menu"))

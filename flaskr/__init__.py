@@ -270,3 +270,15 @@ def change_password():
         owner.password = generate_password_hash(new_password)
         db.session.commit()
         return redirect(url_for("admin_settings")) 
+    
+@app.route("/admin/add-item", methods=["POST"])
+@owner_required
+def add_item():
+    name = request.form.get("item_name")
+    price = request.form.get("price")
+    category = request.form.get("category")
+    restaurant_id = session["owner_id"]
+    item = Items(name=name, price=price, category=category, restaurant_id=restaurant_id)
+    db.session.add(item)
+    db.session.commit()
+    return redirect(url_for("admin_menu"))

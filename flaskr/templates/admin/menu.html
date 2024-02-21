@@ -1,17 +1,45 @@
 {% extends "/admin/base.html" %}
 
 {% block body %}
+    <!-- Add item modal -->
+    <div class="modal fade" id="addItem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"> Add Item </h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/admin/add-item" method="POST">
+                        <div class="mt-3">
+                            <label class="form-label fw-bold">Item name</label>
+                            <input name="item_name" type="text" class="form-control" placeholder="e.g. Pizza" > 
+                        </div>
+                        <div class="mt-3">
+                            <label class="form-label fw-bold">Price</label>
+                            <input name="price" type="text" class="form-control" placeholder="10.00"> 
+                        </div>
+                        <div class="mt-3">
+                            <label class="form-label fw-bold">Category</label>
+                            <input name="category" type="text" class="form-control" placeholder="Dinner" > 
+                        </div>
+                        <button type="submit" class="btn bg-green mt-3 w-100 rounded-5 mt-5">Add</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <div class="container">
 		<div class="row">
 			<div class="col">
 				<h1 class="m-5 fw-bold">Settings</h1>
 			</div>
 			<div class="col text-end">
-				<form action="/admin/add-item" method="GET">
-					<button class="btn btn-lg bg-green w-50 m-5 rounded-5" type="submit">
-						Add Item
-					</button>
-				</form>
+                <button class="btn btn-lg bg-green w-50 m-5 rounded-5" type="button" data-bs-toggle="modal" data-bs-target="#addItem">
+                    Add Item
+                </button>
 			</div>
 		</div>
 		

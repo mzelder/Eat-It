@@ -12,8 +12,9 @@
 # ADMIN
 # protect admin roots
 
-from flask import Flask, render_template, request, abort, session, redirect, url_for
+from flask import Flask, render_template, request, abort, session, redirect, url_for, flash
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail, Message
 from functools import wraps
@@ -27,6 +28,10 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URI")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg"}
+UPLOAD_FOLDER = "flaskr/static/uploads"
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 app.config['MAIL_SERVER']='sandbox.smtp.mailtrap.io'
 app.config['MAIL_PORT'] = 2525
@@ -52,6 +57,7 @@ class Owner(db.Model):
 class Restaurant(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=False, nullable=False) 
+    photo = db.Column(db.String(80), unique=False, nullable=True)
     owner_id = db.Column(db.Integer, db.ForeignKey('owner.id'), unique=True)
     foods = db.relationship('Items', backref='restaurant', lazy=True)
 
@@ -152,7 +158,8 @@ def signout():
 
 @app.route("/delivery")
 def delivery():
-    return render_template("/user/delivery.html")
+    restaurants = Restaurant.query.all() 
+    return render_template("/user/delivery.html", restaurants=restaurants)
 
 @app.route("/business", methods=["GET", "POST"])
 def business_index():
@@ -311,3 +318,31 @@ def delete_item():
     db.session.delete(item)
     db.session.commit()
     return redirect(url_for("admin_menu"))
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route("/admin/update-photo", methods=["POST"])
+@owner_required
+def update_photo():
+    # check if the post request has the file part
+    if 'file' not in request.files:
+        print("No file part")
+        flash('No file part')
+        return redirect(request.url)
+    file = request.files['file']
+    # If the user does not select a file, the browser submits an
+    # empty file without a filename.
+    if file.filename == '':
+        flash('No selected file')
+        return redirect(request.url)
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        # Add photo to the database
+        restaurant = Restaurant.query.filter_by(owner_id=session["owner_id"]).first()
+        restaurant.photo = "/static/uploads/" + filename
+        db.session.commit()
+        return redirect(url_for("admin_settings"))
+    return redirect(url_for("admin_settings"))

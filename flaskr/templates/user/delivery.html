@@ -1,17 +1,12 @@
 {% extends "/user/base.html" %}
 
-<!-- {% block title %} Delivery {% endblock %} -->
+{% block title %} Delivery {% endblock %}
 
 {% block body %}
-
 <div class="container p-3">
     <div class="row">
-        
-        
         <div class="col">
-
             <h5 class="pb-3"> 69 places <h5>
-        
             <!-- Open now section -->
             <div class="row">
                 <div class="col">
@@ -38,15 +33,13 @@
         
             <!-- Min order amount section -->
             <div class="row">
-                <h5 class="pb-2"> Minimum order amount </h5>
-                
+                <h5 class="pb-2"> Minimum order amount </h5>    
                 <div class="form-check pb-2">
                     <input class="form-check-input custom-switch" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
                     <label class="form-check-label" for="flexRadioDefault1">
                         Show all (69)
                     </label>
-                  </div>
-                  
+                </div>
                   <div class="form-check pb-2">
                     <input class="form-check-input custom-switch" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
                     <label class="form-check-label" for="flexRadioDefault2">
@@ -96,10 +89,8 @@
                     </div>
                 </div>
             </div>
-            
-            
-            {% for restaurant in restaurants %}
-            
+                  
+            {% for restaurant in restaurants %}      
             <div class="row">
                 <div class="col p-3">
                     <div class="container-fluid" style="background-color: lightgray; border-radius: 5px;">
@@ -108,7 +99,6 @@
                                 <div class="row p-3">
                                     <h5> {{ restaurant.name }} </h5>
                                     <div class="col-4">
-    
                                         <image class="d-inline" src="static/images/star.png" style="width: 20px;">
                                         <p class="d-inline"> {{ restaurant.rating }} </p>
                                     </div>
@@ -118,10 +108,9 @@
                                     </div>
                                 </div>
                             </div>
-                            
                             <!-- Restaurant Photo -->
                             <div class="col">
-                                <image class="ms-5" src="static/{{ restaurant.photo_path }}" style="width: 200px; border-radius: 5px;">
+                                <img class="ms-5" src="{{  restaurant.photo  }}" style="width: 200px; border-radius: 5px;">
                             </div>
                         </div>
                     </div>
@@ -132,6 +121,4 @@
         </div>
     </div>
 </div>
-
-
 {% endblock %}

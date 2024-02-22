@@ -328,3 +328,7 @@ input[type="color"]:focus,
     max-height: 100px;
     border-radius: 0 5px 5px 0;
 }
+
+.custom-dropdown-button {
+    background-color: #83B271;
+}

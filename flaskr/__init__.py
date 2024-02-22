@@ -159,7 +159,13 @@ def signout():
 @app.route("/delivery")
 def delivery():
     restaurants = Restaurant.query.all() 
-    return render_template("/user/delivery.html", restaurants=restaurants)
+    return render_template("/user/delivery.html", restaurants=restaurants, user=check_status())
+
+@app.route("/menu/<restaurant_name>")
+def menu(restaurant_name):
+    restaurant = Restaurant.query.filter_by(name=restaurant_name).first()
+    items = Items.query.filter_by(restaurant_id=restaurant.id).all()
+    return render_template("/user/menu.html", items=items, restaurant=restaurant, user=check_status())
 
 @app.route("/business", methods=["GET", "POST"])
 def business_index():

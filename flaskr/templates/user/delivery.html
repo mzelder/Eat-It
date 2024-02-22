@@ -2,6 +2,18 @@
 
 {% block title %} Delivery {% endblock %}
 
+{% block menu %}
+    {% if user %}
+        <button class="btn menu-button" style="border-radius:12px;" type="button" data-bs-toggle="modal" data-bs-target="#loged">
+            <img src="static/images/menu.png" width="40px">
+        </button>
+    {% else %}
+        <button class="btn menu-button" style="border-radius:12px;" type="button" data-bs-toggle="modal" data-bs-target="#myAccount" style="background-color: transparent;">
+            <img src="static/images/menu.png" width="40px">
+        </button>
+    {% endif %}
+{% endblock %}
+
 {% block body %}
 <div class="container p-3">
     <div class="row">
@@ -59,15 +71,11 @@
        
         <div class="col-8">
             <div class="row">
-
-            <!-- Second column -->
-            <div class="col-sm">
-                    <form id="searchForm" action="/delivery" method="GET">
-                        <input type="search" class="form-control" id="search" name="search" placeholder="Places and items" autocomplete="off" style="border-radius: 12px;">                    
-                    </form>
-            </div>
-
-                <!-- Third column -->
+                <div class="col-sm">
+                        <form id="searchForm" action="/delivery" method="GET">
+                            <input type="search" class="form-control" id="search" name="search" placeholder="Places and items" autocomplete="off" style="border-radius: 12px;">                    
+                        </form>
+                </div>
                 <div class="col-sm">
                     <div class="row">
                         <div class="col-sm">
@@ -89,33 +97,34 @@
                     </div>
                 </div>
             </div>
-                  
             {% for restaurant in restaurants %}      
-            <div class="row">
-                <div class="col p-3">
-                    <div class="container-fluid" style="background-color: lightgray; border-radius: 5px;">
-                        <div class="row">
-                            <div class="col-8">
-                                <div class="row p-3">
-                                    <h5> {{ restaurant.name }} </h5>
-                                    <div class="col-4">
-                                        <image class="d-inline" src="static/images/star.png" style="width: 20px;">
-                                        <p class="d-inline"> {{ restaurant.rating }} </p>
-                                    </div>
-                                    <div class="col">
-                                        <image class="d-inline" src="static/images/bag.png" style="width: 20px;">
-                                        <p class="d-inline"> Min {{ restaurant.min_order_amount }} zł </p>
+            <a href="/menu/{{ restaurant.name }}" style="text-decoration: none; color: inherit;">
+                <div class="row">
+                    <div class="col p-3">
+                        <div class="container-fluid" style="background-color: lightgray; border-radius: 5px;">
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="row p-3">
+                                        <h5> {{ restaurant.name }} </h5>
+                                        <div class="col-4">
+                                            <image class="d-inline" src="static/images/star.png" style="width: 20px;">
+                                            <p class="d-inline"> {{ restaurant.rating }} </p>
+                                        </div>
+                                        <div class="col">
+                                            <image class="d-inline" src="static/images/bag.png" style="width: 20px;">
+                                            <p class="d-inline"> Min {{ restaurant.min_order_amount }} zł </p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- Restaurant Photo -->
-                            <div class="col text-end" style="padding-right: 0;">
-                                <img class="ms-5 fit-image" src="{{  restaurant.photo  }}">
+                                <!-- Restaurant Photo -->
+                                <div class="col text-end" style="padding-right: 0;">
+                                    <img class="ms-5 img-fluid" src="{{  restaurant.photo  }}">
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </a>
             {% endfor %}
             </div>
         </div>

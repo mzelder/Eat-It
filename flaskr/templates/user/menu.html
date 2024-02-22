@@ -1,0 +1,33 @@
+{% extends "/user/base.html" %}
+
+{% block title %} {{  restaurant.name  }} {% endblock %}
+ 
+{% block menu %}
+<div class="dropdown menu-button">
+    <button class="btn btn-secondary dropdown-toggle menu-button custom-dropdown-button" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+        <img src="/static/images/shopping-cart.png" width="24" alt="Cart">
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <li><h6 class="dropdown-header">Cart Items</h6></li>
+        <li><a class="dropdown-item" href="#">Product 1 - $10.00</a></li>
+        <li><a class="dropdown-item" href="#">Product 2 - $15.00</a></li>
+        <li><a class="dropdown-item" href="#">Product 3 - $5.00</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li class="px-3"><strong>Total: $30.00</strong></li>
+        <li><button class="dropdown-item btn btn-primary text-center">Checkout</button></li>
+    </ul>
+</div>
+    {% if user %}
+        <button class="btn menu-button" style="border-radius:12px;" type="button" data-bs-toggle="modal" data-bs-target="#loged">
+            <img src="/static/images/menu.png" width="40px">
+        </button>
+    {% else %}
+        <button class="btn menu-button" style="border-radius:12px;" type="button" data-bs-toggle="modal" data-bs-target="#myAccount" style="background-color: transparent;">
+            <img src="/static/images/menu.png" width="40px">
+        </button>
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    
+{% endblock %}

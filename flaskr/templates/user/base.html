@@ -17,9 +17,7 @@
                 </a>
                 <div class="col-auto ml-auto">
                     <div class="d-grid gap-2 d-md-block">
-                        {% block menu %}
-                            
-                        {% endblock %}
+                        {% block menu %} {% endblock %}
                     </div>
                 </div>
             </div>
@@ -73,5 +71,7 @@
         <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXopNiIEICPRy4Ud8FAc0rrOX0aH8L7J4&libraries=places&callback=initMap">
         </script>
+        {% include "/user/signin.html" %}
+        {% include "/user/logedin.html" %}
     </body>
 </html>

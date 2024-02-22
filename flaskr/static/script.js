@@ -47,6 +47,7 @@ function scrollToTop() {
     });
 }
 
+// prevent form submission if image dimensions are not okay
 document.getElementById('imageInput').addEventListener('change', function(event) {
     const file = event.target.files[0];
     if (file) {
@@ -67,5 +68,18 @@ document.getElementById('imageInput').addEventListener('change', function(event)
             img.src = e.target.result;
         };
         reader.readAsDataURL(file);
+    }
+});
+
+// prevent form submission if image is not selected
+document.getElementById('updateButton').addEventListener('click', function(event) {
+    var imageInput = document.getElementById('imageInput');
+    var feedbackDiv = document.getElementById('dimensionFeedback');
+
+    if (imageInput.files.length === 0) {
+        event.preventDefault(); // Stop the form from submitting
+        feedbackDiv.textContent = 'Please choose an image before updating.'; // Display error message
+    } else {
+        feedbackDiv.textContent = ''; // Clear any previous error message
     }
 });

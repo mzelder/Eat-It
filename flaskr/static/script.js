@@ -47,3 +47,25 @@ function scrollToTop() {
     });
 }
 
+document.getElementById('imageInput').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = new Image();
+            img.onload = function() {
+                const width = img.naturalWidth;
+                const height = img.naturalHeight;
+                const feedbackElement = document.getElementById('dimensionFeedback');
+                if (height >= 200 && width >= 100) {
+                    feedbackElement.textContent = ''; // Clear feedback if dimensions are okay
+                } else {
+                    feedbackElement.textContent = 'Image height must be equal or bigger than 200px and width equal or bigger than 100px.';
+                    event.target.value = ''; // Reset file input
+                }
+            };
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+});

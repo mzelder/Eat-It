@@ -310,7 +310,7 @@ input[type="color"]:focus,
     cursor: pointer;
 }
 
-.bg-image {
+.bg-image-business {
     background-image: url(images/restaurant_delivery2.png);
     background-size: cover;
 }
@@ -331,4 +331,60 @@ input[type="color"]:focus,
 
 .custom-dropdown-button {
     background-color: #83B271;
+    border: none;
+    border-radius: 12px;
+}
+
+.image-container {
+    position: relative;
+    overflow: hidden; /* This hides the parts of the image that overflow the container */
+    height: 200px; /* Set the desired height */
+    width: 100%; /* Set the desired width, you might want to keep it at 100% for responsiveness */
+}
+
+.center-crop {
+    display: block; /* Replaces inline default of img */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: auto;
+    width: 100%;
+    object-fit: cover; /* This will cover the area of the container without stretching the image */
+    object-position: center; /* This will position the center of the image in the center of the container */
+}
+
+.logo {
+    padding: 5px;
+    width: 80px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: auto;
+    z-index: 2; 
+    position: relative;
+    object-position: center;
+    object-fit: cover;
+}
+
+.logo-container {
+    display: block;
+    position: absolute;
+    overflow: hidden; /* This hides the parts of the image that overflow the container */
+    z-index: 3;
+    height: 80px; /* Set the desired height */
+    width: 80px; /* Set the desired width, you might want to keep it at 100% for responsiveness */
+    top: 225px;
+    left: 12%;
+    background-color: white;
+    border-radius: 12px;
+}
+
+.restaurant-button {
+    background-color: #efefef;
+    border-radius: 100%;
+}
+
+.restaurant-button:hover {
+    background-color: #e0e0e0;
 }

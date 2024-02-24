@@ -16,6 +16,14 @@
 
 {% block body %}
 <div class="container-fluid">
+    <div class="shopping-cart text-center p-5">
+        <h4>Basket</h4>
+        <img src="/static/images/bag.png" width="40px">
+        <div class="mt-4">
+            <h4>Fill your basket</h4>
+            <h5 class="fw-light">Your basket is empty</h5>
+        </div>
+    </div>
     <div class="row">
         <div class="col p-0 image-container">        
             <img src="{{ restaurant.photo }}" class="center-crop">
@@ -23,18 +31,31 @@
         <div class="logo-container border">
             <img src="/static/uploads/logo_465x320.png" class="logo">
         </div>
-        <div class="col-3 text-center p-3 shadow">
-            <h4>Basket</h4>
-            <img src="/static/images/bag.png" width="40px">
-            <div class="mt-4">
-                <h4>Fill your basket</h4>
-                <h5 class="fw-light">Your basket is empty</h5>
-            </div>
+        <div class="col-3 text-center p-3 shadow bas">
+            
         </div>
     </div>
-    <div class="row mt-5">
-        <div class="col">
-            <div class="container w-75">
+    <div class="row">
+        <div class="col border-bottom">
+            <div class="container p-5 w-75">
+                <div class="row">
+                    <div class="col">
+                        <h3 class=""> {{  restaurant.name  }}</h3>
+                    </div>
+                    <div class="col text-end">
+                        <div class="btn-group">
+                            <button class="btn restaurant-button rounded-5 me-2"><img src="/static/images/information.png" width="25px"></button>
+                            <button class="btn restaurant-button rounded-5"><img src="/static/images/heart_1.png" width="25px"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-3"></div>
+    </div>
+    <div class="row">
+        <div class="col shadow-lg" style="background-color: #efefef;">
+            <div class="container p-5 w-75">
                 <div class="row">
                     <div class="col">
                         <h3 class=""> {{  restaurant.name  }}</h3>

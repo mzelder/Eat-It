@@ -62,44 +62,7 @@
   border-radius: 0 20px 20px 0; /* Adjust as needed */
 }
 
-/* google input div */
-/* Stylizacja dla usługi autouzupełniania miejsc Google */
 
-/* .pac-container {
-    background-color: #ffffff;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    border-radius: 20px;
-}
-
-.pac-icon {
-    margin-right: 10px;
-    color: #888;
-}
-
-.pac-item {
-    padding: 10px;
-    border-bottom: 1px solid #eee;
-}
-
-.pac-item:hover {
-    background-color: #f0f0f0;
-}
-
-.pac-item-selected {
-    background-color: #e0e0e0;
-}
-
-.pac-item-query {
-    color: #000;
-    font-weight: bold;
-}
-
-/* .pac-matched {
-    background-color: #99c984;
-} */ */
-.pac-item-selected .pac-icon {
-    color: green; /* Zmiana koloru ikony na zielony dla wybranego elementu */
-}
 
  .bg-green {
    border-color: #83B271;
@@ -135,42 +98,6 @@
 .input-group .btn {
   border-radius: 0 20px 20px 0; /* Adjust as needed */
 }
-
-/* google input div */
-/* Stylizacja dla usługi autouzupełniania miejsc Google */
-
-/* .pac-container {
-    background-color: #ffffff;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    border-radius: 20px;
-}
-
-.pac-icon {
-    margin-right: 10px;
-    color: #888;
-}
-
-.pac-item {
-    padding: 10px;
-    border-bottom: 1px solid #eee;
-}
-
-.pac-item:hover {
-    background-color: #f0f0f0;
-}
-
-.pac-item-selected {
-    background-color: #e0e0e0;
-}
-
-.pac-item-query {
-    color: #000;
-    font-weight: bold;
-}
-
-/* .pac-matched {
-    background-color: #99c984;
-} */ */
 
  .bg-green {
    border-color: #83B271;
@@ -212,7 +139,7 @@
     border: 1px solid #83B271; /* Green border */
     background-color: white; /* White background */
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px #83B271;
-    border-radius: 20px; /* Slightly rounded corners for a modern look */
+    border-radius: 0 0 0 0; /* Slightly rounded corners for a modern look */
     font-family: Arial, sans-serif; /* Consistent font style */
 }
 
@@ -387,4 +314,14 @@ input[type="color"]:focus,
 
 .restaurant-button:hover {
     background-color: #e0e0e0;
+}
+
+.shopping-cart {
+    max-height: 583px;
+    height: auto;
+    width: 445.75px;
+    position: fixed;
+    top: 70px;
+    right: 0px;
+    background-color: white;
 }

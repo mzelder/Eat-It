@@ -33,6 +33,11 @@
    border-color: rgb(230,230,230);
  }
 
+ #price-tag {
+    background-color: #83B271;
+    color: white;
+ }
+
  .menu-button:hover {
     background-color: #99c984;
     border-color: #99c984;
@@ -316,12 +321,16 @@ input[type="color"]:focus,
     background-color: #e0e0e0;
 }
 
+.position-relative {
+    position: relative; /* Ensures that the child absolute positioning is relative to this container */
+}
+
 .shopping-cart {
-    max-height: 583px;
-    height: auto;
-    width: 445.75px;
-    position: fixed;
-    top: 70px;
-    right: 0px;
-    background-color: white;
+    position: absolute;
+    top: 0; /* Adjust this value as needed */
+    right: 0; /* Aligns the shopping cart to the right; adjust according to your layout */
+    width: 100%; /* Or specify a width */
+    z-index: 10; /* Ensures it's above other content */
+    max-height: 90vh; /* Example to limit the height */
+    overflow-y: auto; /* Adds scroll if content exceeds max-height */
 }

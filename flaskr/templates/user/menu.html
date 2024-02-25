@@ -16,14 +16,6 @@
 
 {% block body %}
 <div class="container-fluid">
-    <div class="shopping-cart text-center p-5">
-        <h4>Basket</h4>
-        <img src="/static/images/bag.png" width="40px">
-        <div class="mt-4">
-            <h4>Fill your basket</h4>
-            <h5 class="fw-light">Your basket is empty</h5>
-        </div>
-    </div>
     <div class="row">
         <div class="col p-0 image-container">        
             <img src="{{ restaurant.photo }}" class="center-crop">
@@ -31,16 +23,24 @@
         <div class="logo-container border">
             <img src="/static/uploads/logo_465x320.png" class="logo">
         </div>
-        <div class="col-3 text-center p-3 shadow bas">
-            
+        <div class="col-3 text-center p-3 position-relative" id="shoppingCart">
+            <div class=" shopping-cart text-center p-5">
+                <h4>Basket</h4>
+                <img src="/static/images/bag.png" width="40px">
+                <div class="mt-4">
+                    <h4>Fill your basket</h4>
+                    <h5 class="fw-light">Your basket is empty</h5>
+                </div>
+            </div>
         </div>
     </div>
+    <!-- Restaurant information -->
     <div class="row">
-        <div class="col border-bottom">
-            <div class="container p-5 w-75">
+        <div class="col pt-5 pb-5">
+            <div class="container w-75">
                 <div class="row">
                     <div class="col">
-                        <h3 class=""> {{  restaurant.name  }}</h3>
+                        <h3 class="fw-bold"> {{  restaurant.name  }}</h3>
                     </div>
                     <div class="col text-end">
                         <div class="btn-group">
@@ -49,28 +49,46 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-3"></div>
-    </div>
-    <div class="row">
-        <div class="col shadow-lg" style="background-color: #efefef;">
-            <div class="container p-5 w-75">
                 <div class="row">
-                    <div class="col">
-                        <h3 class=""> {{  restaurant.name  }}</h3>
-                    </div>
-                    <div class="col text-end">
-                        <div class="btn-group">
-                            <button class="btn restaurant-button rounded-5 me-2"><img src="/static/images/information.png" width="25px"></button>
-                            <button class="btn restaurant-button rounded-5"><img src="/static/images/heart_1.png" width="25px"></button>
-                        </div>
+                    <div class="col text-center">
+                        
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-3"></div>
     </div>
+    <!-- Menu items -->
+    {% for category, items in items_by_category.items() %}
+    <div class="row">
+        <div class="col" style="background-color: #f3f3f3;">
+            <div class="container pt-5 pb-5 w-75">
+                <div class="row">
+                    <div class="col">
+                        <h4 class="fw-bold">{{  category  }}</h4>
+                        {% for item in items %}
+                        <div class="container menu-item mt-3 p-4 pb-2 border rounded-2" style="background-color: white;">
+                            <div class="row">
+                                <div class="col">
+                                    <h5 class="fw-bold">{{ item.name }}</h5>
+                                    <p>{{  item.description  }}</p>
+                                    <button class="btn bg-green rounded-2">
+                                        ${{  item.price  }}
+                                    </button>
+                                </div>
+                                <div class="col-3 text-center">
+                                    <img class="rounded-3" src="/static/images/doner-kebab-gyro-chicken-pizza-doner-kebap-de580f3a9871548de8cec064a0691ecf.png" width="150px">
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-3"></div>
+    </div>
+    {% endfor %}
 </div>
 
 {% endblock %}

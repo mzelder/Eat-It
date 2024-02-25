@@ -61,6 +61,8 @@ class Restaurant(db.Model):
     owner_id = db.Column(db.Integer, db.ForeignKey('owner.id'), unique=True)
     foods = db.relationship('Items', backref='restaurant', lazy=True)
 
+# adding description
+# adding photo of the item
 class Items(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=False, nullable=False)
@@ -165,7 +167,20 @@ def delivery():
 def menu(restaurant_name):
     restaurant = Restaurant.query.filter_by(name=restaurant_name).first()
     items = Items.query.filter_by(restaurant_id=restaurant.id).all()
-    return render_template("/user/menu.html", items=items, restaurant=restaurant, user=check_status())
+
+    # Sort items by category
+    items_by_category = {}
+    for item in items:
+        if item.category in items_by_category:
+            items_by_category[item.category].append(item)
+        else:
+            items_by_category[item.category] = [item]
+
+    return render_template("/user/menu.html", items_by_category=items_by_category, restaurant=restaurant, user=check_status())
+
+@app.route("/add-to-cart", methods=["POST"])
+def add_to_cart():
+    item = request.json
 
 @app.route("/business", methods=["GET", "POST"])
 def business_index():

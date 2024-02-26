@@ -63,11 +63,14 @@ class Restaurant(db.Model):
 
 # adding description
 # adding photo of the item
+# restart database
 class Items(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=False, nullable=False)
     price = db.Column(db.Integer, unique=False, nullable=False)
     category = db.Column(db.String(80), unique=False, nullable=False)
+    # description = db.Column(db.String(80), unique=False, nullable=False)
+    # image_path = db.Column(db.String(80), unique=False, nullable=False) 
     restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurant.id'), nullable=False)
 
 class Address(db.Model):
@@ -153,7 +156,7 @@ def index():
             
     return render_template("/user/index.html", message=message, error_message=error_message, user=check_status())
 
-@app.route("/signout", methods=["POST"])
+@app.route("/signout", methods=["POST", "GET"])
 def signout():
     session.clear()
     return redirect(url_for("index"))
@@ -165,6 +168,8 @@ def delivery():
 
 @app.route("/menu/<restaurant_name>")
 def menu(restaurant_name):
+    # Keep track of the last restaurant so the add-to-cart function know where to redirect
+    session["last_restaurant"] = restaurant_name
     restaurant = Restaurant.query.filter_by(name=restaurant_name).first()
     items = Items.query.filter_by(restaurant_id=restaurant.id).all()
 
@@ -178,9 +183,44 @@ def menu(restaurant_name):
 
     return render_template("/user/menu.html", items_by_category=items_by_category, restaurant=restaurant, user=check_status())
 
-@app.route("/add-to-cart", methods=["POST"])
-def add_to_cart():
-    item = request.json
+@app.route("/increase-quantity/<int:id>", methods=["POST"])
+def increase_quantity(id):
+    # Initialize the shopping cart if it doesn't exist
+    if 'shopping_cart' not in session:
+        session['shopping_cart'] = []
+    
+    # Setup flag
+    item_exists = False
+    
+    # Query the item by ID
+    item = Items.query.get_or_404(id)
+
+    # Check if item already exists in cart
+    for cart_item in session['shopping_cart']:
+        if cart_item['id'] == item.id:
+            cart_item['quantity'] += 1  # Increase the quantity
+            cart_item['total_price'] = cart_item["price"] * cart_item["quantity"]
+            item_exists = True
+            break
+
+    # Add item details to the shopping cart
+    if not item_exists:
+        session['shopping_cart'].append({
+            'id': item.id,
+            'name': item.name,
+            'price': item.price,
+            'total_price': item.price,
+            'category': item.category,
+            'quantity': 1
+        })
+
+    session.modified = True
+    print(session["shopping_cart"])
+    return redirect(url_for('menu', restaurant_name=session.get("last_restaurant")))
+
+@app.route("/decrease-quantity/<int:id>", methods=["POST"])
+def decrease_quantity(id):
+    pass
 
 @app.route("/business", methods=["GET", "POST"])
 def business_index():

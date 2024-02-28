@@ -195,7 +195,7 @@ def increase_quantity(id):
     # Query the item by ID
     item = Items.query.get_or_404(id)
 
-    # Check if item already exists in cart
+    # Increasing the quantity and update the total price
     for cart_item in session['shopping_cart']:
         if cart_item['id'] == item.id:
             cart_item['quantity'] += 1  # Increase the quantity
@@ -214,13 +214,47 @@ def increase_quantity(id):
             'quantity': 1
         })
 
+    # Total price of all items in the shopping cart
+    total_price = 0.0
+    for cart_item in session['shopping_cart']:
+        total_price += cart_item['total_price']
+    
+    # Update the total price in the session
+    session['total_price'] = total_price
+
     session.modified = True
-    print(session["shopping_cart"])
     return redirect(url_for('menu', restaurant_name=session.get("last_restaurant")))
 
 @app.route("/decrease-quantity/<int:id>", methods=["POST"])
 def decrease_quantity(id):
-    pass
+    # Query the item by ID
+    item = Items.query.get_or_404(id)
+
+    # Decrease the quantity and update the total price
+    for cart_item in session['shopping_cart']:
+        if cart_item['id'] == item.id:
+            cart_item['quantity'] -= 1
+            cart_item['total_price'] = cart_item["price"] * cart_item["quantity"]
+            if cart_item['quantity'] == 0:
+                session['shopping_cart'].remove(cart_item)
+            break
+
+    # Total price of all items in the shopping cart
+    total_price = 0.0
+    for cart_item in session['shopping_cart']:
+        total_price += cart_item['total_price']
+    
+    # Update the total price in the session
+    session['total_price'] = total_price
+        
+    session.modified = True
+    return redirect(url_for('menu', restaurant_name=session.get("last_restaurant")))
+
+@app.route("/checkout/<restaurant_name>", methods=["POST"])
+def checkout(restaurant_name):
+    restaurant = Restaurant.query.filter_by(name=restaurant_name).first()
+
+    return render_template("/user/checkout.html", restaurant=restaurant, user=check_status())
 
 @app.route("/business", methods=["GET", "POST"])
 def business_index():

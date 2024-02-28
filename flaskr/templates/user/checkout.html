@@ -1,0 +1,125 @@
+{% extends "/user/base.html" %}
+
+{% block title %} {{  restaurant.name  }} {% endblock %}
+ 
+{% block menu %}
+{% if user %}
+    <button class="btn menu-button" style="border-radius:12px;" type="button" data-bs-toggle="modal" data-bs-target="#loged">
+        <img src="/static/images/menu.png" width="40px">
+    </button>
+{% else %}
+    <button class="btn menu-button" style="border-radius:12px;" type="button" data-bs-toggle="modal" data-bs-target="#myAccount" style="background-color: transparent;">
+        <img src="/static/images/menu.png" width="40px">
+    </button>
+{% endif %}
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <!-- Informations, address, etc -->
+        <div class="col">
+            <div class="container p-3 mt-4">
+                <h2 class="fw-bold">Checkout</h2>
+                <p class="fw-light">{{  restaurant.name  }}</p>
+            </div>
+            <div class="container p-3 border rounded-4">
+                <h5 class="p-3">Delivery address</h5>
+                <div class="row p-3">
+                    <div class="col">
+                        <form class="form-floating" action="/" method="POST" novalidate="novalidate">
+                            <!-- Street name -->
+                            <div class="mb-3">
+                                <label for="street_name" class="form-label" style="font-weight: 500;">Street name</label>
+                                <input name="street_name" type="text" class="form-control" id="street_name" placeholder="Type street name" autocomplete="off">
+                            </div>
+                            <!-- Nip (optional) -->
+                            <div class="mb-3">
+                                <label for="nip" class="form-label" style="font-weight: 500;">NIP (optional)</label>
+                                <input name="nip" type="text" class="form-control" id="nip" placeholder="Type your NIP">
+                            </div>
+                            <!-- City -->
+                            <div class="mb-3">
+                                <label for="city" class="form-label" style="font-weight: 500;">City</label>
+                                <input name="city" type="text" class="form-control" id="city" placeholder="Type your city">
+                            </div>
+                            <!-- Floor (optional) -->
+                            <div class="mb-3">
+                                <label for="floor" class="form-label" style="font-weight: 500;">Floor (optional)</label>
+                                <input name="floor" type="text" class="form-control" id="floor" placeholder="Type floor number">
+                            </div>
+                            <!-- Company name (optional) -->
+                            <div class="mb-3">
+                                <label for="company_name" class="form-label" style="font-weight: 500;">Company name (optional)</label>
+                                <input name="company_name" type="text" class="form-control" id="company_name" placeholder="Type company name">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <!-- House number -->
+                            <div class="mb-3">
+                                <label for="house_number" class="form-label" style="font-weight: 500;">House number</label>
+                                <input name="house_number" type="text" class="form-control" id="house_number" placeholder="Type house number">
+                            </div>
+                            <!-- Access code (optional) -->
+                            <div class="mb-3">
+                                <label for="access_code" class="form-label" style="font-weight: 500;">Access code (optional)</label>
+                                <input name="access_code" type="text" class="form-control" id="access_code" placeholder="Type access code number">
+                            </div>
+                            <!-- Flat number (optional) -->
+                            <div class="mb-3">
+                                <label for="flat_number" class="form-label" style="font-weight: 500;">Flat number (optional)</label>
+                                <input name="flat_number" type="text" class="form-control" id="flat_number" placeholder="Type flat number">
+                            </div>
+                            <!-- Postcode -->
+                            <div class="mb-3">
+                                <label for="postcode" class="form-label" style="font-weight: 500;">Postcode</label>
+                                <input name="postcode" type="text" class="form-control" id="postcode" placeholder="Type your postal code">
+                            </div>
+                            <!-- Add note (optional) -->
+                            <div class="mb-3">
+                                <label for="add_note" class="form-label" style="font-weight: 500;">Add note (optional)</label>
+                                <input name="add_note" type="text" class="form-control" id="add_note" placeholder="i.e Please don't ring the bell. Baby is sleeping.">
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+        <!-- Shopping cart -->
+        <div class="col-3 text-center p-3 position-relative" id="shoppingCart">
+            <div class=" shopping-cart text-center p-5">
+                <h4>Basket</h4>
+                {% if session.get('shopping_cart') %}
+                    {% for item in session.get('shopping_cart') %}
+                        <div class="row">
+                            <div class="col-1">
+                                <p class="fw-bold">{{  item.quantity  }}</p>
+                            </div>
+                            <div class="col text-start">
+                                <p class="fw-bold">{{  item.name  }}</p>
+                                <p class="fw-bold">{{  item.description  }}</p>
+                            </div>
+                            <div class="col text-end">${{  item.total_price  }}</div>
+                        </div>
+                        <hr>
+                    {% endfor %}
+                    <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col text-start">
+                            <p class="fw-bold">Total</p>
+                        </div>
+                        <div class="col text-end">
+                            <p class="fw-bold">${{  session.get("total_price")  }}</p>
+                        </div>
+                    </div>
+                {% else %}
+                <img src="/static/images/bag.png" width="40px">
+                <div class="mt-4">
+                    <h4>Fill your basket</h4>
+                    <h5 class="fw-light">Your basket is empty</h5>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

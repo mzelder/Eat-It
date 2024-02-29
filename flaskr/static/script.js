@@ -83,3 +83,40 @@ document.getElementById('updateButton').addEventListener('click', function(event
         feedbackDiv.textContent = ''; // Clear any previous error message
     }
 });
+
+// generating time values for the select element
+function getTimes() {
+        var closingTime = 22; // 10 PM in 24-hour format
+        var currentTime = new Date();
+        var currentHour = currentTime.getHours();
+        var currentMinutes = currentTime.getMinutes();
+
+        if (currentMinutes >= 30) {
+            currentHour += 1;
+        }
+
+        var specifyTimeSelect = document.getElementById('specifyTime');
+
+        for (var hour = currentHour; hour < closingTime; hour++) {
+            var time1 = `${hour % 24}:00`;
+            var time2 = `${hour % 24}:30`;
+            
+            var displayTime1 = formatTime(time1);
+            var displayTime2 = formatTime(time2);
+
+            if (hour < closingTime) {
+                specifyTimeSelect.options.add(new Option(displayTime1, time1));
+            }
+            if (hour < closingTime - 1) {
+                specifyTimeSelect.options.add(new Option(displayTime2, time2));
+            }
+        }
+}
+
+function formatTime(time24) {
+    var [hours, minutes] = time24.split(":");
+    var meridiem = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12 || 12;
+    return `${hours}:${minutes} ${meridiem}`;
+}
+

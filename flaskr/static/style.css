@@ -334,3 +334,7 @@ input[type="color"]:focus,
     max-height: 90vh; /* Example to limit the height */
     overflow-y: auto; /* Adds scroll if content exceeds max-height */
 }
+
+.checkout-hover:hover {
+    background-color: #efefef;
+}

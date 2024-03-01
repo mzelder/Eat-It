@@ -18,14 +18,14 @@
 <div class="container-fluid">
     <div class="row">
         <!-- Informations, address, etc -->
-        <div class="col">
+        <div class="col ps-5">
             <div class="container p-3 mt-4">
                 <h2 class="fw-bold">Checkout</h2>
                 <p class="fw-light">{{  restaurant.name  }}</p>
             </div>
-            <div class="container p-3 border rounded-4">
+            <div class="container p-3 pb-0 border rounded-4">
                 <h5 class="ps-3">Delivery address</h5>
-                <div class="row p-3">
+                <div class="row p-3 pb-0">
                     <div class="col">
                         <form class="form-floating" action="/" method="POST" novalidate="novalidate">
                             <!-- Street name -->
@@ -85,7 +85,7 @@
                 </div>
                 <hr>
                 <h5 class="ps-3">Personal Details</h5>
-                <div class="row p-3">
+                <div class="row p-3 pb-0">
                     <div class="col">
                         <!-- First and last name -->
                         <div class="mb-3">
@@ -105,8 +105,9 @@
                             <input name="email" type="email" class="form-control" id="email" placeholder="Type your email">
                         </div>
                     </div>
-                    <p class="fw-light mt-2" style="font-size: smaller;">When placing an order, you will receive a confirmation, Food Tracker status messages and
-                         a request to review the restaurant via email or otherwise (such as push messages).
+                    <p class="fw-light mt-2" style="font-size: smaller;">When placing an order, you will receive a confirmation, 
+                        Food Tracker status messages and a request to review the
+                         restaurant via email or otherwise (such as push messages).
                     </p>
                 </div>
             </div>
@@ -134,9 +135,21 @@
                     </div>
                 </div>
             </button>
+            <p class="underline-exist mt-3 fw-light cursor-pointer">Add a voucher / giftcard</p>
+            <div class="form-check custom-checkbox d-flex align-items-center">
+                <input class="form-check-input checkout-hover" type="checkbox" value="" id="flexCheckDefault" style="width: 1.5em; height: 1.5em;">
+                <label class="form-check-label" for="flexCheckDefault" style="margin-bottom: 0;">
+                    Receive discounts, loyalty offers, and other updates via email, SMS, and push notification
+                </label>
+            </div>            
+            <p class="mt-2 fw-light" style="font-size: smaller;">
+                By clicking on ORDER & PAY WITH PAYU you agree with the contents of the shopping cart, 
+                the data you filled out, our <span class="underline-exist cursor-pointer">privacy statement</span> and <span class="underline-exist cursor-pointer">terms of use</span>.
+            </p>
+            <button class="btn btn-lg bg-green rounded-5 mt-3 mb-4 ms-3 w-50">Order & pay with PayU (${{  session.get("total_price")  }}) </button>
         </div>
         <!-- Shopping cart -->
-        <div class="col-3 text-center p-3 position-relative" id="shoppingCart">
+        <div class="col-3 text-center p-3 position-relative shadow-lg" id="shoppingCart">
             <div class=" shopping-cart text-center p-5">
                 <h4>Basket</h4>
                 {% if session.get('shopping_cart') %}
@@ -187,7 +200,7 @@
             </div>
             <div class="modal-body ms-3">
                 <label for="specify_time" class="form-label" style="font-weight: 500;">Specify time</label>
-                <select class="form-select" id="specifyTime" aria-label="specify_time" onload="getTimes()" >
+                <select class="form-select" id="specifyTime" aria-label="specify_time">
                     <option selected>As soon as possible</option>
                 </select>
                 <button class="btn bg-green rounded-4 mt-3 w-100">Done</button>
@@ -197,30 +210,42 @@
 </div>
 
 <!-- Payment modal -->
-<div class="modal fade" id="paymentMethod" tabindex="-1" aria-labelledby="paymentMethod" aria-hidden="true">
+<div class="modal fade" id="paymentMethod" tabindex="-1" aria-labelledby="paymentMethodLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="btn btn-back" data-bs-toggle="modal" data-bs-target="#myAccount">
                     <i class="bi bi-arrow-left"></i>
                 </button>
-                <h4 class="modal-title">Paymenth methods</h4>
+                <h4 class="modal-title" id="paymentMethodLabel">Payment methods</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body ms-3">
-                <button class="btn btn-lg checkout-hover border rounded-2 mt-3 w-100">
-                    <div class="row">
-                        <div class="col-1">
-                            <img src="/static/images/payu.png" width="40px">
-                        </div>
-                        <div class="col">
-                            <p class="mb-0">PayU<p>
-                        </div>
+                <!-- Payu option -->
+                <button class="btn btn-lg checkout-hover border rounded-2 mt-3 w-100 d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <img src="/static/images/payu.png" width="40px" class="me-2">
+                        <p class="mb-0">PayU</p>
                     </div>
+                    <i class="bi bi-check-lg"></i>
                 </button>
-                <button class="btn btn-lg checkout-hover border rounded-2 mt-3 w-100">Cash</button>
-                <button class="btn btn-lg checkout-hover border rounded-2 mt-3 w-100">Credit card</button>
-                <button class="btn checkout-hover rounded-4 mt-3 w-100">Done</button>
+                <!-- Cash option -->
+                <button class="btn btn-lg checkout-hover border rounded-2 mt-3 w-100 d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <img src="/static/images/money1.png" width="20px" class="me-4">
+                        <p class="mb-0">Cash</p>
+                    </div>
+                    <i class="bi bi-check-lg"></i>
+                </button>
+                <!-- Card option -->
+                <button class="btn btn-lg checkout-hover border rounded-2 mt-3 w-100 d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <img src="/static/images/card1.png" width="20px" class="me-4">
+                        <p class="mb-0">Credit card</p>
+                    </div>
+                    <i class="bi bi-check-lg"></i>
+                </button>
+                <button class="btn bg-green rounded-4 mt-3 w-100">Done</button>
             </div>
         </div>
     </div>

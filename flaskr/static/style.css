@@ -338,3 +338,27 @@ input[type="color"]:focus,
 .checkout-hover:hover {
     background-color: #efefef;
 }
+
+/* Custom checkbox color when checked */
+.custom-checkbox .form-check-input:checked {
+    background-color: #28a745; /* Bootstrap success color */
+    border-color: #28a745; /* Bootstrap success color */
+}
+
+/* Ensure the checkmark is centered correctly */
+.custom-checkbox .form-check-input:checked::before {
+    transform: translate(-50%, -50%) scale(1.5);
+}
+
+/* Larger checkboxes */
+.custom-checkbox .form-check-input {
+    width: 1.5em; /* Adjust the size as needed */
+    height: 1.5em; /* Adjust the size as needed */
+    cursor: pointer;
+}
+
+.custom-checkbox .form-check-label {
+    padding-left: 1em; /* Adjust as needed */
+    cursor: pointer;
+    user-select: none;
+}

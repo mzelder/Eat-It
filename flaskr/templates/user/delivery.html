@@ -69,7 +69,7 @@
 
         </div>
        
-        <div class="col-8">
+        <div class="col-9">
             <div class="row">
                 <div class="col-sm">
                         <form id="searchForm" action="/delivery" method="GET">
@@ -100,8 +100,8 @@
             {% for restaurant in restaurants %}      
             <a href="/menu/{{ restaurant.name }}" style="text-decoration: none; color: inherit;">
                 <div class="row">
-                    <div class="col p-3">
-                        <div class="container-fluid" style="background-color: lightgray; border-radius: 5px;">
+                    <div class="col p-3 text-left">
+                        <div class="container rounded-4 border shadow" style="background-color: rgb(241, 241, 241);">
                             <div class="row">
                                 <div class="col-8">
                                     <div class="row p-3">
@@ -117,8 +117,8 @@
                                     </div>
                                 </div>
                                 <!-- Restaurant Photo -->
-                                <div class="col text-end" style="padding-right: 0;">
-                                    <img class="ms-5 img-fluid" src="{{  restaurant.photo  }}">
+                                <div class="col text-end p-0">
+                                    <img class="ms-5 img-fluid rounded-end-4" src="{{  restaurant.photo  }}" width="200px">
                                 </div>
                             </div>
                         </div>

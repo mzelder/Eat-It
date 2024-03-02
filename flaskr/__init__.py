@@ -1,5 +1,7 @@
 # Hide all informations 
 
+# TODO -> adding description to the items
+
 # USER form
 # TODO -> security for modals
 # TODO -> regex for creating account on backend
@@ -71,8 +73,8 @@ class Items(db.Model):
     name = db.Column(db.String(80), unique=False, nullable=False)
     price = db.Column(db.Integer, unique=False, nullable=False)
     category = db.Column(db.String(80), unique=False, nullable=False)
-    # description = db.Column(db.String(80), unique=False, nullable=False)
-    # image_path = db.Column(db.String(80), unique=False, nullable=False) 
+    description = db.Column(db.String(80), unique=False, nullable=True)
+    image_path = db.Column(db.String(80), unique=False, nullable=True) 
     restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurant.id'), nullable=False)
 
 class Address(db.Model):

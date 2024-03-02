@@ -9,8 +9,10 @@
 # TODO -> regex for creating account on backend
 # abort when some of the data are not given and html is changed 
 
-# ADMIN
-# protect admin roots
+# ADMIN form
+
+# CHECKOUT form 
+ 
 
 from flask import Flask, render_template, request, abort, session, redirect, url_for, flash
 from werkzeug.security import generate_password_hash, check_password_hash

@@ -1,20 +1,4 @@
-# Hide all informations 
-
-# TODO -> adding description to the items
-
-# USER form
-# TODO -> security for modals
-# TODO -> regex for creating account on backend
-# TODO -> checking if the password == confirm_password
-
-# BUSINESS form
-# TODO -> regex for creating account on backend
-# abort when some of the data are not given and html is changed 
-
-# ADMIN form
-
-# CHECKOUT form 
- 
+# Business Form validation -> Done
 
 from flask import Flask, render_template, request, abort, session, redirect, url_for, flash
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -61,13 +45,11 @@ class Owner(db.Model):
 class Restaurant(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=False, nullable=False) 
-    photo = db.Column(db.String(80), unique=False, nullable=True)
+    background_image = db.Column(db.String(80), unique=False, nullable=True)
+    icon_image = db.Column(db.String(80), unique=False, nullable=True)
     owner_id = db.Column(db.Integer, db.ForeignKey('owner.id'), unique=True)
     foods = db.relationship('Items', backref='restaurant', lazy=True)
 
-# adding description
-# adding photo of the item
-# restart database
 class Items(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=False, nullable=False)
@@ -84,7 +66,6 @@ class Address(db.Model):
     street_number = db.Column(db.String(80), unique=False, nullable=False)
     postal_code = db.Column(db.String(80), unique=False, nullable=False)
     phone_number = db.Column(db.String(80), unique=False, nullable=False)
-    # adding country? 
 
 with app.app_context():
     db.create_all()
@@ -275,7 +256,15 @@ def business_index():
         
         # Ensure all informations are given
         if not all([first_name, surname, city, street, street_number, postal_code, phone_number]):
-            return abort(405)
+            return abort(203)
+
+        # Ensure email, phone number and postal code are valid
+        if not re.match(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$$", email):
+            return abort(203)
+        if not re.match(r"^\+\d{2} \d{3} \d{3} \d{3}$", phone_number):
+            return abort(203)
+        if not re.match(r"^\d{2}-\d{3}$", postal_code):
+            return abort(203)
 
         # Send password to the owner of the restaurant
         password = generate_password(length=12)
@@ -422,26 +411,44 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route("/admin/update-photo", methods=["POST"])
+@app.route("/admin/update-background", methods=["POST"])
 @owner_required
-def update_photo():
+def background_photo():
     # check if the post request has the file part
     if 'file' not in request.files:
-        print("No file part")
-        flash('No file part')
         return redirect(request.url)
     file = request.files['file']
     # If the user does not select a file, the browser submits an
     # empty file without a filename.
     if file.filename == '':
-        flash('No selected file')
         return redirect(request.url)
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         # Add photo to the database
         restaurant = Restaurant.query.filter_by(owner_id=session["owner_id"]).first()
-        restaurant.photo = "/static/uploads/" + filename
+        restaurant.background_image = "/static/uploads/" + filename
+        db.session.commit()
+        return redirect(url_for("admin_settings"))
+    return redirect(url_for("admin_settings"))
+
+@app.route("/admin/update-logo", methods=["POST"])
+@owner_required
+def logo_photo():
+    # check if the post request has the file part
+    if 'file' not in request.files:
+        return redirect(request.url)
+    file = request.files['file']
+    # If the user does not select a file, the browser submits an
+    # empty file without a filename.
+    if file.filename == '':
+        return redirect(request.url)
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        # Add photo to the database
+        restaurant = Restaurant.query.filter_by(owner_id=session["owner_id"]).first()
+        restaurant.icon_image = "/static/uploads/" + filename
         db.session.commit()
         return redirect(url_for("admin_settings"))
     return redirect(url_for("admin_settings"))

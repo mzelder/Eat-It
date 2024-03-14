@@ -47,42 +47,84 @@ function scrollToTop() {
     });
 }
 
+// BACKGROUND IMAGE VALIDATION 
 // prevent form submission if image dimensions are not okay
-// document.getElementById('imageInput').addEventListener('change', function(event) {
-//     const file = event.target.files[0];
-//     if (file) {
-//         const reader = new FileReader();
-//         reader.onload = function(e) {
-//             const img = new Image();
-//             img.onload = function() {
-//                 const width = img.naturalWidth;
-//                 const height = img.naturalHeight;
-//                 const feedbackElement = document.getElementById('dimensionFeedback');
-//                 if (height >= 200 && width >= 100) {
-//                     feedbackElement.textContent = ''; // Clear feedback if dimensions are okay
-//                 } else {
-//                     feedbackElement.textContent = 'Image height must be equal or bigger than 200px and width equal or bigger than 100px.';
-//                     event.target.value = ''; // Reset file input
-//                 }
-//             };
-//             img.src = e.target.result;
-//         };
-//         reader.readAsDataURL(file);
-//     }
-// });
+document.getElementById('backgroundInput').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = new Image();
+            img.onload = function() {
+                const width = img.naturalWidth;
+                const height = img.naturalHeight;
+                const feedbackElement = document.getElementById('dimensionFeedback');
+                if (height >= 200 && width >= 100) {
+                    feedbackElement.textContent = ''; // Clear feedback if dimensions are okay
+                } else {
+                    feedbackElement.textContent = 'Image width and height must be equal or bigger than 200px';
+                    event.target.value = ''; // Reset file input
+                }
+            };
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+});
 
 // prevent form submission if image is not selected
-// document.getElementById('updateButton').addEventListener('click', function(event) {
-//     var imageInput = document.getElementById('imageInput');
-//     var feedbackDiv = document.getElementById('dimensionFeedback');
+document.getElementById('backgroundInput').addEventListener('click', function(event) {
+    var imageInput = document.getElementById('backgroundInput');
+    var feedbackDiv = document.getElementById('dimensionFeedback');
 
-//     if (imageInput.files.length === 0) {
-//         event.preventDefault(); // Stop the form from submitting
-//         feedbackDiv.textContent = 'Please choose an image before updating.'; // Display error message
-//     } else {
-//         feedbackDiv.textContent = ''; // Clear any previous error message
-//     }
-// });
+    if (imageInput.files.length === 0) {
+        event.preventDefault(); // Stop the form from submitting
+        feedbackDiv.textContent = 'Please choose an image before updating.'; // Display error message
+    } else {
+        feedbackDiv.textContent = ''; // Clear any previous error message
+    }
+});
+
+// LOGO IMAGE VALIDATION 
+// prevent form submission if image dimensions are not okay
+document.getElementById('logoInput').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = new Image();
+            img.onload = function() {
+                const width = img.naturalWidth;
+                const height = img.naturalHeight;
+                const feedbackElement = document.getElementById('dimensionFeedback2');
+                if (height >= 80 && width >= 80) {
+                    feedbackElement.textContent = ''; // Clear feedback if dimensions are okay
+                    console.log('Image dimensions are okay');
+                } else {
+                    feedbackElement.textContent = 'Image width and height must be equal or bigger than 80px';
+                    event.target.value = ''; // Reset file input
+                }
+            };
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+// prevent form submission if image is not selected
+document.getElementById('logoUpdate').addEventListener('click', function(event) {
+    var imageInput = document.getElementById('logoUpdate');
+    var feedbackDiv = document.getElementById('dimensionFeedback2');
+
+    if (imageInput.files.length === 0) {
+        event.preventDefault(); // Stop the form from submitting
+        feedbackDiv.textContent = 'Please choose an image before updating.'; // Display error message
+    } else {
+        feedbackDiv.textContent = ''; // Clear any previous error message
+    }
+});
+
+
 
 /*
     CHECKOUT PAGE

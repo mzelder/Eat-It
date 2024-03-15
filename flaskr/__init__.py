@@ -331,11 +331,6 @@ def admin_orders():
 @app.route("/admin/settings", methods=["GET", "POST"])
 @owner_required
 def admin_settings():
-    if request.method == "POST":
-        restaurant = Restaurant.query.filter_by(owner_id=session["owner_id"]).first()
-        restaurant.name = request.form.get("restaurant_name")
-        session["restaurant_name"] = request.form.get("restaurant_name")
-        return redirect(url_for("admin_settings"))
     return render_template("admin/settings.html")
 
 @app.route("/admin/change-restaurant-name", methods=["POST"])
@@ -350,6 +345,7 @@ def change_restaurant_name():
     restaurant = Restaurant.query.filter_by(owner_id=session["owner_id"]).first()
     restaurant.name = restaurant_name
     session["restaurant_name"] = request.form.get("restaurant_name")
+    session["name_alert"] = True
     db.session.commit()
     return redirect(url_for("admin_settings"))
 
@@ -364,7 +360,11 @@ def change_password():
         owner = Owner.query.filter_by(email=session["owner_email"]).first()
         owner.password = generate_password_hash(new_password)
         db.session.commit()
-        return redirect(url_for("admin_settings")) 
+        session["password_alert"] = True
+    else:
+        session["password_alert"] = False
+
+    return redirect(url_for("admin_settings"))
     
 @app.route("/admin/add-item", methods=["POST"])
 @owner_required

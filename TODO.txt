@@ -1,0 +1,2 @@
+# Done
+restaurant icon update -> update should show message or redirect to settings side, not redirecting 

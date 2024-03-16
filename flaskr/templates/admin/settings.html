@@ -2,26 +2,13 @@
 
 {% block body %}
 <!-- Alerts -->
-<!-- Passwords  -->
-{% if session["password_alert"] is sameas true %}
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        Password have been updated successfully.
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-{% elif session["password_alert"] is sameas false %}
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        The current password you entered is incorrect. Please try again.
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-{% endif %}
-
-<!-- Restaurant Name -->
-{% if session["name_alert"] is sameas true %}
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        Restaurant name have been updated successfully.
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-{% endif %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="alert alert-{{ category }}">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
 
 <div class="container">
     <h1 class="m-5 fw-bold">Settings</h1>
@@ -54,7 +41,7 @@
                 <label class="form-label fw-bold">Restaurant Background Image</label>
                 <input id="backgroundInput" class="w-100" type="file" name="file" accept=".png, .jpg, .jpeg">
                 <div id="dimensionFeedback" class="text-danger mt-3"></div>
-                <button id="backgroudUpdate" class="btn bg-green mt-3" type="submit">Update</button>
+                <button id="backgroundUpdate" class="btn bg-green mt-3" type="submit">Update</button>
             </form>
         </div>    
     </div><div class="row m-5 w-50">

@@ -73,7 +73,7 @@ document.getElementById('backgroundInput').addEventListener('change', function(e
 });
 
 // prevent form submission if image is not selected
-document.getElementById('backgroundInput').addEventListener('click', function(event) {
+document.getElementById('backgroundUpdate').addEventListener('click', function(event) {
     var imageInput = document.getElementById('backgroundInput');
     var feedbackDiv = document.getElementById('dimensionFeedback');
 
@@ -113,7 +113,7 @@ document.getElementById('logoInput').addEventListener('change', function(event) 
 
 // prevent form submission if image is not selected
 document.getElementById('logoUpdate').addEventListener('click', function(event) {
-    var imageInput = document.getElementById('logoUpdate');
+    var imageInput = document.getElementById('logoInput');
     var feedbackDiv = document.getElementById('dimensionFeedback2');
 
     if (imageInput.files.length === 0) {
@@ -123,8 +123,6 @@ document.getElementById('logoUpdate').addEventListener('click', function(event) 
         feedbackDiv.textContent = ''; // Clear any previous error message
     }
 });
-
-
 
 /*
     CHECKOUT PAGE

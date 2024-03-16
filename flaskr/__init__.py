@@ -339,14 +339,15 @@ def change_restaurant_name():
     # Ensure restaurant are not blank
     restaurant_name = request.form.get("restaurant_name")
     if restaurant_name == "":
-        return abort(405)
+        flash("Restaurant name cannot be blank", "danger")
+        return redirect(url_for("admin_settings"))
     
     # Changeing restaurant name in database and session
     restaurant = Restaurant.query.filter_by(owner_id=session["owner_id"]).first()
     restaurant.name = restaurant_name
     session["restaurant_name"] = request.form.get("restaurant_name")
-    session["name_alert"] = True
     db.session.commit()
+    flash("Restaurant name has been changed", "success")
     return redirect(url_for("admin_settings"))
 
 @app.route("/admin/change-password", methods=["POST"])
@@ -360,10 +361,9 @@ def change_password():
         owner = Owner.query.filter_by(email=session["owner_email"]).first()
         owner.password = generate_password_hash(new_password)
         db.session.commit()
-        session["password_alert"] = True
+        flash("Your password has been successfully changed.", "success")
     else:
-        session["password_alert"] = False
-
+        flash("Failed to change password. Please make sure your current password is correct and the new passwords match.", "danger")
     return redirect(url_for("admin_settings"))
     
 @app.route("/admin/add-item", methods=["POST"])
@@ -432,7 +432,7 @@ def background_photo():
         return redirect(url_for("admin_settings"))
     return redirect(url_for("admin_settings"))
 
-@app.route("/admin/update-logo", methods=["POST"])
+@app.route("/admin/update-logo", methods=["GET"])
 @owner_required
 def logo_photo():
     # check if the post request has the file part
@@ -450,5 +450,4 @@ def logo_photo():
         restaurant = Restaurant.query.filter_by(owner_id=session["owner_id"]).first()
         restaurant.icon_image = "/static/uploads/" + filename
         db.session.commit()
-        return redirect(url_for("admin_settings"))
     return redirect(url_for("admin_settings"))

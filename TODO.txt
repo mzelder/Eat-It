@@ -1,4 +1,4 @@
 TODO
-- Adding image and description to items
-- Fixing rounding in total price in shoping cart
+- Adding image to items
+- Number rounding bug | shopping cart
 - going back from menu page to the delivery page without need to click previos pages

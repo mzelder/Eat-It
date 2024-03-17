@@ -423,15 +423,14 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route("/admin/update-background", methods=["POST"])
+@app.route("/admin/update-image/<image_type>", methods=["POST"])
 @owner_required
-def background_photo():
-    # check if the post request has the file part
+def update_image(image_type):
+    # Check if the post request has the file part
     if 'file' not in request.files:
         return redirect(request.url)
     file = request.files['file']
-    # If the user does not select a file, the browser submits an
-    # empty file without a filename.
+    # If the user does not select a file, the browser submits an empty file without a filename.
     if file.filename == '':
         return redirect(request.url)
     if file and allowed_file(file.filename):
@@ -439,28 +438,13 @@ def background_photo():
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         # Add photo to the database
         restaurant = Restaurant.query.filter_by(owner_id=session["owner_id"]).first()
-        restaurant.background_image = "/static/uploads/" + filename
+        if image_type == "background":
+            restaurant.background_image = "/static/uploads/" + filename
+        elif image_type == "logo":
+            restaurant.icon_image = "/static/uploads/" + filename
+        else:
+            flash("Invalid image type.", "danger")
+            return redirect(request.url)
         db.session.commit()
-        flash("Your background image has been successfully changed.", "success")
-    return redirect(url_for("admin_settings"))
-
-@app.route("/admin/update-logo", methods=["POST"])
-@owner_required
-def logo_photo():
-    # check if the post request has the file part
-    if 'file' not in request.files:
-        return redirect(request.url)
-    file = request.files['file']
-    # If the user does not select a file, the browser submits an
-    # empty file without a filename.
-    if file.filename == '':
-        return redirect(request.url)
-    if file and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        # Add photo to the database
-        restaurant = Restaurant.query.filter_by(owner_id=session["owner_id"]).first()
-        restaurant.icon_image = "/static/uploads/" + filename
-        db.session.commit()
-        flash("Your logo image has been successfully changed.", "success")
+        flash(f"Your {image_type} image has been successfully changed.", "success")
     return redirect(url_for("admin_settings"))

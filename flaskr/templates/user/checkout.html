@@ -146,11 +146,11 @@
                 By clicking on ORDER & PAY WITH PAYU you agree with the contents of the shopping cart, 
                 the data you filled out, our <span class="underline-exist cursor-pointer">privacy statement</span> and <span class="underline-exist cursor-pointer">terms of use</span>.
             </p>
-            <button class="btn btn-lg bg-green rounded-5 mt-3 mb-4 ms-3 w-50">Order & pay with PayU (${{  session.get("total_price")  }}) </button>
+            <button class="btn btn-lg bg-green rounded-5 mt-3 mb-4 ms-3 w-50">Order & pay with PayU (${{  "%.2f"|format(session.get("total_price"))  }}) </button>
         </div>
         <!-- Shopping cart -->
         <div class="col-3 text-center p-3 position-relative shadow-lg" id="shoppingCart">
-            <div class=" shopping-cart text-center p-5">
+            <div class="shopping-cart text-center p-5">
                 <h4>Basket</h4>
                 {% if session.get('shopping_cart') %}
                     {% for item in session.get('shopping_cart') %}
@@ -162,7 +162,7 @@
                                 <p class="fw-bold">{{  item.name  }}</p>
                                 <p class="fw-bold">{{  item.description  }}</p>
                             </div>
-                            <div class="col text-end">${{  item.total_price  }}</div>
+                            <div class="col text-end">${{  "%.2f"|format(item.total_price)  }}</div>
                         </div>
                         <hr>
                     {% endfor %}
@@ -172,7 +172,7 @@
                             <p class="fw-bold">Total</p>
                         </div>
                         <div class="col text-end">
-                            <p class="fw-bold">${{  session.get("total_price")  }}</p>
+                            <p class="fw-bold">${{  "%.2f"|format(session.get("total_price"))  }}</p>
                         </div>
                     </div>
                 {% else %}

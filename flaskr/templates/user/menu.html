@@ -25,7 +25,7 @@
         </div>
         <!-- Shopping cart -->
         <div class="col-3 text-center p-3 position-relative" id="shoppingCart">
-            <div class=" shopping-cart text-center p-5">
+            <div class="shopping-cart text-center p-5">
                 <h4>Basket</h4>
                 {% if session.get('shopping_cart') %}
                     {% for item in session.get('shopping_cart') %}
@@ -38,7 +38,7 @@
                                 <p class="fw-bold">  {{  item.description  }}</p>
                             </div>
                             <div class="col text-end">
-                                <p>${{  item.total_price  }}</p>
+                                <p>${{  "%.2f"|format(item.total_price)  }}</p>
                             </div>
                         </div>
                         <div class="row">
@@ -68,14 +68,14 @@
                             <p class="fw-bold">Total</p>
                         </div>
                         <div class="col text-end">
-                            <p class="fw-bold">${{  session.get("total_price")  }}</p>
+                            <p class="fw-bold">${{  "%.2f"|format(session.get("total_price"))  }}</p>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col text-start">
                             <form action="{{  url_for('checkout', restaurant_name=session.get('last_restaurant'))  }}" method="POST">
                                 <button type="submit" class="btn bg-green rounded-5 p-2 w-100">
-                                    <div class="fw-bold">Checkout (${{  session.get("total_price")  }})</div>
+                                    <div class="fw-bold">Checkout (${{  "%.2f"|format(session.get("total_price"))  }})</div>
                                 </button>
                             </form> 
                         </div>
@@ -128,7 +128,7 @@
                                     <p>{{  item.description  }}</p>
                                     <form action="{{  url_for('increase_quantity', id=item.id  )}}" method="POST">
                                         <button type="submit" class="btn bg-green rounded-2">
-                                            ${{  item.price  }}
+                                            ${{  "%.2f"|format(item.price)  }}
                                         </button>
                                     </form>
                                 </div>

@@ -234,3 +234,6 @@ document.getElementById("paymentBtn").addEventListener("click", function() {
         paymentMethodText.textContent = "Credit Card";
     }
 });
+
+// Going back to the delivery path from menu after clicking back button in web browser
+

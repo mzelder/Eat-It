@@ -121,7 +121,7 @@
                     <div class="col">
                         <h4 class="fw-bold">{{  category  }}</h4>
                         {% for item in items %}
-                        <div class="container menu-item mt-3 p-4 pb-2 border rounded-2" style="background-color: white;">
+                        <div class="container menu-item mt-3 p-4 border rounded-2" style="background-color: white;">
                             <div class="row">
                                 <div class="col">
                                     <h5 class="fw-bold">{{ item.name }}</h5>
@@ -132,8 +132,8 @@
                                         </button>
                                     </form>
                                 </div>
-                                <div class="col-3 text-center">
-                                    <img class="rounded-3" src="/static/images/doner-kebab-gyro-chicken-pizza-doner-kebap-de580f3a9871548de8cec064a0691ecf.png" width="150px">
+                                <div class="col-3 text-center d-flex align-items-center position-relative">
+                                    <img class="rounded-3" src="{{  item.image_path  }}" style="width: 150px; height: 100px; object-fit: cover;">
                                 </div>
                             </div>
                         </div>

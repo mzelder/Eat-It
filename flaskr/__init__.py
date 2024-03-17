@@ -373,18 +373,31 @@ def add_item():
     price = request.form.get("price")
     category = request.form.get("category")
     description = request.form.get("description")
-    image = request.form.get("image")
     restaurant_id = session["owner_id"]
 
     #Ensure price meet regex pattern
     if not re.match(r"^(?!0\d)\d+\.\d{2}$", price):
-        return abort(405)
+        return abort(403)
 
     # Ensure all informations are given
     if not all([name, price, category, description]):
-        return abort(405)
-    
+        return abort(403)
+
     item = Items(name=name, price=price, category=category, description=description, restaurant_id=restaurant_id)
+
+    # Ensure image is given
+    if 'file' not in request.files:
+        return redirect(request.url)
+    file = request.files['file']
+    # If the user does not select a file, the browser submits an empty file without a filename.
+    if file.filename == '':
+        return redirect(request.url)
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        # Add photo to the database
+        item.image_path = "/static/uploads/" + filename
+
     db.session.add(item)
     db.session.commit()
     return redirect(url_for("admin_menu"))
@@ -393,20 +406,37 @@ def add_item():
 @owner_required
 def edit_item():
     item_id = request.form.get("item_id")
-    name = request.form.get("item_name")
-    price = request.form.get("price")
-    description = request.form.get("description")
-    category = request.form.get("category")
+    name = request.form.get("item_name", None)
+    price = request.form.get("price", None)
+    description = request.form.get("description", None)
+    category = request.form.get("category", None)
 
     #Ensure price meet regex pattern
-    if not re.match(r"^(?!0\d)\d+\.\d{2}$", price):
-        return abort(405)
+    if price and not re.match(r"^(?!0\d)\d+\.\d{2}$", price):
+        return abort(403)
 
     item = Items.query.filter_by(id=item_id).first()
-    item.name = name
-    item.price = price
-    item.category = category
-    item.description = description
+
+    # Check for file upload without making it mandatory
+    file = request.files.get('file', None)
+    if file and file.filename:
+        if not allowed_file(file.filename):
+            return abort(400)  # Unsupported file type
+        filename = secure_filename(file.filename)
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file.save(file_path)
+        item.image_path = "/static/uploads/" + filename
+
+    # Only update fields if they are provided
+    if name != "":
+        item.name = name
+    if price != "":
+        item.price = price
+    if description != "":
+        item.description = description
+    if category != "":
+        item.category = category
+    
     db.session.commit()
     return redirect(url_for("admin_menu"))
 

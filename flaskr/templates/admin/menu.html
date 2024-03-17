@@ -10,18 +10,31 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="/admin/add-item" method="POST">
+                    <form action="/admin/add-item" method="POST" class="needs-validation" novalidate>
                         <div class="mt-3">
                             <label class="form-label fw-bold">Item name</label>
-                            <input name="item_name" type="text" class="form-control" placeholder="e.g. Pizza" > 
+                            <input name="item_name" type="text" class="form-control" placeholder="e.g. Pizza" required> 
+                            <div class="invalid-feedback">Please complete mandatory field.</div>
                         </div>
                         <div class="mt-3">
                             <label class="form-label fw-bold">Price</label>
-                            <input name="price" type="text" class="form-control" placeholder="e.g. 10.00"> 
+                            <input name="price" type="text" class="form-control" placeholder="In format: 25.50 or 100.00" pattern="^^(?!0\d)\d+\.\d{2}$" required> 
+                            <div class="invalid-feedback">Price should be in format: 25.50 or 100.00</div>
                         </div>
                         <div class="mt-3">
                             <label class="form-label fw-bold">Category</label>
-                            <input name="category" type="text" class="form-control" placeholder="e.g. Dinner" > 
+                            <input name="category" type="text" class="form-control" placeholder="e.g. Pizzas" required> 
+                            <div class="invalid-feedback">Please complete mandatory field.</div>
+                        </div>
+                        <div class="mt-3">
+                            <label class="form-label fw-bold">Description</label>
+                            <input name="description" type="text" class="form-control" placeholder="e.g. marinara sauce, mozzarella, salami, red onion" required> 
+                            <div class="invalid-feedback">Please complete mandatory field.</div>
+                        </div>
+                        <div class="mt-3">
+                            <label class="form-label fw-bold">Item Image</label>
+                            <input id="itemInput" class="w-100" type="file" name="file" accept=".png, .jpg, .jpeg" required>
+                            <div class="invalid-feedback">Please complete mandatory field.</div>
                         </div>
                         <button type="submit" class="btn bg-green mt-3 w-100 rounded-5 mt-5">Add</button>
                     </form>
@@ -40,19 +53,29 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="/admin/edit-item" method="POST">
+                <form action="/admin/edit-item" method="POST" class="needs-validation" novalidate>
                     <input type="hidden" name="item_id" value="{{ item.id }}">
                     <div class="mt-3">
                         <label class="form-label fw-bold">Item name</label>
-                        <input name="item_name" type="text" class="form-control" placeholder="e.g. Pizza" > 
+                        <input name="item_name" type="text" class="form-control" placeholder="e.g. Pizza" required> 
                     </div>
                     <div class="mt-3">
                         <label class="form-label fw-bold">Price</label>
-                        <input name="price" type="text" class="form-control" placeholder="e.g. 10.00"> 
+                        <input name="price" type="text" class="form-control" placeholder="In format: 25.50 or 100.00" pattern="^^(?!0\d)\d+\.\d{2}$" required> 
                     </div>
                     <div class="mt-3">
                         <label class="form-label fw-bold">Category</label>
-                        <input name="category" type="text" class="form-control" placeholder="e.g. Dinner" > 
+                        <input name="category" type="text" class="form-control" placeholder="e.g. Dinner" required> 
+                    </div>
+                    <div class="mt-3">
+                        <label class="form-label fw-bold">Description</label>
+                        <input name="description" type="text" class="form-control" placeholder="e.g. marinara sauce, mozzarella, salami, red onion" required> 
+                        <div class="invalid-feedback">Please complete mandatory field.</div>
+                    </div>
+                    <div class="mt-3">
+                        <label class="form-label fw-bold">Item Image</label>
+                        <input id="itemInput" class="w-100" type="file" name="file" accept=".png, .jpg, .jpeg" required>
+                        <div class="invalid-feedback">Please complete mandatory field.</div>
                     </div>
                     <button type="submit" class="btn bg-green mt-3 w-100 rounded-5 mt-5">Update</button>
                 </form>
@@ -104,6 +127,8 @@
                     <th scope="col">Name</th>
                     <th scope="col">Price</th>
                     <th scope="col">Categories</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Image</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -113,6 +138,8 @@
                     <th scope="row" style="color: #83B271;">{{ item.name }}</th>
                     <td>${{ item.price }}</td>
                     <td>{{ item.category }}</td>
+                    <td style="max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{  item.description  }}</td>
+                    <td>Image</td>
                     <td class="text-center">
                         <button class="btn bg-green" type="button" id="{{  item.id  }}" data-bs-toggle="modal" data-bs-target="#editItem{{  item.id  }}">
                             Edit

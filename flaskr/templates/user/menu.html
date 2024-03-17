@@ -55,6 +55,7 @@
                                 <p class="d-inline-block ps-3 pe-3">{{  item.quantity  }}</p>
                                 <form action="{{  url_for('increase_quantity', id=item.id  )}}" method="POST" class="d-inline-block">
                                     <button type="submit" class="btn restaurant-button rounded-5 p-2">
+                                        <img src="/static/images/plus.png" width="20px">
                                     </button>
                                 </form>
                             </div>

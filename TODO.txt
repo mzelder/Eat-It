@@ -1,2 +1,4 @@
-# Done
-restaurant icon update -> update should show message or redirect to settings side, not redirecting 
+TODO
+- Adding image and description to items
+- Fixing rounding in total price in shoping cart
+- going back from menu page to the delivery page without need to click previos pages

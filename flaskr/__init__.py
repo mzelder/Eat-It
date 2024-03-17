@@ -372,13 +372,19 @@ def add_item():
     name = request.form.get("item_name")
     price = request.form.get("price")
     category = request.form.get("category")
+    description = request.form.get("description")
+    image = request.form.get("image")
     restaurant_id = session["owner_id"]
 
+    #Ensure price meet regex pattern
+    if not re.match(r"^(?!0\d)\d+\.\d{2}$", price):
+        return abort(405)
+
     # Ensure all informations are given
-    if not all([name, price, category]):
+    if not all([name, price, category, description]):
         return abort(405)
     
-    item = Items(name=name, price=price, category=category, restaurant_id=restaurant_id)
+    item = Items(name=name, price=price, category=category, description=description, restaurant_id=restaurant_id)
     db.session.add(item)
     db.session.commit()
     return redirect(url_for("admin_menu"))
@@ -389,12 +395,18 @@ def edit_item():
     item_id = request.form.get("item_id")
     name = request.form.get("item_name")
     price = request.form.get("price")
+    description = request.form.get("description")
     category = request.form.get("category")
+
+    #Ensure price meet regex pattern
+    if not re.match(r"^(?!0\d)\d+\.\d{2}$", price):
+        return abort(405)
 
     item = Items.query.filter_by(id=item_id).first()
     item.name = name
     item.price = price
     item.category = category
+    item.description = description
     db.session.commit()
     return redirect(url_for("admin_menu"))
 
@@ -429,10 +441,10 @@ def background_photo():
         restaurant = Restaurant.query.filter_by(owner_id=session["owner_id"]).first()
         restaurant.background_image = "/static/uploads/" + filename
         db.session.commit()
-        return redirect(url_for("admin_settings"))
+        flash("Your background image has been successfully changed.", "success")
     return redirect(url_for("admin_settings"))
 
-@app.route("/admin/update-logo", methods=["GET"])
+@app.route("/admin/update-logo", methods=["POST"])
 @owner_required
 def logo_photo():
     # check if the post request has the file part
@@ -450,4 +462,5 @@ def logo_photo():
         restaurant = Restaurant.query.filter_by(owner_id=session["owner_id"]).first()
         restaurant.icon_image = "/static/uploads/" + filename
         db.session.commit()
+        flash("Your logo image has been successfully changed.", "success")
     return redirect(url_for("admin_settings"))

@@ -33,12 +33,6 @@ setTimeout(() => {
 });
 
 
-// Address finder
-let autocomplete;
-function initMap() {
-    autocomplete = new google.maps.places.Autocomplete(document.getElementById("autocomplete"));
-}
-
 
 function scrollToTop() {
     window.scrollTo({
@@ -47,90 +41,96 @@ function scrollToTop() {
     });
 }
 
-// BACKGROUND IMAGE VALIDATION 
-// prevent form submission if image dimensions are not okay
-document.getElementById('backgroundInput').addEventListener('change', function(event) {
-    const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const img = new Image();
-            img.onload = function() {
-                const width = img.naturalWidth;
-                const height = img.naturalHeight;
-                const feedbackElement = document.getElementById('dimensionFeedback');
-                if (height >= 200 && width >= 100) {
-                    feedbackElement.textContent = ''; // Clear feedback if dimensions are okay
-                } else {
-                    feedbackElement.textContent = 'Image width and height must be equal or bigger than 200px';
-                    event.target.value = ''; // Reset file input
-                }
+
+if (window.location.pathname === "/admin/settings") {
+    // BACKGROUND IMAGE VALIDATION 
+    // prevent form submission if image dimensions are not okay
+    document.getElementById('backgroundInput').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const width = img.naturalWidth;
+                    const height = img.naturalHeight;
+                    const feedbackElement = document.getElementById('dimensionFeedback');
+                    if (height >= 200 && width >= 100) {
+                        feedbackElement.textContent = ''; // Clear feedback if dimensions are okay
+                    } else {
+                        feedbackElement.textContent = 'Image width and height must be equal or bigger than 200px';
+                        event.target.value = ''; // Reset file input
+                    }
+                };
+                img.src = e.target.result;
             };
-            img.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-    }
-});
+            reader.readAsDataURL(file);
+        }
+    });
 
-// prevent form submission if image is not selected
-document.getElementById('backgroundUpdate').addEventListener('click', function(event) {
-    var imageInput = document.getElementById('backgroundInput');
-    var feedbackDiv = document.getElementById('dimensionFeedback');
+    // prevent form submission if image is not selected
+    document.getElementById('backgroundUpdate').addEventListener('click', function(event) {
+        var imageInput = document.getElementById('backgroundInput');
+        var feedbackDiv = document.getElementById('dimensionFeedback');
 
-    if (imageInput.files.length === 0) {
-        event.preventDefault(); // Stop the form from submitting
-        feedbackDiv.textContent = 'Please choose an image before updating.'; // Display error message
-    } else {
-        feedbackDiv.textContent = ''; // Clear any previous error message
-    }
-});
+        if (imageInput.files.length === 0) {
+            event.preventDefault(); // Stop the form from submitting
+            feedbackDiv.textContent = 'Please choose an image before updating.'; // Display error message
+        } else {
+            feedbackDiv.textContent = ''; // Clear any previous error message
+        }
+    });
 
-// LOGO IMAGE VALIDATION 
-// prevent form submission if image dimensions are not okay
-document.getElementById('logoInput').addEventListener('change', function(event) {
-    const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const img = new Image();
-            img.onload = function() {
-                const width = img.naturalWidth;
-                const height = img.naturalHeight;
-                const feedbackElement = document.getElementById('dimensionFeedback2');
-                if (height >= 80 && width >= 80) {
-                    feedbackElement.textContent = ''; // Clear feedback if dimensions are okay
-                    console.log('Image dimensions are okay');
-                } else {
-                    feedbackElement.textContent = 'Image width and height must be equal or bigger than 80px';
-                    event.target.value = ''; // Reset file input
-                }
+    // LOGO IMAGE VALIDATION 
+    // prevent form submission if image dimensions are not okay
+    document.getElementById('logoInput').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const width = img.naturalWidth;
+                    const height = img.naturalHeight;
+                    const feedbackElement = document.getElementById('dimensionFeedback2');
+                    if (height >= 80 && width >= 80) {
+                        feedbackElement.textContent = ''; // Clear feedback if dimensions are okay
+                        console.log('Image dimensions are okay');
+                    } else {
+                        feedbackElement.textContent = 'Image width and height must be equal or bigger than 80px';
+                        event.target.value = ''; // Reset file input
+                    }
+                };
+                img.src = e.target.result;
             };
-            img.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-    }
-});
+            reader.readAsDataURL(file);
+        }
+    });
 
-// prevent form submission if image is not selected
-document.getElementById('logoUpdate').addEventListener('click', function(event) {
-    var imageInput = document.getElementById('logoInput');
-    var feedbackDiv = document.getElementById('dimensionFeedback2');
+    // prevent form submission if image is not selected
+    document.getElementById('logoUpdate').addEventListener('click', function(event) {
+        var imageInput = document.getElementById('logoInput');
+        var feedbackDiv = document.getElementById('dimensionFeedback2');
 
-    if (imageInput.files.length === 0) {
-        event.preventDefault(); // Stop the form from submitting
-        feedbackDiv.textContent = 'Please choose an image before updating.'; // Display error message
-    } else {
-        feedbackDiv.textContent = ''; // Clear any previous error message
-    }
-});
+        if (imageInput.files.length === 0) {
+            event.preventDefault(); // Stop the form from submitting
+            feedbackDiv.textContent = 'Please choose an image before updating.'; // Display error message
+        } else {
+            feedbackDiv.textContent = ''; // Clear any previous error message
+        }
+    });
+}
 
 /*
     CHECKOUT PAGE
 */
 
-document.addEventListener('DOMContentLoaded', function() {
-    getTimes();
-});
+if (window.location.pathname === "/checkout") {
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log("DONE");
+        getTimes();
+    });
+}
 
 function getTimes() {
     // generating time values for the select element
@@ -174,66 +174,67 @@ function getTimes() {
     });
 }
 
-// Updating delivery time on checkout page
-document.getElementById("timeBtn").addEventListener("click", function() {
-    var time = document.getElementById("specifyTime").value;
-    var deliveryTime = document.getElementById("deliveryTime");
-    deliveryTime.textContent = time;
-});
+if (window.pathname === "/checkout") {
+    // Updating delivery time on checkout page
+    document.getElementById("timeBtn").addEventListener("click", function() {
+        var time = document.getElementById("specifyTime").value;
+        var deliveryTime = document.getElementById("deliveryTime");
+        deliveryTime.textContent = time;
+    });
 
-// Showing with payment method is selected
-document.getElementById("payu").addEventListener("click", function() {
-    var payuIcon = document.getElementById("payuIcon");
-    var cashIcon = document.getElementById("cashIcon");
-    var cardIcon = document.getElementById("cardIcon");
+    // Showing with payment method is selected
+    document.getElementById("payu").addEventListener("click", function() {
+        var payuIcon = document.getElementById("payuIcon");
+        var cashIcon = document.getElementById("cashIcon");
+        var cardIcon = document.getElementById("cardIcon");
 
-    payuIcon.style.visibility = "visible";
-    cashIcon.style.visibility = "hidden";
-    cardIcon.style.visibility = "hidden";
-});
+        payuIcon.style.visibility = "visible";
+        cashIcon.style.visibility = "hidden";
+        cardIcon.style.visibility = "hidden";
+    });
 
-document.getElementById("cash").addEventListener("click", function() {
-    var payuIcon = document.getElementById("payuIcon");
-    var cashIcon = document.getElementById("cashIcon");
-    var cardIcon = document.getElementById("cardIcon");
+    document.getElementById("cash").addEventListener("click", function() {
+        var payuIcon = document.getElementById("payuIcon");
+        var cashIcon = document.getElementById("cashIcon");
+        var cardIcon = document.getElementById("cardIcon");
 
-    payuIcon.style.visibility = "hidden";
-    cashIcon.style.visibility = "visible";
-    cardIcon.style.visibility = "hidden";
-});
+        payuIcon.style.visibility = "hidden";
+        cashIcon.style.visibility = "visible";
+        cardIcon.style.visibility = "hidden";
+    });
 
-document.getElementById("card").addEventListener("click", function() {
-    var payuIcon = document.getElementById("payuIcon");
-    var cashIcon = document.getElementById("cashIcon");
-    var cardIcon = document.getElementById("cardIcon");
+    document.getElementById("card").addEventListener("click", function() {
+        var payuIcon = document.getElementById("payuIcon");
+        var cashIcon = document.getElementById("cashIcon");
+        var cardIcon = document.getElementById("cardIcon");
 
-    payuIcon.style.visibility = "hidden";
-    cashIcon.style.visibility = "hidden";
-    cardIcon.style.visibility = "visible";
-});
+        payuIcon.style.visibility = "hidden";
+        cashIcon.style.visibility = "hidden";
+        cardIcon.style.visibility = "visible";
+    });
 
-// Updating payment method on checkout page
-document.getElementById("paymentBtn").addEventListener("click", function() {
-    var paymentMethodImg = document.getElementById("paymentMethodImg");
-    var paymentMethodText = document.getElementById("paymentMethodText");
+    // Updating payment method on checkout page
+    document.getElementById("paymentBtn").addEventListener("click", function() {
+        var paymentMethodImg = document.getElementById("paymentMethodImg");
+        var paymentMethodText = document.getElementById("paymentMethodText");
 
-    var payuIcon = document.getElementById("payuIcon");
-    var cashIcon = document.getElementById("cashIcon");
-    var cardIcon = document.getElementById("cardIcon");
+        var payuIcon = document.getElementById("payuIcon");
+        var cashIcon = document.getElementById("cashIcon");
+        var cardIcon = document.getElementById("cardIcon");
 
-    if (payuIcon.style.visibility == "visible") {
-        paymentMethodImg.src = "/static/images/payu.png";
-        paymentMethodText.textContent = "PayU";
-    }
-    else if (cashIcon.style.visibility == "visible") {
-        paymentMethodImg.src = "/static/images/money1.png";
-        paymentMethodText.textContent = "Cash";
-    }
-    else if (cardIcon.style.visibility == "visible") {
-        paymentMethodImg.src = "/static/images/card1.png";
-        paymentMethodText.textContent = "Credit Card";
-    }
-});
-
+        if (payuIcon.style.visibility == "visible") {
+            paymentMethodImg.src = "/static/images/payu.png";
+            paymentMethodText.textContent = "PayU";
+        }
+        else if (cashIcon.style.visibility == "visible") {
+            paymentMethodImg.src = "/static/images/money1.png";
+            paymentMethodText.textContent = "Cash";
+        }
+        else if (cardIcon.style.visibility == "visible") {
+            paymentMethodImg.src = "/static/images/card1.png";
+            paymentMethodText.textContent = "Credit Card";
+        }
+    });
+}
 // Going back to the delivery path from menu after clicking back button in web browser
 

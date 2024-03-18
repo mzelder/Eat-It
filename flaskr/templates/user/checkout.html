@@ -19,69 +19,72 @@
     <div class="row">
         <!-- Informations, address, etc -->
         <div class="col ps-5">
-            <div class="container p-3 mt-4">
-                <h2 class="fw-bold">Checkout</h2>
-                <p class="fw-light">{{  restaurant.name  }}</p>
-            </div>
+            <form class="needs-validation" action="{{  url_for('order_confirm')  }}" method="POST" novalidate="novalidate">
+                <div class="container p-3 mt-4">
+                    <h2 class="fw-bold">Checkout</h2>
+                    <p class="fw-light">{{  restaurant.name  }}</p>
+                </div>
             <div class="container p-3 pb-0 border rounded-4">
                 <h5 class="ps-3">Delivery address</h5>
                 <div class="row p-3 pb-0">
                     <div class="col">
-                        <form class="form-floating" action="/" method="POST" novalidate="novalidate">
-                            <!-- Street name -->
-                            <div class="mb-3">
-                                <label for="street_name" class="form-label" style="font-weight: 500;">Street name</label>
-                                <input name="street_name" type="text" class="form-control" id="street_name" placeholder="Type street name" autocomplete="off">
-                            </div>
-                            <!-- Nip (optional) -->
-                            <div class="mb-3">
-                                <label for="nip" class="form-label" style="font-weight: 500;">NIP (optional)</label>
-                                <input name="nip" type="text" class="form-control" id="nip" placeholder="Type your NIP">
-                            </div>
-                            <!-- City -->
-                            <div class="mb-3">
-                                <label for="city" class="form-label" style="font-weight: 500;">City</label>
-                                <input name="city" type="text" class="form-control" id="city" placeholder="Type your city">
-                            </div>
-                            <!-- Floor (optional) -->
-                            <div class="mb-3">
-                                <label for="floor" class="form-label" style="font-weight: 500;">Floor (optional)</label>
-                                <input name="floor" type="text" class="form-control" id="floor" placeholder="Type floor number">
-                            </div>
-                            <!-- Company name (optional) -->
-                            <div>
-                                <label for="company_name" class="form-label" style="font-weight: 500;">Company name (optional)</label>
-                                <input name="company_name" type="text" class="form-control" id="company_name" placeholder="Type company name">
-                            </div>
+                        <!-- Street name -->
+                        <div class="mb-3">
+                            <label for="street_name" class="form-label" style="font-weight: 500;">Street name</label>
+                            <input name="street_name" type="text" class="form-control" id="street_name" placeholder="Type street name" autocomplete="off" required>
+                            <div class="invalid-feedback">Please complete mandatory field.</div>
                         </div>
-                        <div class="col">
-                            <!-- House number -->
-                            <div class="mb-3">
-                                <label for="house_number" class="form-label" style="font-weight: 500;">House number</label>
-                                <input name="house_number" type="text" class="form-control" id="house_number" placeholder="Type house number">
-                            </div>
-                            <!-- Access code (optional) -->
-                            <div class="mb-3">
-                                <label for="access_code" class="form-label" style="font-weight: 500;">Access code (optional)</label>
-                                <input name="access_code" type="text" class="form-control" id="access_code" placeholder="Type access code number">
-                            </div>
-                            <!-- Flat number (optional) -->
-                            <div class="mb-3">
-                                <label for="flat_number" class="form-label" style="font-weight: 500;">Flat number (optional)</label>
-                                <input name="flat_number" type="text" class="form-control" id="flat_number" placeholder="Type flat number">
-                            </div>
-                            <!-- Postcode -->
-                            <div class="mb-3">
-                                <label for="postcode" class="form-label" style="font-weight: 500;">Postcode</label>
-                                <input name="postcode" type="text" class="form-control" id="postcode" placeholder="Type your postal code">
-                            </div>
-                            <!-- Add note (optional) -->
-                            <div>
-                                <label for="add_note" class="form-label" style="font-weight: 500;">Add note (optional)</label>
-                                <input name="add_note" type="text" class="form-control" id="add_note" placeholder="i.e Please don't ring the bell. Baby is sleeping.">
-                            </div>
+                        <!-- Nip (optional) -->
+                        <div class="mb-3">
+                            <label for="nip" class="form-label" style="font-weight: 500;">NIP (optional)</label>
+                            <input name="nip" type="text" class="form-control" id="nip" placeholder="Type your NIP">
                         </div>
-                    </form>
+                        <!-- City -->
+                        <div class="mb-3">
+                            <label for="city" class="form-label" style="font-weight: 500;">City</label>
+                            <input name="city" type="text" class="form-control" id="city" placeholder="Type your city" required>
+                            <div class="invalid-feedback">Please complete mandatory field.</div>
+                        </div>
+                        <!-- Floor (optional) -->
+                        <div class="mb-3">
+                            <label for="floor" class="form-label" style="font-weight: 500;">Floor (optional)</label>
+                            <input name="floor" type="text" class="form-control" id="floor" placeholder="Type floor number">
+                        </div>
+                        <!-- Company name (optional) -->
+                        <div>
+                            <label for="company_name" class="form-label" style="font-weight: 500;">Company name (optional)</label>
+                            <input name="company_name" type="text" class="form-control" id="company_name" placeholder="Type company name">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <!-- House number -->
+                        <div class="mb-3">
+                            <label for="house_number" class="form-label" style="font-weight: 500;">House number</label>
+                            <input name="house_number" type="text" class="form-control" id="house_number" placeholder="Type house number" required>
+                            <div class="invalid-feedback">Please complete mandatory field.</div>
+                        </div>
+                        <!-- Access code (optional) -->
+                        <div class="mb-3">
+                            <label for="access_code" class="form-label" style="font-weight: 500;">Access code (optional)</label>
+                            <input name="access_code" type="text" class="form-control" id="access_code" placeholder="Type access code number">
+                        </div>
+                        <!-- Flat number (optional) -->
+                        <div class="mb-3">
+                            <label for="flat_number" class="form-label" style="font-weight: 500;">Flat number (optional)</label>
+                            <input name="flat_number" type="text" class="form-control" id="flat_number" placeholder="Type flat number">
+                        </div>
+                        <!-- Postcode -->
+                        <div class="mb-3">
+                            <label for="postcode" class="form-label" style="font-weight: 500;">Postcode</label>
+                            <input name="postcode" type="text" class="form-control" id="postcode" placeholder="Type your postal code e.g 00-525" pattern="^\d{2}-\d{3}$" required>
+                            <div class="invalid-feedback">Please enter a valid postal code in the format 12-123.</div>
+                        </div>
+                        <!-- Add note (optional) -->
+                        <div>
+                            <label for="add_note" class="form-label" style="font-weight: 500;">Add note (optional)</label>
+                            <input name="add_note" type="text" class="form-control" id="add_note" placeholder="i.e Please don't ring the bell. Baby is sleeping.">
+                        </div>
+                    </div>
                 </div>
                 <hr>
                 <h5 class="ps-3">Personal Details</h5>
@@ -90,19 +93,22 @@
                         <!-- First and last name -->
                         <div class="mb-3">
                             <label for="first_last_name" class="form-label" style="font-weight: 500;">First and last name</label>
-                            <input name="first_last_name" type="text" class="form-control" id="first_last_name" placeholder="Type your first and last name">
+                            <input name="first_last_name" type="text" class="form-control" id="first_last_name" placeholder="Type your first and last name" pattern="^\w+ \w+$" required>
+                            <div class="invalid-feedback">Please complete mandatory field.</div>
                         </div>
                         <!-- Phone number -->
                         <div>
                             <label for="phone_number" class="form-label" style="font-weight: 500;">Phone Number</label>
-                            <input name="phone_number" type="text" class="form-control" id="phone_number" placeholder="Type your phone number">
+                            <input name="phone_number" type="text" class="form-control" id="phone_number"  placeholder="e.g. +48 000 000 000"  pattern="^\+\d{2} \d{3} \d{3} \d{3}$" required>
+                            <div class="invalid-feedback">Please enter your phone number in the format: +48 000 000 000</div>
                         </div>
                     </div>
                     <div class="col">
                         <!-- E-mail -->
                         <div>
                             <label for="email" class="form-label" style="font-weight: 500;">E-mail</label>
-                            <input name="email" type="email" class="form-control" id="email" placeholder="Type your email">
+                            <input name="email" type="email" class="form-control" id="email" placeholder="Type your email" required>
+                            <div class="invalid-feedback">Please complete mandatory field.</div>
                         </div>
                     </div>
                     <p class="fw-light mt-2" style="font-size: smaller;">When placing an order, you will receive a confirmation, 
@@ -112,7 +118,7 @@
                 </div>
             </div>
             <!-- Delivery time -->
-            <button class="btn checkout-hover border rounded-4 mt-4 w-100" data-bs-toggle="modal" data-bs-target="#deliverTime" id="deliveryTimeButton">
+            <button type="button" class="btn checkout-hover border rounded-4 mt-4 w-100" data-bs-toggle="modal" data-bs-target="#deliverTime" id="deliveryTimeButton">
                 <div class="row">
                     <div class="col-1 d-flex align-items-center justify-content-center">
                         <img src="/static/images/clock.png" width="30px">
@@ -124,7 +130,7 @@
                 </div>
             </button>
             <!-- Payment -->
-            <button class="btn checkout-hover border rounded-4 mt-2 w-100" data-bs-toggle="modal" data-bs-target="#paymentMethod">
+            <button type="button" class="btn checkout-hover border rounded-4 mt-2 w-100" data-bs-toggle="modal" data-bs-target="#paymentMethod">
                 <div class="row">
                     <div class="col-1 d-flex align-items-center justify-content-center">
                         <img id="paymentMethodImg" src="/static/images/payu.png" width="40px">
@@ -146,8 +152,9 @@
                 By clicking on ORDER & PAY WITH PAYU you agree with the contents of the shopping cart, 
                 the data you filled out, our <span class="underline-exist cursor-pointer">privacy statement</span> and <span class="underline-exist cursor-pointer">terms of use</span>.
             </p>
-            <button class="btn btn-lg bg-green rounded-5 mt-3 mb-4 ms-3 w-50">Order & pay with PayU (${{  "%.2f"|format(session.get("total_price"))  }}) </button>
-        </div>
+            <button type="submit" class="btn btn-lg bg-green rounded-5 mt-3 mb-4 ms-3 w-50">Order & pay with PayU (${{  "%.2f"|format(session.get("total_price"))  }}) </button>
+        </form>
+    </div>
         <!-- Shopping cart -->
         <div class="col-3 text-center p-3 position-relative shadow-lg" id="shoppingCart">
             <div class="shopping-cart text-center p-5">
@@ -192,9 +199,6 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="btn btn-back" data-bs-toggle="modal" data-bs-target="#myAccount">
-                    <i class="bi bi-arrow-left"></i>
-                </button>
                 <h4 class="modal-title" id="deliverTimeLabel">Delivery time</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -214,9 +218,6 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="btn btn-back" data-bs-toggle="modal" data-bs-target="#myAccount">
-                    <i class="bi bi-arrow-left"></i>
-                </button>
                 <h4 class="modal-title" id="paymentMethodLabel">Payment methods</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>

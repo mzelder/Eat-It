@@ -1,9 +1,8 @@
-# Business Form validation -> Done
-
 from flask import Flask, render_template, request, abort, session, redirect, url_for, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from flask_sqlalchemy import SQLAlchemy
+from .models import db, User, Owner, Restaurant, Items, RestaurantAddress, DeliveryAddress, Order, OrderItem
 from flask_mail import Mail, Message
 from functools import wraps
 import os
@@ -29,44 +28,8 @@ app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
 
 mail = Mail(app)
-db = SQLAlchemy(app)
 
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(80), unique=True, nullable=False)
-    password = db.Column(db.String(200), unique=False, nullable=False)
-
-class Owner(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(80), unique=True, nullable=False)
-    password = db.Column(db.String(200), unique=False, nullable=False) 
-    restaurant = db.relationship('Restaurant', backref='owner', uselist=False)
-
-class Restaurant(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), unique=False, nullable=False) 
-    background_image = db.Column(db.String(80), unique=False, nullable=True)
-    icon_image = db.Column(db.String(80), unique=False, nullable=True)
-    owner_id = db.Column(db.Integer, db.ForeignKey('owner.id'), unique=True)
-    foods = db.relationship('Items', backref='restaurant', lazy=True)
-
-class Items(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), unique=False, nullable=False)
-    price = db.Column(db.Integer, unique=False, nullable=False)
-    category = db.Column(db.String(80), unique=False, nullable=False)
-    description = db.Column(db.String(80), unique=False, nullable=True)
-    image_path = db.Column(db.String(80), unique=False, nullable=True) 
-    restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurant.id'), nullable=False)
-
-class Address(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    city = db.Column(db.String(80), unique=False, nullable=False)
-    street = db.Column(db.String(80), unique=False, nullable=False)
-    street_number = db.Column(db.String(80), unique=False, nullable=False)
-    postal_code = db.Column(db.String(80), unique=False, nullable=False)
-    phone_number = db.Column(db.String(80), unique=False, nullable=False)
-
+db.init_app(app)
 with app.app_context():
     db.create_all()
 
@@ -238,8 +201,42 @@ def decrease_quantity(id):
 @app.route("/checkout/<restaurant_name>", methods=["POST"])
 def checkout(restaurant_name):
     restaurant = Restaurant.query.filter_by(name=restaurant_name).first()
-
     return render_template("/user/checkout.html", restaurant=restaurant, user=check_status())
+
+@app.route("/thank-you", methods=["POST"])
+def order_confirm():
+    #required
+    street_name = request.form.get("street_name")
+    city = request.form.get("city")
+    house_number = request.form.get("house_number")
+    first, last = request.form.get("first_last_name").split()
+    phone_number = request.form.get("phone_number")
+    email = request.form.get("email")
+    postal_code = request.form.get("postcode")
+
+    # optional
+    nip = request.form.get("nip")
+    floor = request.form.get("floor")
+    company_name = request.form.get("company_name")
+    access_code = request.form.get("access_code")
+    flat_number = request.form.get("flat_number")
+    add_note = request.form.get("add_note")
+    
+    # Ensure first, last, email, phone number and postal code are valid
+    if not re.match("^\w+ \w+$", first + " " + last):
+        return abort(403)
+    if not re.match(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$$", email):
+        return abort(403)
+    if not re.match(r"^\+\d{2} \d{3} \d{3} \d{3}$", phone_number):
+        return abort(403)
+    if not re.match(r"^\d{2}-\d{3}$", postal_code):
+        return abort(403)
+    
+    # Ensure all informations are given
+    if not all([street_name, city, house_number, first, last, phone_number, email, postal_code]):
+        return abort(403)
+
+    return "THANK YOU!"
 
 @app.route("/business", methods=["GET", "POST"])
 def business_index():
@@ -283,7 +280,7 @@ def business_index():
         db.session.commit()
 
         # Add address of the restaurant to database
-        address = Address(
+        address = RestaurantAddress(
             city = city,
             street = street,
             street_number = street_number, 

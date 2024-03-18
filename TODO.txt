@@ -1,2 +1,5 @@
 TODO
 - Rooting BUG
+- Checkout timestamps and payment
+- Adding database for orders
+- html page for ordering site

@@ -320,4 +320,13 @@
         </div>
     </div>
 </div>
+<script>
+    // Address finder
+    let autocomplete;
+    function initAutocomplete() {
+        autocomplete = new google.maps.places.Autocomplete(document.getElementById("autocomplete"));
+    }
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXopNiIEICPRy4Ud8FAc0rrOX0aH8L7J4&libraries=places&callback=initAutocomplete">
+</script>
 {% endblock %}

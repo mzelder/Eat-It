@@ -81,7 +81,7 @@
                     <!-- PASSWORD -->
                     <div class="mb-3">
                         <label for="password" class="form-label" style="font-weight: 500;">Password</label>
-                        <input name="password_login" type="password" class="form-control" id="password" placeholder="Password">
+                        <input name="password_login" type="password" class="form-control" id="password_login" placeholder="Password" autocomplete="off">
                     </div>
                     <div class="d-flex justify-content-end mb-3">
                         <button type="button" class="btn btn-sm underline-no-exist">Forgot password?</button>
@@ -114,19 +114,19 @@
                     <!-- EMAIL -->
                     <div class="mb-3">
                         <label for="email" class="form-label" style="font-weight: 500;">Email address</label>
-                        <input name="email" type="email" class="form-control" id="email" placeholder="Email address" required autocomplete="off">
+                        <input name="email" type="email" class="form-control" id="email_create_account" placeholder="Email address" required autocomplete="off">
                         <div class="invalid-feedback">Please enter a valid email address.</div>
                     </div>
                     <!-- PASSWORD -->
                     <div class="mb-3">
                         <label for="password" class="form-label" style="font-weight: 500;">Password</label>
-                        <input name="password" type="password" class="form-control" id="password" placeholder="Password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" required>
+                        <input name="password" type="password" class="form-control" id="password" placeholder="Password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" required autocomplete="off">
                         <div class="invalid-feedback">Your password should be at least 8 characters long, contain both lower and upper-case letters, and include either a number or a symbol.</div>
                     </div>
                     <!-- CONFIRM PASSWORD -->
                     <div class="mb-3">
                         <label for="password" class="form-label" style="font-weight: 500;">Confirm password</label>
-                        <input name="confirm_password" type="password" class="form-control" id="confirm_password" placeholder="Confirm password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" required>
+                        <input name="confirm_password" type="password" class="form-control" id="confirm_password" placeholder="Confirm password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" required autocomplete="off">
                         <div class="invalid-feedback">The new passwords you entered don't match. Please try again.</div>
                     </div>
                     <button type="submit" class="btn w-100 bg-green mt-3" style="border-radius: 12px;">Create account</button>

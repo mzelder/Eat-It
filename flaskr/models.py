@@ -65,7 +65,6 @@ class Order(db.Model):
     set_time = db.Column(db.String(80), unique=False, nullable=False)
     payment = db.Column(db.String(80), unique=False, nullable=False)
     total_price = db.Column(db.Integer, unique=False, nullable=False)
-    order_status = db.Column(db.String(80), unique=False, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurant.id'), nullable=False)
     items = db.relationship('OrderItem', back_populates='order')

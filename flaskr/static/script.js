@@ -125,21 +125,17 @@ if (window.location.pathname === "/admin/settings") {
     CHECKOUT PAGE
 */
 
-if (window.location.pathname === "/checkout") {
-    document.addEventListener('DOMContentLoaded', function() {
-        console.log("DONE");
-        getTimes();
-    });
-}
+document.addEventListener("DOMContentLoaded" , function() {
+    getTimes();
+});
 
 function getTimes() {
     // generating time values for the select element
     var select = document.getElementById("specifyTime");
     let times = [];
     var currentTime = new Date();
-    currentTime.setMinutes(59);
-    currentTime.setHours(16);
-    var closingTime = 20;
+    currentTime.setHours(12);
+    var closingTime = 22;
     let hour = currentTime.getHours();
     let minutes = currentTime.getMinutes();
 
@@ -174,67 +170,50 @@ function getTimes() {
     });
 }
 
-if (window.pathname === "/checkout") {
-    // Updating delivery time on checkout page
-    document.getElementById("timeBtn").addEventListener("click", function() {
-        var time = document.getElementById("specifyTime").value;
-        var deliveryTime = document.getElementById("deliveryTime");
-        deliveryTime.textContent = time;
-    });
+// Updating delivery time on checkout page
+document.getElementById("timeBtn").addEventListener("click", function() {
+    var time = document.getElementById("specifyTime").value;
+    var deliveryTime = document.getElementById("deliveryTime");
+    var deliveryTimeInput = document.getElementById("deliveryTimeInput");
+    
+    deliveryTime.textContent = time;
+    deliveryTimeInput.value = time;
+});
 
-    // Showing with payment method is selected
-    document.getElementById("payu").addEventListener("click", function() {
-        var payuIcon = document.getElementById("payuIcon");
-        var cashIcon = document.getElementById("cashIcon");
-        var cardIcon = document.getElementById("cardIcon");
+document.getElementById("cash").addEventListener("click", function() {
+    var cashIcon = document.getElementById("cashIcon");
+    var cardIcon = document.getElementById("cardIcon");
 
-        payuIcon.style.visibility = "visible";
-        cashIcon.style.visibility = "hidden";
-        cardIcon.style.visibility = "hidden";
-    });
+    cashIcon.style.visibility = "visible";
+    cardIcon.style.visibility = "hidden";
+});
 
-    document.getElementById("cash").addEventListener("click", function() {
-        var payuIcon = document.getElementById("payuIcon");
-        var cashIcon = document.getElementById("cashIcon");
-        var cardIcon = document.getElementById("cardIcon");
+document.getElementById("card").addEventListener("click", function() {
+    var cashIcon = document.getElementById("cashIcon");
+    var cardIcon = document.getElementById("cardIcon");
 
-        payuIcon.style.visibility = "hidden";
-        cashIcon.style.visibility = "visible";
-        cardIcon.style.visibility = "hidden";
-    });
+    cashIcon.style.visibility = "hidden";
+    cardIcon.style.visibility = "visible";
+});
 
-    document.getElementById("card").addEventListener("click", function() {
-        var payuIcon = document.getElementById("payuIcon");
-        var cashIcon = document.getElementById("cashIcon");
-        var cardIcon = document.getElementById("cardIcon");
+// Updating payment method on checkout page
+document.getElementById("paymentBtn").addEventListener("click", function() {
+    var paymentMethodImg = document.getElementById("paymentMethodImg");
+    var paymentMethodText = document.getElementById("paymentMethodText");
+    var paymentMethodInput = document.getElementById("paymentMethodInput");
 
-        payuIcon.style.visibility = "hidden";
-        cashIcon.style.visibility = "hidden";
-        cardIcon.style.visibility = "visible";
-    });
+    var cashIcon = document.getElementById("cashIcon");
+    var cardIcon = document.getElementById("cardIcon");
 
-    // Updating payment method on checkout page
-    document.getElementById("paymentBtn").addEventListener("click", function() {
-        var paymentMethodImg = document.getElementById("paymentMethodImg");
-        var paymentMethodText = document.getElementById("paymentMethodText");
-
-        var payuIcon = document.getElementById("payuIcon");
-        var cashIcon = document.getElementById("cashIcon");
-        var cardIcon = document.getElementById("cardIcon");
-
-        if (payuIcon.style.visibility == "visible") {
-            paymentMethodImg.src = "/static/images/payu.png";
-            paymentMethodText.textContent = "PayU";
-        }
-        else if (cashIcon.style.visibility == "visible") {
-            paymentMethodImg.src = "/static/images/money1.png";
-            paymentMethodText.textContent = "Cash";
-        }
-        else if (cardIcon.style.visibility == "visible") {
-            paymentMethodImg.src = "/static/images/card1.png";
-            paymentMethodText.textContent = "Credit Card";
-        }
-    });
-}
-// Going back to the delivery path from menu after clicking back button in web browser
+    if (cashIcon.style.visibility == "visible") {
+        paymentMethodImg.src = "/static/images/money1.png";
+        paymentMethodText.textContent = "Cash";
+        paymentMethodInput.value = "Cash";
+    }
+    else if (cardIcon.style.visibility == "visible") {
+        paymentMethodImg.src = "/static/images/card1.png";
+        paymentMethodText.textContent = "Credit Card";
+        paymentMethodInput.value = "Credit Card";
+    }
+});
 

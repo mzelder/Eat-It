@@ -9,6 +9,7 @@ import os
 import re
 import string
 import random
+import datetime
 
 
 app = Flask(__name__)
@@ -70,7 +71,7 @@ def process_form_request():
     """Process the incoming form request."""
     form_type = request.form.get("form_type")
     if form_type == "create_account":
-        email = request.form.get("email")
+        email = request.form.get("email_create_account")
         password = request.form.get("password")
         return create_account(email, password), None  
     elif form_type == "signin":
@@ -211,7 +212,7 @@ def order_confirm():
     house_number = request.form.get("house_number")
     first, last = request.form.get("first_last_name").split()
     phone_number = request.form.get("phone_number")
-    email = request.form.get("email")
+    email = request.form.get("email_checkout")
     postal_code = request.form.get("postcode")
 
     # optional
@@ -221,6 +222,9 @@ def order_confirm():
     access_code = request.form.get("access_code")
     flat_number = request.form.get("flat_number")
     add_note = request.form.get("add_note")
+
+    delivery_time = request.form.get("deliveryTimeInput")
+    payment_method = request.form.get("paymentMethodInput")
     
     # Ensure first, last, email, phone number and postal code are valid
     if not re.match("^\w+ \w+$", first + " " + last):
@@ -232,9 +236,41 @@ def order_confirm():
     if not re.match(r"^\d{2}-\d{3}$", postal_code):
         return abort(403)
     
-    # Ensure all informations are given
+    # Ensure all required informations are given
     if not all([street_name, city, house_number, first, last, phone_number, email, postal_code]):
         return abort(403)
+
+    # Add delivery address and personail details to the database
+    delivery_address = DeliveryAddress(
+        first_name = first,
+        last_name = last,
+        phone_number = phone_number,
+        email = email,
+        street = street_name,
+        street_number = house_number,
+        city = city,
+        postal_code = postal_code,
+        nip = nip,
+        floor = floor,
+        company_name = company_name,
+        access_code = access_code,
+        flat_number = flat_number,
+        add_note = add_note
+    )
+    db.session.add(delivery_address)
+    
+    # Add order to the database
+    order = Order(
+        date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+        set_time = delivery_time,
+        payment = payment_method,
+        total_price = session["total_price"], # prob bug here
+        user_id = session["user_id"],
+        restaurant_id = Restaurant.query.filter_by(name=session.get("last_restaurant")).first().id
+    )
+
+
+
 
     return "THANK YOU!"
 

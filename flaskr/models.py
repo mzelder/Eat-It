@@ -70,6 +70,7 @@ class Order(db.Model):
     items = db.relationship('OrderItem', back_populates='order')
 
 class OrderItem(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
     order_id = db.Column(db.Integer, db.ForeignKey('order.id'), primary_key=True)
     item_id = db.Column(db.Integer, db.ForeignKey('items.id'), primary_key=True)
     quantity = db.Column(db.Integer, nullable=False)

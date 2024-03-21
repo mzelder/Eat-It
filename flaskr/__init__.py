@@ -225,8 +225,6 @@ def order_confirm():
 
     delivery_time = request.form.get("deliveryTimeInput")
     payment_method = request.form.get("paymentMethodInput")
-
-    print(email)
     
     # Ensure first, last, email, phone number and postal code are valid
     if not re.match("^\w+ \w+$", first + " " + last):
@@ -249,7 +247,7 @@ def order_confirm():
         phone_number = phone_number,
         email = email,
         street = street_name,
-        street_number = house_number,
+        house_number = house_number,
         city = city,
         postal_code = postal_code,
         nip = nip,
@@ -257,7 +255,7 @@ def order_confirm():
         company_name = company_name,
         access_code = access_code,
         flat_number = flat_number,
-        add_note = add_note
+        note = add_note
     )
     db.session.add(delivery_address)
     
@@ -267,9 +265,10 @@ def order_confirm():
         set_time = delivery_time,
         payment = payment_method,
         total_price = session["total_price"], # prob bug here
-        user_id = session["user_id"],
         restaurant_id = Restaurant.query.filter_by(name=session.get("last_restaurant")).first().id
     )
+    db.session.add(order)
+    db.session.commit()
     
     # Add items from the shopping cart to the database
     if "shopping_cart" in session:
@@ -283,7 +282,7 @@ def order_confirm():
     else:
         return abort(403)
     
-    db.commit()
+    db.session.commit()
 
     return "THANK YOU!"
 

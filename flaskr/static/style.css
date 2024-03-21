@@ -362,3 +362,17 @@ input[type="color"]:focus,
     cursor: pointer;
     user-select: none;
 }
+
+.circle {
+    width: 100px; /* Adjust size as needed */
+    height: 100px; /* Adjust size as needed */
+    border: 5px solid #83B271;
+    border-radius: 50%;
+    background-color: white;
+  }
+
+#up-hand {
+  width: 5px;
+  height: 2px;
+  background-color: #83B271;
+}

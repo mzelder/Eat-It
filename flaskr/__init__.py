@@ -204,8 +204,10 @@ def checkout(restaurant_name):
     restaurant = Restaurant.query.filter_by(name=restaurant_name).first()
     return render_template("/user/checkout.html", restaurant=restaurant, user=check_status())
 
-@app.route("/thank-you", methods=["POST"])
+@app.route("/thank-you", methods=["GET" ,"POST"])
 def order_confirm():
+    if request.method == "GET":
+        return render_template("/user/thankyou.html")
     #required
     street_name = request.form.get("street_name")
     city = request.form.get("city")
@@ -284,7 +286,7 @@ def order_confirm():
     
     db.session.commit()
 
-    return "THANK YOU!"
+    return render_template("/user/thankyou.html")
 
 @app.route("/business", methods=["GET", "POST"])
 def business_index():

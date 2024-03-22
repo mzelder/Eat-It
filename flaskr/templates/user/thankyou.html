@@ -21,13 +21,59 @@
            <p class="fw-light">Your order from {nazwa restauracji} will be delivered in about {liczba minut} minutes.</p>
            <div class="container">
                 <div class="row">
-                    <div class="col border-1">
-                        <h5>Tip your courier to say thanks!</h5>
-                        <p>All tips go to courier. <span>Learn more</span></p>
+                    <div class="col">
+                        <div class="container border p-3 text-start rounded-3" style="background-color: white;">
+                            <h5>Tip your courier to say thanks!</h5>
+                            <p class="fw-light">All tips go to courier. <span class="underline-exist cursor-pointer">Learn more</span></p>
+                            <div class="container-fluid rounded-5" style="background-color: #F4F4F4;">
+                                <div class="row p-1">
+                                    <div class="col text-center">
+                                        <p class="p-0 m-0">5%</p>
+                                        <p class="p-0 m-0">kwota</p>
+                                    </div>
+                                    <div class="col text-center">
+                                        <p class="p-0 m-0">10%</p>
+                                        <p class="p-0 m-0">kwota</p>
+                                    </div>
+                                    <div class="col text-center">
+                                        <p class="p-0 mb-0">15%</p>
+                                        <p class="p-0 mb-0">kwota</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn bg-green rounded-5 w-100 mt-3 fw-bold">Tip your courier</button>
+                        </div>
                     </div>
-                    <div class="col border-1">
-
+                    <div class="col">
+                        <div class="container border p-3 text-start " style="background-color: white;">
+                            <div class="row">
+                                <div class="col">
+                                    <img src="/static/images/kebab.jpg" style="width: 50px; height: 50px;">
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col">
+                        <div class="container border p-3 text-start rounded-3" style="background-color: white;">
+                            <h5 class="m-0">Delivering to</h5>
+                            <p class="fw-light">{Adres}</p>
+                            <h5 class="m-0">Notes</h5>
+                            <p>...</p>
+                        </div>
+                    </div>
+                    <div class="col"></div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col">
+                        <div class="container border p-3 text-start rounded-3" style="background-color: white;">
+                            <h5>Something wrong?</h5>
+                            <p class="fw-light">Contact us and we'll get it sorted.</p>
+                            <button class="btn bg-green rounded-5 w-25 fw-bold">Get help</button>
+                        </div>
+                    </div>
+                    <div class="col"></div>
                 </div>
            </div>
         </div>

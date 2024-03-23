@@ -339,9 +339,13 @@ def business_index():
         )
         db.session.add(address)
         db.session.commit()
-        return f"You will find your password on this email: {email}"
+        return redirect(url_for("offer"))
         
     return render_template("/business/index.html")
+
+@app.route("/business/offer", methods=["GET"])
+def offer():
+    return render_template("/business/offer.html")
 
 @app.route("/business/login", methods=["GET", "POST"])
 def login():

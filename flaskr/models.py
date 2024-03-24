@@ -58,21 +58,24 @@ class DeliveryAddress(db.Model):
     last_name = db.Column(db.String(80), unique=False, nullable=False)
     email = db.Column(db.String(80), unique=False, nullable=False)
     phone_number = db.Column(db.String(80), unique=False, nullable=False)
+    orders = db.relationship('Order', backref='delivery_address', lazy=True)
 
 class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True) 
+    order_number = db.Column(db.String(80), unique=True, nullable=False) # unique change to True
     date = db.Column(db.String(80), unique=False, nullable=False)
     set_time = db.Column(db.String(80), unique=False, nullable=False)
     payment = db.Column(db.String(80), unique=False, nullable=False)
     total_price = db.Column(db.Integer, unique=False, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurant.id'), nullable=False)
+    delivery_address_id = db.Column(db.Integer, db.ForeignKey('delivery_address.id'), nullable=True)
     items = db.relationship('OrderItem', back_populates='order')
 
 class OrderItem(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    order_id = db.Column(db.Integer, db.ForeignKey('order.id'), primary_key=True)
-    item_id = db.Column(db.Integer, db.ForeignKey('items.id'), primary_key=True)
+    order_id = db.Column(db.Integer, db.ForeignKey('order.id'), nullable=False)
+    item_id = db.Column(db.Integer, db.ForeignKey('items.id'), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
     order = db.relationship("Order", back_populates="items")
     item = db.relationship("Items", back_populates="orders")

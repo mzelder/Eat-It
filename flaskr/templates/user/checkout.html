@@ -19,7 +19,7 @@
     <div class="row">
         <!-- Informations, address, etc -->
         <div class="col ps-5">
-            <form class="needs-validation" action="{{  url_for('order_confirm')  }}" method="POST" novalidate="novalidate">
+            <form class="needs-validation" action="{{  url_for('order_confirm', order_number=order_number)  }}" method="POST" novalidate="novalidate">
                 <div class="container p-3 mt-4">
                     <h2 class="fw-bold">Checkout</h2>
                     <p class="fw-light">{{  restaurant.name  }}</p>

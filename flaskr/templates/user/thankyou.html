@@ -18,7 +18,7 @@
         </div>
         <div class="container-fluid text-center p-3">
            <h4 class="mt-5">Delivery time confirmed</h4>
-           <p class="fw-light">Your order from {nazwa restauracji} will be delivered in about {liczba minut} minutes.</p>
+           <p class="fw-light">Your order from {{  restaurant.name  }} will be delivered in about 35 minutes.</p>
            <div class="container">
                 <div class="row align-items">
                     <div class="col">
@@ -46,9 +46,13 @@
                         <!-- Delivering to, note -->
                         <div class="container border p-3 text-start rounded-3 mt-4" style="background-color: white;">
                             <h5 class="m-0">Delivering to</h5>
-                            <p class="fw-light">{Adres}</p>
+                            <p class="fw-light">{{  address.street  }} {{  address.house_number  }}, {{  address.postal_code  }} {{  address.city  }}</p>
                             <h5 class="m-0">Notes</h5>
-                            <p>...</p>
+                            {% if address.note %}
+                                <p>{{  address.note  }}</p>
+                            {% else %}
+                                <p>...</p>
+                            {% endif %}
                         </div>
                         <!-- Something wrong? -->
                         <div class="container border p-3 text-start rounded-3 mt-4" style="background-color: white;">
@@ -62,11 +66,13 @@
                         <div class="container border p-4 text-start rounded-3" style="background-color: white;">
                             <div class="row ms-1">
                                 <div class="col-2">
-                                    <img src="/static/images/kebab.jpg" style="width: 50px; height: 50px;">
+                                    <div class="logo-container border">
+                                        <img class="logo" src="{{ restaurant.icon_image }}">
+                                    </div>
                                 </div>
                                 <div class="col">
-                                    <p class="fw-bold m-0">Pasibus</p>
-                                    <p class="fw-light">Order #14j684</p>
+                                    <p class="fw-bold m-0">{{  restaurant.name  }}</p>
+                                    <p class="fw-light">Order #{{  order.order_number  }}</p>
                                 </div>
                                 <div class="col d-flex align-items-center justify-content-end">
                                     <button class="btn restaurant-button rounded-5"><img src="/static/images/heart_1.png" width="25px"></button>

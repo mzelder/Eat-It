@@ -199,94 +199,102 @@ def decrease_quantity(id):
     session.modified = True
     return redirect(url_for('menu', restaurant_name=session.get("last_restaurant")))
 
+generate_order_number = lambda: ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
+
 @app.route("/checkout/<restaurant_name>", methods=["POST"])
 def checkout(restaurant_name):
     restaurant = Restaurant.query.filter_by(name=restaurant_name).first()
-    return render_template("/user/checkout.html", restaurant=restaurant, user=check_status())
+    return render_template("/user/checkout.html", restaurant=restaurant, order_number=generate_order_number() ,user=check_status())
 
-@app.route("/thank-you", methods=["GET" ,"POST"])
-def order_confirm():
-    if request.method == "GET":
-        return render_template("/user/thankyou.html")
-    #required
-    street_name = request.form.get("street_name")
-    city = request.form.get("city")
-    house_number = request.form.get("house_number")
-    first, last = request.form.get("first_last_name").split()
-    phone_number = request.form.get("phone_number")
-    email = request.form.get("email_checkout")
-    postal_code = request.form.get("postcode")
+@app.route("/thank-you/<order_number>", methods=["GET" ,"POST"])
+def order_confirm(order_number):
+    if request.method == "POST":
+        #required
+        street_name = request.form.get("street_name")
+        city = request.form.get("city")
+        house_number = request.form.get("house_number")
+        first, last = request.form.get("first_last_name").split()
+        phone_number = request.form.get("phone_number")
+        email = request.form.get("email_checkout")
+        postal_code = request.form.get("postcode")
 
-    # optional
-    nip = request.form.get("nip")
-    floor = request.form.get("floor")
-    company_name = request.form.get("company_name")
-    access_code = request.form.get("access_code")
-    flat_number = request.form.get("flat_number")
-    add_note = request.form.get("add_note")
+        # optional
+        nip = request.form.get("nip")
+        floor = request.form.get("floor")
+        company_name = request.form.get("company_name")
+        access_code = request.form.get("access_code")
+        flat_number = request.form.get("flat_number")
+        add_note = request.form.get("add_note")
 
-    delivery_time = request.form.get("deliveryTimeInput")
-    payment_method = request.form.get("paymentMethodInput")
-    
-    # Ensure first, last, email, phone number and postal code are valid
-    if not re.match("^\w+ \w+$", first + " " + last):
-        return abort(403)
-    if not re.match(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$$", email):
-        return abort(403)
-    if not re.match(r"^\+\d{2} \d{3} \d{3} \d{3}$", phone_number):
-        return abort(403)
-    if not re.match(r"^\d{2}-\d{3}$", postal_code):
-        return abort(403)
-    
-    # Ensure all required informations are given
-    if not all([street_name, city, house_number, first, last, phone_number, email, postal_code]):
-        return abort(403)
+        delivery_time = request.form.get("deliveryTimeInput")
+        payment_method = request.form.get("paymentMethodInput")
+        
+        # Ensure first, last, email, phone number and postal code are valid
+        if not re.match("^\w+ \w+$", first + " " + last):
+            return abort(403)
+        if not re.match(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$$", email):
+            return abort(403)
+        if not re.match(r"^\+\d{2} \d{3} \d{3} \d{3}$", phone_number):
+            return abort(403)
+        if not re.match(r"^\d{2}-\d{3}$", postal_code):
+            return abort(403)
+        
+        # Ensure all required informations are given
+        if not all([street_name, city, house_number, first, last, phone_number, email, postal_code]):
+            return abort(403)
 
-    # Add delivery address and personail details to the database
-    delivery_address = DeliveryAddress(
-        first_name = first,
-        last_name = last,
-        phone_number = phone_number,
-        email = email,
-        street = street_name,
-        house_number = house_number,
-        city = city,
-        postal_code = postal_code,
-        nip = nip,
-        floor = floor,
-        company_name = company_name,
-        access_code = access_code,
-        flat_number = flat_number,
-        note = add_note
-    )
-    db.session.add(delivery_address)
-    
-    # Add order to the database
-    order = Order(
-        date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-        set_time = delivery_time,
-        payment = payment_method,
-        total_price = session["total_price"], # prob bug here
-        restaurant_id = Restaurant.query.filter_by(name=session.get("last_restaurant")).first().id
-    )
-    db.session.add(order)
-    db.session.commit()
-    
-    # Add items from the shopping cart to the database
-    if "shopping_cart" in session:
-        for item in session["shopping_cart"]:
-            order_item = OrderItem(
-                order_id = order.id,
-                item_id = item["id"],
-                quantity = item["quantity"]
-            )
-            db.session.add(order_item)
-    else:
-        return abort(403)
-    
-    db.session.commit()
+        # Add delivery address and personail details to the database
+        delivery_address = DeliveryAddress(
+            first_name = first,
+            last_name = last,
+            phone_number = phone_number,
+            email = email,
+            street = street_name,
+            house_number = house_number,
+            city = city,
+            postal_code = postal_code,
+            nip = nip,
+            floor = floor,
+            company_name = company_name,
+            access_code = access_code,
+            flat_number = flat_number,
+            note = add_note
+        )
+        db.session.add(delivery_address)
+        
+        # Add order to the database
+        order = Order(
+            order_number = order_number,
+            date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+            set_time = delivery_time,
+            payment = payment_method,
+            total_price = session["total_price"], # prob bug here
+            restaurant_id = Restaurant.query.filter_by(name=session.get("last_restaurant")).first().id,
+            delivery_address_id = delivery_address.id
+        )
+        db.session.add(order)
+        db.session.commit()
+        
+        # Add items from the shopping cart to the database
+        if "shopping_cart" in session:
+            for item in session["shopping_cart"]:
+                order_item = OrderItem(
+                    order_id = order.id,
+                    item_id = item["id"],
+                    quantity = item["quantity"]
+                )
+                db.session.add(order_item)
+        else:
+            return abort(403)
+        
+        db.session.commit()
+        session.clear()
+        
+    order = Order.query.filter_by(order_number=order_number).first()
+    restaurant = Restaurant.query.filter_by(id=order.restaurant_id).first()
+    address = DeliveryAddress.query.filter_by(id=order.delivery_address_id).first()
 
-    return render_template("/user/thankyou.html")
+    return render_template("/user/thankyou.html", order=order, restaurant=restaurant, address=address)
 
 @app.route("/business", methods=["GET", "POST"])
 def business_index():

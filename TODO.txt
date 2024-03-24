@@ -1,7 +1,3 @@
 TODO
-- Rooting BUG
-- Checkout timestamps and payment
-- Adding database for orders
-- html page for ordering site
-- adding informations to database
-- timestamps via FLASK NOT JS
+- rooting bug 
+- render thankyou page with all items that user ordered

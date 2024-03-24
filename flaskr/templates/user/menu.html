@@ -20,7 +20,7 @@
         <div class="col p-0 image-container">        
             <img src="{{  restaurant.background_image  }}" class="center-crop">
         </div>
-        <div class="logo-container border">
+        <div class="logo-container border" style="position: absolute;">
             <img src="{{  restaurant.icon_image  }}" class="logo">
         </div>
         <!-- Shopping cart -->
@@ -127,7 +127,7 @@
                                     <h5 class="fw-bold">{{ item.name }}</h5>
                                     <p>{{  item.description  }}</p>
                                     <form action="{{  url_for('increase_quantity', id=item.id  )}}" method="POST">
-                                        <button type="submit" class="btn bg-green rounded-2">
+                                        <button type="submit" class="btn bg-green rounded-2" onclick="changeHistory()">
                                             ${{  "%.2f"|format(item.price)  }}
                                         </button>
                                     </form>

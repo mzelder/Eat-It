@@ -78,24 +78,26 @@
                                     <button class="btn restaurant-button rounded-5"><img src="/static/images/heart_1.png" width="25px"></button>
                                 </div>
                             </div>
+                            {% for item in item_details %}
                             <div class="row mt-4">
                                 <div class="col-1">
-                                    <p class="fw-bold text-start">1</p>
+                                    <p class="fw-bold text-start">{{  item.quantity  }}</p>
                                 </div>
                                 <div class="col">
-                                    <p class="fw-bold text-start">Salad with chicken</p>
+                                    <p class="fw-bold text-start">{{  item.name  }}</p>
                                 </div>
                                 <div class="col text-end">
-                                    <p class="fw-light">$29,27</p>
+                                    <p class="fw-light">${{  item.price  }}</p>
                                 </div>
                             </div>
+                            {% endfor %}
                             <hr>
                             <div class="row">
                                 <div class="col text-start">
                                     <p class="fw-bold">Total</p>
                                 </div>
                                 <div class="col text-end">
-                                    <p class="fw-bold">$29,27</p>
+                                    <p class="fw-bold">${{  order.total_price  }}</p>
                                 </div>
                             </div>
                             <hr>

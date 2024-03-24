@@ -206,7 +206,7 @@ def checkout(restaurant_name):
     restaurant = Restaurant.query.filter_by(name=restaurant_name).first()
     return render_template("/user/checkout.html", restaurant=restaurant, order_number=generate_order_number() ,user=check_status())
 
-@app.route("/thank-you/<order_number>", methods=["GET" ,"POST"])
+@app.route("/order/<order_number>", methods=["GET" ,"POST"])
 def order_confirm(order_number):
     if request.method == "POST":
         #required
@@ -293,8 +293,20 @@ def order_confirm(order_number):
     order = Order.query.filter_by(order_number=order_number).first()
     restaurant = Restaurant.query.filter_by(id=order.restaurant_id).first()
     address = DeliveryAddress.query.filter_by(id=order.delivery_address_id).first()
+    order_items = OrderItem.query.filter_by(order_id=order.id).all()
 
-    return render_template("/user/thankyou.html", order=order, restaurant=restaurant, address=address)
+    # Creating dict with all items from database
+    items_details = []
+    for order_item in order_items:
+        item = Items.query.filter_by(id=order_item.item_id).first()
+        items_details.append({
+            "name": item.name,
+            "quantity": order_item.quantity,
+            "price": item.price,
+            # Add any other item details you need
+        })
+
+    return render_template("/user/thankyou.html", order=order, restaurant=restaurant, address=address, item_details=items_details)
 
 @app.route("/business", methods=["GET", "POST"])
 def business_index():

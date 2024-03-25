@@ -1,3 +1,8 @@
 TODO
 - rooting bug 
 - render thankyou page with all items that user ordered
+
+Upgrading
+- code readability
+- structure of the code
+- adding status for orders

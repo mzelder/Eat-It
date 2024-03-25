@@ -1,1 +1,37 @@
 {% extends "/admin/base.html" %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1 class="m-5 fw-bold">Orders</h1>
+        </div>
+    </div>
+    <table class="table mt-5">
+        <thead>
+            <tr>
+                <th scope="col">Product/s</th>
+                <th scope="col">Price</th>
+                <th scope="col">Order number</th>
+                <th scope="col">Customer</th>
+                <th scope="col">Delivery address</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+<tr>
+    <th>
+        {% for product_name, details in order.product_details.items() %}
+            <p class="m-0" style="color: #83B271;">{{ product_name }} ({{ details.quantity }})</p><br>
+        {% endfor %}
+    </td>
+    <td>${{ "%.2f"|format(order.total_price) }}</td>
+    <td>{{ order.order_number }}</td>
+    <td>{{ order.customer_name }}</td>
+    <td>{{ order.delivery_address }}</td>
+</tr>
+{% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

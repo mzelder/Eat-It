@@ -299,12 +299,19 @@ def order_confirm(order_number):
     items_details = []
     for order_item in order_items:
         item = Items.query.filter_by(id=order_item.item_id).first()
-        items_details.append({
-            "name": item.name,
-            "quantity": order_item.quantity,
-            "price": item.price,
-            # Add any other item details you need
-        })
+        # Check if the item name already exists in the items_details list
+        existing_item = next((i for i in items_details if i['name'] == item.name), None)
+        if existing_item:
+            # If the item already exists, update the quantity and price
+            existing_item['quantity'] += order_item.quantity
+            existing_item['price'] += item.price * order_item.quantity  # Assuming price here is per unit
+        else:
+            # If the item does not exist, add it to the list
+            items_details.append({
+                "name": item.name,
+                "quantity": order_item.quantity,
+                "price": item.price * order_item.quantity,  # Assuming price here is per unit
+            })
 
     return render_template("/user/thankyou.html", order=order, restaurant=restaurant, address=address, item_details=items_details)
 
@@ -397,7 +404,36 @@ def admin_menu():
 @app.route("/admin/orders")
 @owner_required
 def admin_orders():
-    return render_template("admin/orders.html")
+    orders = Order.query.filter_by(restaurant_id=session.get("owner_id")).order_by(Order.id.desc()).all()
+
+    orders_data = []
+    for order in orders:
+        order_items = OrderItem.query.filter_by(order_id=order.id).all()
+        
+        items_details = {}
+        for order_item in order_items:
+            item = Items.query.filter_by(id=order_item.item_id).first()
+            if item.name in items_details:
+                items_details[item.name]['quantity'] += order_item.quantity
+            else:
+                items_details[item.name] = {
+                    'quantity': order_item.quantity,
+                    'price': item.price
+                }
+
+        total_price = sum(item['price'] * item['quantity'] for item in items_details.values())
+        customer = f"{order.delivery_address.first_name} {order.delivery_address.last_name}" if order.delivery_address else "No Customer Info"
+        delivery_address_str = f"{order.delivery_address.street} {order.delivery_address.house_number}, {order.delivery_address.city}" if order.delivery_address else "No Address Info"
+
+        orders_data.append({
+            'product_details': items_details,
+            'total_price': total_price,
+            'order_number': order.order_number,
+            'customer_name': customer,
+            'delivery_address': delivery_address_str
+        })
+
+    return render_template("admin/orders.html", orders=orders_data)
 
 @app.route("/admin/settings", methods=["GET", "POST"])
 @owner_required

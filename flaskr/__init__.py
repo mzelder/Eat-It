@@ -288,12 +288,20 @@ def order_confirm(order_number):
             return abort(403)
         
         db.session.commit()
-        session.clear()
+        session.pop("shopping_cart", None)
         
     order = Order.query.filter_by(order_number=order_number).first()
     restaurant = Restaurant.query.filter_by(id=order.restaurant_id).first()
     address = DeliveryAddress.query.filter_by(id=order.delivery_address_id).first()
     order_items = OrderItem.query.filter_by(order_id=order.id).all()
+
+    # Updating sales, orders, delivered and customers in the restaurant
+    if request.method == "POST":
+        restaurant.sales += order.total_price
+        restaurant.orders += 1
+        restaurant.delivered += 1
+        restaurant.customers += 1
+        db.session.commit()
 
     # Creating dict with all items from database
     items_details = []
@@ -352,7 +360,7 @@ def business_index():
         db.session.commit()
 
         # Add restaurant to database
-        restaurant = Restaurant(name=restaurant_name, owner_id=owner.id)
+        restaurant = Restaurant(name=restaurant_name, owner_id=owner.id, sales=0, orders=0, delivered=0, customers=0)
         db.session.add(restaurant)
         db.session.commit()
 
@@ -366,6 +374,8 @@ def business_index():
         )
         db.session.add(address)
         db.session.commit()
+
+        session["restaurant_name"] = restaurant_name
         return redirect(url_for("offer"))
         
     return render_template("/business/index.html")
@@ -393,7 +403,15 @@ def login():
 @app.route("/admin/dashboard")
 @owner_required
 def admin():
-    return render_template("admin/dashboard.html")
+    # show last 3 orders
+    orders = Order.query.filter_by(restaurant_id=session.get("owner_id")).order_by(Order.id.desc()).limit(3).all()
+    restaurant = Restaurant.query.filter_by(owner_id=session.get("owner_id")).first()
+    orders_with_addresses = [{
+        'order': order,
+        'delivery_address': DeliveryAddress.query.filter_by(id=order.delivery_address_id).first()
+    } for order in orders]
+    return render_template("admin/dashboard.html", orders_with_addresses=orders_with_addresses, restaurant=restaurant)
+
 
 @app.route("/admin/menu")
 @owner_required

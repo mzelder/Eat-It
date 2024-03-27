@@ -18,19 +18,19 @@
             </tr>
         </thead>
         <tbody>
-            {% for order in orders %}
-<tr>
-    <th>
-        {% for product_name, details in order.product_details.items() %}
-            <p class="m-0" style="color: #83B271;">{{ product_name }} ({{ details.quantity }})</p><br>
-        {% endfor %}
-    </td>
-    <td>${{ "%.2f"|format(order.total_price) }}</td>
-    <td>{{ order.order_number }}</td>
-    <td>{{ order.customer_name }}</td>
-    <td>{{ order.delivery_address }}</td>
-</tr>
-{% endfor %}
+    {% for order in orders %}
+    <tr>
+        <th>
+            {% for product_name, details in order.product_details.items() %}
+                <p class="m-0" style="color: #83B271;">{{ product_name }} ({{ details.quantity }})</p><br>
+            {% endfor %}
+        </td>
+        <td>${{ "%.2f"|format(order.total_price) }}</td>
+        <td>{{ order.order_number }}</td>
+        <td>{{ order.customer_name }}</td>
+        <td>{{ order.delivery_address }}</td>
+    </tr>
+    {% endfor %}
         </tbody>
     </table>
 </div>

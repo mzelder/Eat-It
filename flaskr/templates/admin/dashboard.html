@@ -6,22 +6,22 @@
         <div class="row text-center">
             <div class="col border p-2 ms-5 me-5" style="background-color: white;">
                 <img src="/static/images/dollar.png" width="100px">
-                <h2>$86,802.60</h2>
+                <h2>${{  restaurant.sales  }}</h2>
                 <p>Sales</p>
             </div>
             <div class="col border p-2 ms-5 me-5" style="background-color: white;">
                 <img class="mb-1" src="/static/images/targets.png" width="100px">
-                <h2>383</h2>
+                <h2>{{  restaurant.delivered  }}</h2>
                 <p>Delivered</p>
             </div>
             <div class="col border p-2 ms-5 me-5" style="background-color: white;">
                 <img class="mb-1" src="/static/images/bag1.png" width="100px">
-                <h2>1067</h2>
+                <h2>{{  restaurant.orders  }}</h2>
                 <p>Orders</p>
             </div>
             <div class="col border p-2 ms-5 me-5" style="background-color: white;">
                 <img class="mb-1" src="/static/images/chat.png" width="100px">
-                <h2>502</h2>
+                <h2>{{  restaurant.customers  }}</h2>
                 <p>Customers</p>  
             </div>
         </div>
@@ -38,18 +38,42 @@
                     <h5>Orders Price</h5>
                 </div>
             </div>
+            <!-- Chart -->
             <div class="col border p-2 ms-5 me-5" style="background-color: white;">
-                <h2>All Orders</h2>
-                <hr>
-                <div class="p-3">
-                    <h3>1067</h3>
-                    <h5>New Orders</h5>
-                </div>
-                <div class="p-3">
-                    <h3>$86,802.60</h3>
-                    <h5>Orders Price</h5>
-                </div>
+                <canvas id="myChart"></canvas>
             </div>
+            <script>
+                const data = {
+                    labels: ["January", "February", "March", "April"], // Example for monthly; adjust accordingly for daily/yearly
+                    datasets: [{
+                        label: 'Sales',
+                        borderColor: 'rgb(81, 215, 123)',
+                        data: [123], // Your sales data
+                    }, {
+                        label: 'Deliveries',
+                        borderColor: 'rgb(238, 94, 92)',
+                        data: [30, 35, 40, 45], // Your deliveries data
+                    }, {
+                        label: 'Orders',
+                        borderColor: 'rgb(76, 156, 236)',
+                        data: [80, 88, 90, 100], // Your orders data
+                    }, {
+                        label: 'Customers',
+                        borderColor: 'rgb(250, 209, 63)',
+                        data: [20, 25, 30, 35], // Your customers data
+                    }]
+                };
+
+                const config = {
+                    type: 'line',
+                    data: data,
+                    
+                };
+                
+                const myChart = new Chart(
+                    document.getElementById('myChart'), config    
+                );    
+            </script>
         </div>
         <!-- Current Orders -->
         <div class="row pt-5">
@@ -60,30 +84,17 @@
                         <hr>
                     </div>
                 </div>
-                <!-- {% for order in orders %} -->
+                {% for item in orders_with_addresses %}
                 <div class="row">
                     <div class="col">
-                        <h5>Order #789123981273</h5>
-                        <h5>Order #123312134314</h5>
-                        <h5>Order #719823790123</h5>
+                        <h5>Order #{{ item.order.order_number }}</h5>
                     </div>
                     <div class="col">
-                        <h5>Ashi Jha</h5>
-                        <h5>Naina Khan</h5>
-                        <h5>Nikita Kapoor</h5>
+                        <h5>{{ item.delivery_address.first_name }} {{ item.delivery_address.last_name }}</h5>
                     </div>
-                    <div class="col">
-                        <h5>Paid</h5>
-                        <h5>Paid</h5>
-                        <h5>Pending</h5>
-                    </div>
-                    <!-- <div class="col">
-                        <button class="btn bg-green btn-sm">Mark as Picked-Up</button>
-                        <button class="btn bg-green btn-sm">Mark as Picked-Up</button>
-                        <button class="btn bg-green btn-sm">Mark as Picked-Up</button>
-                    </div> -->
+                    <!-- Your other columns here -->
                 </div>
-                <!-- {% endfor %} -->
+                {% endfor %}
             </div>
         </div>
     </div>

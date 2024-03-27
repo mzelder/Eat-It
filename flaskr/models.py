@@ -20,9 +20,13 @@ class Restaurant(db.Model):
     name = db.Column(db.String(80), unique=False, nullable=False) 
     background_image = db.Column(db.String(80), unique=False, nullable=True)
     icon_image = db.Column(db.String(80), unique=False, nullable=True)
+    sales = db.Column(db.Integer, unique=False, nullable=False)
+    orders = db.Column(db.Integer, unique=False, nullable=False)
+    delivered = db.Column(db.Integer, unique=False, nullable=False)
+    customers = db.Column(db.Integer, unique=False, nullable=False)
     owner_id = db.Column(db.Integer, db.ForeignKey('owner.id'), unique=True)
     foods = db.relationship('Items', backref='restaurant', lazy=True)
-    orders = db.relationship('Order', backref='restaurant', lazy=True)
+    orders_relationship = db.relationship('Order', backref='restaurant', lazy=True)
 
 class Items(db.Model):
     id = db.Column(db.Integer, primary_key=True)

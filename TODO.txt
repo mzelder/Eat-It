@@ -1,6 +1,7 @@
 TODO
 - rooting bug 
 - render thankyou page with all items that user ordered
+- change google filler to pl
 
 Upgrading
 - code readability

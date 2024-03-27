@@ -1,9 +1,14 @@
 TODO
 - rooting bug 
 - render thankyou page with all items that user ordered
-- change google filler to pl
+- dashboard root -> restaurant only visable when images added
+- restaurant localization
+- user localization
 
 Upgrading
 - code readability
 - structure of the code
 - adding status for orders
+- minimum order amount
+- delivery options
+- opening hours

@@ -6,7 +6,7 @@
         <div class="row text-center">
             <div class="col border p-2 ms-5 me-5" style="background-color: white;">
                 <img src="/static/images/dollar.png" width="100px">
-                <h2>${{  restaurant.sales  }}</h2>
+                <h2>${{  "%.2f"|format(restaurant.sales)  }}</h2>
                 <p>Sales</p>
             </div>
             <div class="col border p-2 ms-5 me-5" style="background-color: white;">
@@ -30,11 +30,11 @@
                 <h2>All Orders</h2>
                 <hr>
                 <div class="p-3">
-                    <h3>1067</h3>
+                    <h3>{{  restaurant.orders  }}</h3>
                     <h5>New Orders</h5>
                 </div>
                 <div class="p-3">
-                    <h3>$86,802.60</h3>
+                    <h3>${{  "%.2f"|format(restaurant.sales)  }}</h3>
                     <h5>Orders Price</h5>
                 </div>
             </div>

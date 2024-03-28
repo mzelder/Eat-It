@@ -31,7 +31,7 @@
                         <!-- Street name -->
                         <div class="mb-3">
                             <label for="street_name" class="form-label" style="font-weight: 500;">Street name</label>
-                            <input name="street_name" type="text" class="form-control" id="street_name" placeholder="Type street name" autocomplete="off" required>
+                            <input name="street_name" type="text" class="form-control" id="street_name" placeholder="Type street name"  value="{{  user_address.streetName  }}" required>
                             <div class="invalid-feedback">Please complete mandatory field.</div>
                         </div>
                         <!-- Nip (optional) -->
@@ -42,7 +42,7 @@
                         <!-- City -->
                         <div class="mb-3">
                             <label for="city" class="form-label" style="font-weight: 500;">City</label>
-                            <input name="city" type="text" class="form-control" id="city" placeholder="Type your city" required>
+                            <input name="city" type="text" class="form-control" id="city" placeholder="Type your city" value="{{  user_address.city  }}" required>
                             <div class="invalid-feedback">Please complete mandatory field.</div>
                         </div>
                         <!-- Floor (optional) -->
@@ -60,7 +60,7 @@
                         <!-- House number -->
                         <div class="mb-3">
                             <label for="house_number" class="form-label" style="font-weight: 500;">House number</label>
-                            <input name="house_number" type="text" class="form-control" id="house_number" placeholder="Type house number" required>
+                            <input name="house_number" type="text" class="form-control" id="house_number" placeholder="Type house number" value="{{  user_address.houseNumber  }}" required>
                             <div class="invalid-feedback">Please complete mandatory field.</div>
                         </div>
                         <!-- Access code (optional) -->
@@ -76,7 +76,7 @@
                         <!-- Postcode -->
                         <div class="mb-3">
                             <label for="postcode" class="form-label" style="font-weight: 500;">Postcode</label>
-                            <input name="postcode" type="text" class="form-control" id="postcode" placeholder="Type your postal code e.g 00-525" pattern="^\d{2}-\d{3}$" required>
+                            <input name="postcode" type="text" class="form-control" id="postcode" placeholder="Type your postal code e.g 00-525" pattern="^\d{2}-\d{3}$" value="{{  user_address.postCode  }}" required>
                             <div class="invalid-feedback">Please enter a valid postal code in the format 12-123.</div>
                         </div>
                         <!-- Add note (optional) -->

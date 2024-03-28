@@ -12,3 +12,4 @@ Upgrading
 - minimum order amount
 - delivery options
 - opening hours
+- sorting by, searching restaurants, items

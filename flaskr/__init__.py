@@ -96,24 +96,31 @@ def owner_required(f):
     return decorated_function
 
 @app.route("/", methods=["GET", "POST"])
-def index():
+def index():    
     message = None
     error_message = None
     
     if request.method == "POST":
         message, error_message = process_form_request()
             
-    return render_template("/user/index.html", message=message, error_message=error_message, user=check_status())
+    return render_template("/user/index.html", message=message, error_message=error_message,google_api_key = os.environ.get("GOOGLE_API_KEY"), user=check_status())
 
 @app.route("/signout", methods=["POST", "GET"])
 def signout():
     session.clear()
     return redirect(url_for("index"))
 
-@app.route("/delivery")
+@app.route("/delivery", methods=["GET"])
 def delivery():
     restaurants = Restaurant.query.all() 
     return render_template("/user/delivery.html", restaurants=restaurants, user=check_status())
+
+@app.route("/get-data", methods=["POST"])
+def get_data():
+    data = request.json
+    session["user_address"] = data
+    print(session.get("user_address"))
+    return {"status": "success"}
 
 @app.route("/menu/<restaurant_name>")
 def menu(restaurant_name):
@@ -204,7 +211,7 @@ generate_order_number = lambda: ''.join(random.choices(string.ascii_uppercase + 
 @app.route("/checkout/<restaurant_name>", methods=["POST"])
 def checkout(restaurant_name):
     restaurant = Restaurant.query.filter_by(name=restaurant_name).first()
-    return render_template("/user/checkout.html", restaurant=restaurant, order_number=generate_order_number() ,user=check_status())
+    return render_template("/user/checkout.html", restaurant=restaurant, order_number=generate_order_number(), user_address=session.get("user_address"), user=check_status())
 
 @app.route("/order/<order_number>", methods=["GET" ,"POST"])
 def order_confirm(order_number):

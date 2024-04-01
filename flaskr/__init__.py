@@ -5,12 +5,16 @@ from flask_sqlalchemy import SQLAlchemy
 from .models import db, User, Owner, Restaurant, Items, RestaurantAddress, DeliveryAddress, Order, OrderItem
 from flask_mail import Mail, Message
 from functools import wraps
+import time as t
 import os
 import re
 import string
 import random
 import datetime
+import googlemaps
 
+
+gmaps = googlemaps.Client(key=os.environ.get("GOOGLE_API_KEY"))
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
@@ -319,7 +323,7 @@ def order_confirm(order_number):
         if existing_item:
             # If the item already exists, update the quantity and price
             existing_item['quantity'] += order_item.quantity
-            existing_item['price'] += item.price * order_item.quantity  # Assuming price here is per unit
+            existing_item['price'] += item.ptrice * order_item.quantity  # Assuming price here is per unit
         else:
             # If the item does not exist, add it to the list
             items_details.append({
@@ -330,30 +334,53 @@ def order_confirm(order_number):
 
     return render_template("/user/thankyou.html", order=order, restaurant=restaurant, address=address, item_details=items_details)
 
+def get_geocode():
+    try:
+        street = request.form.get("street_name")
+        street_number = request.form.get("house_number")
+        city = request.form.get("city")
+        postal_code = request.form.get("postcode")
+        geocode = gmaps.geocode(f"{street} {street_number}, {city} {postal_code} PL")[0]["geometry"]["location"]
+        if geocode:
+            return geocode["lat"], geocode["lng"]
+        else:
+            return None, None
+    except Exception as e:
+        return None, None
+
 @app.route("/business", methods=["GET", "POST"])
 def business_index():
     if request.method == "POST":
         first_name = request.form.get("name")
         surname = request.form.get("surname")
+        email = request.form.get("email")
         phone_number = request.form.get("phone_number")
+        
         street_number = request.form.get("street_number")
         street = request.form.get("street_name")
         city = request.form.get("city")
         postal_code = request.form.get("postal_code")
-        email = request.form.get("email")
+        latitude, longitude = get_geocode()
+
         restaurant_name = request.form.get("restaurant_name")
         
+
         # Ensure all informations are given
-        if not all([first_name, surname, city, street, street_number, postal_code, phone_number]):
-            return abort(203)
+        if not all([first_name, surname, city, street, street_number, postal_code, phone_number, restaurant_name]):
+            return abort(403)
 
         # Ensure email, phone number and postal code are valid
         if not re.match(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$$", email):
-            return abort(203)
+            return abort(403)
         if not re.match(r"^\+\d{2} \d{3} \d{3} \d{3}$", phone_number):
-            return abort(203)
+            return abort(403)
         if not re.match(r"^\d{2}-\d{3}$", postal_code):
-            return abort(203)
+            return abort(403)
+        
+        # Ensure latitude and longitude are valid
+        if not all([latitude, longitude]):
+            flash("Invalid address. Please make sure the address is correct.", "danger")
+            return redirect(url_for("business_index"))
 
         # Send password to the owner of the restaurant
         password = generate_password(length=12)
@@ -377,6 +404,8 @@ def business_index():
             street = street,
             street_number = street_number, 
             postal_code = postal_code, 
+            latitude = gmaps.geocode(f"{street} {street_number}, {city} {postal_code} PL")[0]["geometry"]["location"]["lat"],
+            longitude = gmaps.geocode(f"{street} {street_number}, {city} {postal_code} PL")[0]["geometry"]["location"]["lng"],
             phone_number = phone_number
         )
         db.session.add(address)

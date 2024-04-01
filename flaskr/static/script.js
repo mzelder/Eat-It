@@ -29,7 +29,7 @@ setTimeout(() => {
           var bsAlert = new bootstrap.Alert(alert);
           bsAlert.close();
       });
-  }, 3000);
+  }, 5000);
 });
 
 

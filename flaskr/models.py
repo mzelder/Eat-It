@@ -43,8 +43,11 @@ class RestaurantAddress(db.Model):
     city = db.Column(db.String(80), unique=False, nullable=False)
     street = db.Column(db.String(80), unique=False, nullable=False)
     street_number = db.Column(db.String(80), unique=False, nullable=False)
+    latitude = db.Column(db.String(80), unique=False, nullable=False)
+    longitude = db.Column(db.String(80), unique=False, nullable=False)
     postal_code = db.Column(db.String(80), unique=False, nullable=False)
     phone_number = db.Column(db.String(80), unique=False, nullable=False)
+
 
 class DeliveryAddress(db.Model):
     id = db.Column(db.Integer, primary_key=True)

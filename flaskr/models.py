@@ -27,6 +27,7 @@ class Restaurant(db.Model):
     owner_id = db.Column(db.Integer, db.ForeignKey('owner.id'), unique=True)
     foods = db.relationship('Items', backref='restaurant', lazy=True)
     orders_relationship = db.relationship('Order', backref='restaurant', lazy=True)
+    address = db.relationship('RestaurantAddress', backref='restaurant', uselist=False)
 
 class Items(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -47,7 +48,7 @@ class RestaurantAddress(db.Model):
     longitude = db.Column(db.String(80), unique=False, nullable=False)
     postal_code = db.Column(db.String(80), unique=False, nullable=False)
     phone_number = db.Column(db.String(80), unique=False, nullable=False)
-
+    restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurant.id'), nullable=False)
 
 class DeliveryAddress(db.Model):
     id = db.Column(db.Integer, primary_key=True)

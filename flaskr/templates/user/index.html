@@ -364,12 +364,16 @@
                 if(types.includes("street_number")) {
                     addressObj.houseNumber = component.long_name;
                 }
+
+                if(place.geometry && place.geometry.location) {
+                    addressObj.latitude = place.geometry.location.lat();
+                    addressObj.longitude = place.geometry.location.lng();
+                }
             }
-            console.log(place);
+            console.log(addressObj);
 
             // Sending data to the server
             searchButton.addEventListener("click", function() {
-                console.log(addressObj);
                 fetch("{{  url_for('get_data')  }}", {
                     method: "POST",
                     headers: {

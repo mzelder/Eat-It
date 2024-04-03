@@ -116,8 +116,25 @@ def signout():
 
 @app.route("/delivery", methods=["GET"])
 def delivery():
-    restaurants = Restaurant.query.all() 
-    return render_template("/user/delivery.html", restaurants=restaurants, user=check_status())
+    # redirect to index if user address is not set
+    if not session.get("user_address"):
+        return redirect(url_for("index"))
+    
+    result_restaurants = []
+    restaurants = Restaurant.query.all()
+    restaurant_addresses = RestaurantAddress.query.all()
+    origin_cords = f'{session.get("user_address")["latitude"]}, {session.get("user_address")["longitude"]}'
+
+    for restaurant in restaurant_addresses:
+        destination_cords = f"{restaurant.latitude}, {restaurant.longitude}"
+        direction_results = gmaps.directions(origin_cords, destination_cords, mode="driving")
+        distance_value = direction_results[0]["legs"][0]["distance"]["value"]
+        
+        # Check if restaurant is within 20km
+        if distance_value <= 20000:
+            result_restaurants.append(restaurants[restaurant.restaurant_id])    
+    
+    return render_template("/user/delivery.html", restaurants=result_restaurants, user=check_status())
 
 @app.route("/get-data", methods=["POST"])
 def get_data():
@@ -406,7 +423,8 @@ def business_index():
             postal_code = postal_code, 
             latitude = gmaps.geocode(f"{street} {street_number}, {city} {postal_code} PL")[0]["geometry"]["location"]["lat"],
             longitude = gmaps.geocode(f"{street} {street_number}, {city} {postal_code} PL")[0]["geometry"]["location"]["lng"],
-            phone_number = phone_number
+            phone_number = phone_number,
+            restaurant_id = restaurant.id
         )
         db.session.add(address)
         db.session.commit()

@@ -191,6 +191,48 @@ input[type="color"]:focus,
   outline: 0 none;
 }
 
+textarea:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+.uneditable-input:focus {   
+  border-color: #83B271;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px #83B271;
+  outline: 0 none;
+}
+
+textarea:focus,
+select[type="text"]:focus,
+select[type="password"]:focus,
+select[type="datetime"]:focus,
+select[type="datetime-local"]:focus,
+select[type="date"]:focus,
+select[type="month"]:focus,
+select[type="time"]:focus,
+select[type="week"]:focus,
+select[type="number"]:focus,
+select[type="email"]:focus,
+select[type="url"]:focus,
+select[type="search"]:focus,
+select[type="tel"]:focus,
+select[type="color"]:focus,
+.uneditable-select:focus {   
+  border-color: #83B271;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px #83B271;
+  outline: 0 none;
+}
+
 
 /* Custom switch style */
 .custom-switch:checked {

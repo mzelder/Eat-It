@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Information</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+      }
+      .container {
+        background-color: #ffffff;
+        width: 100%;
+        max-width: 600px;
+        margin: auto;
+        padding: 20px;
+      }
+      .header {
+        background: #83B271;
+        padding: 10px;
+        color: #ffffff;
+        text-align: center;
+      }
+      .content {
+        padding: 20px;
+        text-align: center;
+      }
+      .footer {
+        background: #eeeeee;
+        padding: 10px;
+        text-align: center;
+        margin-top: 20px;
+      }
+      a {
+        color: #007bff;
+      }
+      button {
+        background-color: #83B271;
+        color: #ffffff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #91c985;
+      }
+      #password:hover {
+        cursor: pointer;
+        color: #007bff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h2>Your New Password</h2>
+      </div>
+      <div class="content">
+        <img src="http://127.0.0.1:5000/static/images/logo_black.png" alt="Password Logo" style="width: 200px;">
+        <h3>Welcome to Eat<span style="color: #83B271">It</span>!</h3>
+        <p>Your new password has been generated successfully.</p>
+        <p style="margin-bottom: 25px;"><strong>Password:</strong> <span id="password">{{ password }}</span></p>
+        <hr>
+        <p style="margin-top: 25px;">Please keep it safe and do not share it with anyone.</p>
+        <p>You can login to your account through the following link:</p>
+        <button>
+          <a href="http://127.0.0.1:5000/business/login" style="color: white; text-decoration: none;">Login to Your Account</a>
+        </button>
+      </div>
+      <div class="footer">
+        <p>If you didn't request this email, please contact us immediately.</p>
+      </div>
+    </div>
+  </body>
+</html>

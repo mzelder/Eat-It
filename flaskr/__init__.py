@@ -125,13 +125,14 @@ def delivery():
     restaurant_addresses = RestaurantAddress.query.all()
     origin_cords = f'{session.get("user_address")["latitude"]}, {session.get("user_address")["longitude"]}'
 
-    for restaurant in restaurant_addresses:
-        destination_cords = f"{restaurant.latitude}, {restaurant.longitude}"
+    for restaurant_address in restaurant_addresses:
+        restaurant = Restaurant.query.filter_by(id=restaurant_address.restaurant_id).first()
+        destination_cords = f"{restaurant_address.latitude}, {restaurant_address.longitude}"
         direction_results = gmaps.directions(origin_cords, destination_cords, mode="driving")
         distance_value = direction_results[0]["legs"][0]["distance"]["value"]
         
-        # Check if restaurant is within 20km
-        if distance_value <= 20000:
+        # Check if restaurant is within 20km and has both icon and background image
+        if distance_value <= 20000 and restaurant.icon_image != None and restaurant.background_image != None:
             result_restaurants.append(Restaurant.query.filter_by(id=restaurant.restaurant_id).first())    
     
     return render_template("/user/delivery.html", restaurants=result_restaurants, user=check_status())
@@ -402,7 +403,7 @@ def business_index():
         # Send password to the owner of the restaurant
         password = generate_password(length=12)
         msg = Message(subject="EatIt | Your password", sender=os.environ.get("EMAIL_EATIT"), recipients=[f"{email}"])
-        msg.body = f"Your password: {password} \n Log in to admin panel via: http://127.0.0.1:5000/business/login"
+        msg.html = render_template("/user/email.html", password=password)
         mail.send(msg)
         
         # Add owner of the restaurant to the database

@@ -2,6 +2,7 @@ TODO
 - rooting bug 
 - render thankyou page with all items that user ordered (BUG)
 - dashboard root -> restaurant only visable when images added
+- signin and create account validation not working
 
 Upgrading
 - code readability

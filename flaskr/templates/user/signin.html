@@ -47,7 +47,6 @@
                                 <div class="d-flex align-items-center">
                                     <img src="/static/images/briefcase.png" style="width: 20px;" class="me-2" alt="Office Icon">
                                     <p class="mb-0">For business</p>
-                                    <!-- <p class="mb-0"> For business </p> -->
                                 </div>
                             </button>
                         </form>
@@ -71,7 +70,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
              </div>
              <div class="modal-body">
-                <form class="form-floating" action="/" method="POST" novalidate="novalidate">
+                <form class="form-floating needs-validation" action="/" method="POST" novalidate>
                     <input type="hidden" name="form_type" value="signin">
                     <!-- EMAIL -->
                     <div class="mb-3">
@@ -109,12 +108,12 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
              </div>
              <div class="modal-body">
-                <form class="form-floating needs-validation" action="/" method="POST" novalidate oninput='confirm_password.setCustomValidity(password.value != confirm_password.value ? "Passwords do not match." : "")'>
+                <form class="form-floating needs-validation" action="/" method="POST" novalidate>
                     <input type="hidden" name="form_type" value="create_account">
                     <!-- EMAIL -->
                     <div class="mb-3">
                         <label for="email" class="form-label" style="font-weight: 500;">Email address</label>
-                        <input name="email" type="email" class="form-control" id="email_create_account" placeholder="Email address" required autocomplete="off">
+                        <input name="email_create_account" type="email" class="form-control" id="email_create_account" placeholder="Email address" required autocomplete="off">
                         <div class="invalid-feedback">Please enter a valid email address.</div>
                     </div>
                     <!-- PASSWORD -->

@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, abort, session, redirect, url
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from flask_sqlalchemy import SQLAlchemy
-from .models import db, User, Owner, Restaurant, Items, RestaurantAddress, DeliveryAddress, Order, OrderItem
+from models import db, User, Owner, Restaurant, Items, RestaurantAddress, DeliveryAddress, Order, OrderItem
 from flask_mail import Mail, Message
 from functools import wraps
 import time as t
@@ -107,18 +107,16 @@ def index():
     if request.method == "POST":
         message, error_message = process_form_request()
             
-    return render_template("/user/index.html", message=message, error_message=error_message,google_api_key = os.environ.get("GOOGLE_API_KEY"), user=check_status())
+    return render_template("/user/index.html", message=message, error_message=error_message, google_api_key = os.environ.get("GOOGLE_API_KEY"), user=check_status())
 
 @app.route("/signout", methods=["POST", "GET"])
 def signout():
     session.clear()
     return redirect(url_for("index"))
 
-@app.route("/delivery", methods=["GET"])
+@app.route("/delivery", methods=["POST", "GET"])
 def delivery():
-    # redirect to index if user address is not set
-    if not session.get("user_address"):
-        session.pop("user_address", None)
+    if request.method == "GET":
         return redirect(url_for("index"))
     
     result_restaurants = []
@@ -132,8 +130,8 @@ def delivery():
         distance_value = direction_results[0]["legs"][0]["distance"]["value"]
         
         # Check if restaurant is within 20km and has both icon and background image
-        if distance_value <= 20000 and restaurant.icon_image != None and restaurant.background_image != None:
-            result_restaurants.append(Restaurant.query.filter_by(id=restaurant.restaurant_id).first())    
+        # if distance_value <= 20000: #and restaurant.icon_image != None and restaurant.background_image != None:
+        result_restaurants.append(restaurant)    
     
     return render_template("/user/delivery.html", restaurants=result_restaurants, user=check_status())
 
@@ -658,3 +656,6 @@ def update_image(image_type):
         db.session.commit()
         flash(f"Your {image_type} image has been successfully changed.", "success")
     return redirect(url_for("admin_settings"))
+
+if __name__ == "__main__":
+    app.run(debug=True)

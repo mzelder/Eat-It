@@ -42,7 +42,7 @@
         <div class="row mt-5 text-center">
             <div class="col-7 ml-5 mt-5">
                 <img src="static/images/logo_black.png">
-                <form id="searchForm" class="needs-validation" action="{{  url_for('delivery')  }}" method="GET" novalidate="novalidate"></form>
+                <form id="searchForm" class="needs-validation" action="{{  url_for('delivery')  }}" method="POST" novalidate="novalidate"></form>
                     <div class="input-group pb-5">
                         <input type="text" class="form-control" id="autocomplete" placeholder="Address, i.e Aleja 29 Listopada 1" required>               
                         <button id="searchButton" class="btn bg-green" type="submit" style="color: white;">Search</button>
@@ -322,7 +322,7 @@
         </div>
     </div>
 </div>
-<script>
+<!-- <script>
     // Address finder
     let autocomplete;
     function initAutocomplete() {
@@ -370,7 +370,6 @@
                     addressObj.longitude = place.geometry.location.lng();
                 }
             }
-            console.log(addressObj);
 
             // Sending data to the server
             searchButton.addEventListener("click", function() {
@@ -385,7 +384,6 @@
             }); 
         });
     }
-</script>
-<script async src="https://maps.googleapis.com/maps/api/js?key={{  google_api_key  }}&libraries=places&callback=initAutocomplete">
-</script>
+</script> -->
+<!-- <script async src="https://maps.googleapis.com/maps/api/js?key={{  google_api_key  }}&libraries=places&callback=initAutocomplete"></script> -->
 {% endblock %}

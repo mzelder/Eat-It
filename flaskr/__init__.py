@@ -127,7 +127,7 @@ def delivery():
         restaurant = Restaurant.query.filter_by(id=restaurant_address.restaurant_id).first()
         destination_cords = f"{restaurant_address.latitude}, {restaurant_address.longitude}"
         direction_results = gmaps.directions(origin_cords, destination_cords, mode="driving")
-        distance_value = direction_results[0]["legs"][0]["distance"]["value"]
+        # distance_value = direction_results[0]["legs"][0]["distance"]["value"]
         
         # Check if restaurant is within 20km and has both icon and background image
         # if distance_value <= 20000: #and restaurant.icon_image != None and restaurant.background_image != None:
